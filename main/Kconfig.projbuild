@@ -1,0 +1,72 @@
+menu "HomeControl"
+
+config SPIFFS_BASE_ADDR
+    int "SPIFFS Base address"
+    range 1048576 33546240
+    default 1572864
+    help
+	Starting address of the SPIFFS area in ESP32 Flash
+
+config SPIFFS_SIZE
+    int "SPIFFS Size in bytes"
+    range 262144 2097152
+    default 1048576
+
+config SPIFFS_LOG_BLOCK_SIZE
+    int "SPIFFS Logical block size"
+    range 4098 65536
+    default 8192
+
+config SPIFFS_LOG_PAGE_SIZE
+    int "SPIFFS Logical page size"
+    range 256 2048
+    default 256
+    help
+	Set it to the phisycal page size og the used SPI Flash chip.
+
+config EXAMPLE_DISPLAY_TYPE
+    int
+    default 0 if EXAMPLE_DISPLAY_TYPE0
+    default 1 if EXAMPLE_DISPLAY_TYPE1
+    default 2 if EXAMPLE_DISPLAY_TYPE2
+    default 3 if EXAMPLE_DISPLAY_TYPE3
+
+    choice
+        prompt "Select predefined display configuration"
+        default EXAMPLE_DISPLAY_TYPE0
+        help
+            Select predefined display configuration
+
+        config EXAMPLE_DISPLAY_TYPE0
+            bool "None"
+        config EXAMPLE_DISPLAY_TYPE1
+            bool "ESP-WROVER-KIT Display"
+        config EXAMPLE_DISPLAY_TYPE2
+            bool "Adafruit TFT Feather display"
+        config EXAMPLE_DISPLAY_TYPE3
+            bool "M5Stack TFT display"
+    endchoice
+
+config EXAMPLE_USE_WIFI
+    bool "Use wifi in TFT Demo"
+    default n
+    help
+        If WiFi is used ntp server will be used to provide the exact time
+        and file timestamps will be correct.
+
+config WIFI_SSID
+    string "WiFi SSID"
+   	depends on EXAMPLE_USE_WIFI
+    default "myssid"
+    help
+	SSID (network name) for the demo to connect to.
+
+config WIFI_PASSWORD
+    string "WiFi Password"
+   	depends on EXAMPLE_USE_WIFI
+    default "mypassword"
+    help
+	WiFi password (WPA or WPA2) for the demo to use.
+
+
+endmenu

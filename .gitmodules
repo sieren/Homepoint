@@ -1,0 +1,12 @@
+[submodule "components/arduino-esp32"]
+	path = components/arduino-esp32
+  url = https://github.com/sieren/arduino-esp32.git
+[submodule "main/libraries/TFT_eFEX"]
+	path = main/libraries/TFT_eFEX
+  url = https://github.com/sieren/TFT_eFEX.git
+[submodule "main/libraries/rapidjson"]
+	path = main/libraries/rapidjson
+	url = https://github.com/Tencent/rapidjson.git
+[submodule "main/libraries/JPEGDecoder"]
+	path = main/libraries/JPEGDecoder
+	url = https://github.com/sieren/JPEGDecoder.git 
