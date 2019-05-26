@@ -58,7 +58,7 @@ static void obtain_time(void)
 
     // wait for time to be set
     time_t now = 0;
-    struct tm timeinfo = { 0 };
+    struct tm timeinfo = { };
     int retry = 0;
     const int retry_count = 10;
     while (sntp_get_sync_status() == SNTP_SYNC_STATUS_RESET && ++retry < retry_count) {
@@ -73,6 +73,7 @@ static void initialize_sntp(void)
 {
     ESP_LOGI(TAG, "Initializing SNTP");
     sntp_setoperatingmode(SNTP_OPMODE_POLL);
-    sntp_setservername(0, "pool.ntp.org");
+    char serverName[] = "pool.ntp.org"; // Should be const, blame the sntp API.
+    sntp_setservername(0, serverName);
     sntp_init();
 }
