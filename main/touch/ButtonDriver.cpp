@@ -111,4 +111,4 @@ namespace gfx
       return tl::nullopt;
     }
   }
-}
+} // namespace gfx

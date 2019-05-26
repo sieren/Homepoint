@@ -38,4 +38,3 @@ namespace util
 
 } // namespace util
 } // namespace gfx
-

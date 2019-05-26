@@ -192,4 +192,5 @@ namespace gfx
     changeViewThread.detach();
     mpStatusBar->setTextLabel("");
   }
-} // namespace gfc
+
+} // namespace gfx

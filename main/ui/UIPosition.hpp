@@ -74,4 +74,4 @@ namespace gfx
     }
   };
 
-}
+} // namespace gfx

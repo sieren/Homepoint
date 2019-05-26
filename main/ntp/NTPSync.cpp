@@ -14,7 +14,6 @@ extern "C"
   #include "esp_attr.h"
   #include "esp_sleep.h"
   #include "nvs_flash.h"
- // #include "protocol_examples_common.h"
   #include "esp_sntp.h"
 }
 
@@ -50,7 +49,7 @@ namespace ntp
     localtime_r(&now, &timeinfo);
     strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
   }
-} // namespace time
+} // namespace ntp
 
 static void obtain_time(void)
 {

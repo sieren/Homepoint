@@ -62,4 +62,4 @@ class UIWidget : public std::enable_shared_from_this<UIWidget>
     bool mIsFirstDraw = true;
     bool mIsSelected = false;
 };
-}
+} // namespace gfx

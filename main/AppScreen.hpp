@@ -50,6 +50,7 @@ class AppScreen : public UIWidget
     std::vector<WidgetPtr> baseViews; 
     std::mutex viewMutex;
 };
-}
+
+} // namespace gfx
 
 #include "AppScreen.ipp"

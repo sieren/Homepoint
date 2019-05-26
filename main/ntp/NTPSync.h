@@ -31,4 +31,4 @@ namespace util
       return ss.str();
   }
 } // namespace util
-} // namespace time
+} // namespace ntp

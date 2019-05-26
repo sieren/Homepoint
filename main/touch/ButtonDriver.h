@@ -20,4 +20,4 @@ namespace gfx
       std::chrono::system_clock::time_point mLastPressTime;
       ButtonPressState mCurrentPressState;
   };
-}
+} // namespace gfx

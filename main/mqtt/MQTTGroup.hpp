@@ -61,4 +61,4 @@ namespace mqtt
 
     GroupDevices<MQTTSwitchDevice> mDevices;
   };
-}
+} // namespce mqtt

@@ -39,4 +39,5 @@ namespace mqtt
   using JSONValueKey = std::string;
   using Value = std::string;
   using ValueTuple = std::tuple<DataTypeKey, JSONValueKey, Value>;
-}
+
+} // namespace mqtt

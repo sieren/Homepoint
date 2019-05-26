@@ -1,3 +1,4 @@
+#pragma once
 
 namespace sound
 {
@@ -11,4 +12,4 @@ namespace sound
       digitalWrite(0, 0);
     }
   };
-}
+} // namespace sound

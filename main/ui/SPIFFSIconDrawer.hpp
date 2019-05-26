@@ -18,5 +18,6 @@ namespace util
       screenPtr->drawJpg(fileName, position);
     }
   };
-}
-}
+
+} // namespace util
+} // namespace gfx

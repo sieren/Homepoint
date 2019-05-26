@@ -61,4 +61,5 @@ namespace gfx
       return {185, 244, 66};
     }
   };
+
 } // namespace gfx

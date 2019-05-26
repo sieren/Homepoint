@@ -18,4 +18,4 @@ namespace gfx
       int mCols;
       int mRows;
   };
-}
+} // namespace gfx

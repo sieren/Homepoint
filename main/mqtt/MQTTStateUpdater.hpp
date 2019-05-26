@@ -74,4 +74,5 @@ namespace mqtt
       // ADD A HANDLER FOR A NEW SCENE TYPE
     };
   };
-}
+
+} // namespace mqtt

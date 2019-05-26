@@ -43,4 +43,4 @@ namespace ctx
   {
     return mMQTTGroups;
   }
-}
+} // namespace ctx

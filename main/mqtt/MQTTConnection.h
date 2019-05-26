@@ -52,4 +52,4 @@ namespace mqtt
       MQTTConnectionStatus mLastState;
       Dispatcher<MQTTConnectionStatus> mConnectionStatusNotifier;
   };
-}
+} // namespace mqtt
