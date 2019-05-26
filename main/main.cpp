@@ -2,27 +2,62 @@
 #define ESP_PLATFORM 1
 #include <Arduino.h>
 #include <SPI.h>
-#include <memory>
 #include <config/Config.h>
 #include <fs/ConfigReader.hpp>
 #include "AppScreen.hpp"
 
+#include <memory>
+
+extern "C"
+{
+  #include "freertos/FreeRTOS.h"
+  #include "freertos/task.h"
+  #include "esp_task_wdt.h"
+  #include "nvs_flash.h"
+}
+
+#define MAINLOOPCORE 1
+TaskHandle_t runLoopHandle = NULL;
+bool loopTaskWDTEnabled = false; // Enable if watchdog running
 
 std::shared_ptr<ctx::AppContext> mpAppContext(new ctx::AppContext());
 gfx::AppScreen<ScreenDriver, NavigationDriver> mScreen(mpAppContext);
 
-void setup() {
-  Serial.begin(115200); 
-  mpAppContext->setup();
-  const auto wifiCredentials = fs::ConfigReader::getWifiCredentials();
-  mpAppContext->getWifiContext().connect(std::get<0>(wifiCredentials), std::get<1>(wifiCredentials));
+extern "C" 
+{
+  void runLoop(void *pvParameters);
+  void setupApp();
 
-  mScreen.setup();
+  void app_main()
+  {
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+      ESP_ERROR_CHECK(nvs_flash_erase());
+      ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
 
-  mpAppContext->getMQTTConnection()->connect();
-}
+    initArduino();
+    setupApp();
+    xTaskCreateUniversal(runLoop, "loopTask", 8192, NULL, 1, &runLoopHandle, MAINLOOPCORE);
+  }
 
-void loop() {
-  mScreen.draw();
-  delay(50);
+  void setupApp()
+  {
+    mpAppContext->setup();
+    const auto wifiCredentials = fs::ConfigReader::getWifiCredentials();
+    mpAppContext->getWifiContext().connect(std::get<0>(wifiCredentials), std::get<1>(wifiCredentials));
+    mScreen.setup();
+    mpAppContext->getMQTTConnection()->connect();
+  }
+
+  void runLoop(void *pvParameters)
+  {
+    for(;;) {
+        if(loopTaskWDTEnabled){
+            esp_task_wdt_reset();
+        }
+        mScreen.draw();
+    }
+  }
 }
