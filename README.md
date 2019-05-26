@@ -11,8 +11,8 @@ Homepoint is a screen-based interface for MQTT-connected Smarthome devices that 
 on the cheaply available ESP32 Chipset.
 This project requires a MQTT-Broker to be running in your smarthome.
 
-![alt text](https://raw.githubusercontent.com/sieren/Homepoint/master/media/img1.jpg "M5Stack")
-![alt text](https://raw.githubusercontent.com/sieren/Homepoint/master/media/img2.gif "ArduiTouch")
+<img src="https://raw.githubusercontent.com/sieren/Homepoint/master/media/img1.jpg" width="400"><img src="https://raw.githubusercontent.com/sieren/Homepoint/master/media/img2.gif" width="400">
+
 
 ## Features
 
