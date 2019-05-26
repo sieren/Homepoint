@@ -39,8 +39,6 @@ namespace util
         });
 
         sensor.second.mSetNeedsUpdateCB = [ptr, deviceId, weakBtn = std::weak_ptr<UIButton>(button), icons]() {
-          printf("Deviceid: %i\r\n", deviceId);
-          printf("Groupid: %i\r\n", ptr->groupId);
           auto findSensor = std::find_if(ptr->mDevices.begin(), ptr->mDevices.end(), [&deviceId](auto& ele)
           {
             return ele.second.deviceId == deviceId;
@@ -52,12 +50,12 @@ namespace util
           const auto textColor = (*findSensor).second.active ? Color::ActiveBgColor() : Color::InactiveTextColor();
           const auto imagePath = (*findSensor).second.active ? icons.first : icons.second;
           auto button = weakBtn.lock();
+
           if (!button)
           {
             return;
           }
-          std::string name = (*findSensor).second.name;
-          std::string isOn = (*findSensor).second.active ? "On" : "Off";
+
           button->setTextColor(textColor);
           button->setImage(imagePath);
         };
