@@ -4,6 +4,7 @@
 #include <ui/ScreenNavigator.hpp>
 #include <ui/UIMosaicMenuWidget.hpp>
 #include <ui/UIWidgetBuilder.hpp>
+#include <ui/UIErrorWidget.hpp>
 #include <touch/TouchDriver.h>
 #include <util/varianthelper.hpp>
 
@@ -198,4 +199,15 @@ namespace gfx
     mpStatusBar->setTextLabel("");
   }
 
+  template<class ScreenDriver, class NavigationDriver>
+  void AppScreen<ScreenDriver, NavigationDriver>::showWarning(const std::string warningMessage)
+  {
+    auto frame = Frame();
+    frame.position.x = 0;
+    frame.position.y = 0;
+    frame.size = mWindowSize;
+    auto warningWidget = std::make_shared<UIErrorWidget>(&mTft, frame, 99);
+    warningWidget->setWarningMessage(warningMessage);
+    baseViews.push_back(warningWidget);
+  }
 } // namespace gfx

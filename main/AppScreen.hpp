@@ -29,6 +29,8 @@ class AppScreen : public UIWidget
     template<class N = NavigationDriver>
     void draw(typename std::enable_if<std::is_same<N, gfx::ButtonDriver>::value, N >::type* = 0);
 
+    void showWarning(const std::string warningMessage);
+
     void presentMenu();
     void presentScreen(const uint16_t sceneId);
     void dismissPresentingScreen(const uint16_t tag);
