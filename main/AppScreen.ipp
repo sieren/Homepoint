@@ -206,7 +206,7 @@ namespace gfx
   template<class ScreenDriver, class NavigationDriver>
   void AppScreen<ScreenDriver, NavigationDriver>::showWarning(const std::string warningMessage)
   {
-    Frame frame {{0, kStatusBarHeight, 0}, mWindowSize};
+    Frame frame {{0, kStatusBarHeight, 0}, mViewPortSize};
     auto warningWidget = std::make_shared<UIErrorWidget>(&mTft, frame, 99);
     warningWidget->setWarningMessage(warningMessage);
     baseViews.clear();
