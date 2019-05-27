@@ -4,6 +4,7 @@
 #include <ui/ScreenNavigator.hpp>
 #include <ui/UIMosaicMenuWidget.hpp>
 #include <ui/UIWidgetBuilder.hpp>
+#include <ui/UIErrorWidget.hpp>
 #include <touch/TouchDriver.h>
 #include <util/varianthelper.hpp>
 
@@ -80,20 +81,25 @@ namespace gfx
   }
 
   template<class ScreenDriver, class NavigationDriver>
-  void AppScreen<ScreenDriver, NavigationDriver>::setup()
+  void AppScreen<ScreenDriver, NavigationDriver>::setupScreen()
   {
     mTft.begin(320000000);
     mTft.setRotation(Rotation);
     mpStatusBar->setBackgroundColor(Color::BlackColor());
     mpStatusBar->setTextColor(Color::WhiteColor());
+
+    ledcSetup(0, 2000, 8);
+    ledcAttachPin(SDA, 0);
+  }
+
+  template<class ScreenDriver, class NavigationDriver>
+  void AppScreen<ScreenDriver, NavigationDriver>::setupData()
+  {
     mpStatusBar->registerCallback(&mpAppContext->getWifiContext());
     using namespace std::placeholders;
     mpAppContext->getMQTTConnection()->registerConnectionStatusCallback(std::bind(&UIStatusBarWidget::mqttConnectionChanged, mpStatusBar.get(), _1));
 
     presentMenu();
-
-    ledcSetup(0, 2000, 8);
-    ledcAttachPin(SDA, 0);
   }
 
   template<class ScreenDriver, class NavigationDriver>
@@ -193,4 +199,15 @@ namespace gfx
     mpStatusBar->setTextLabel("");
   }
 
+  template<class ScreenDriver, class NavigationDriver>
+  void AppScreen<ScreenDriver, NavigationDriver>::showWarning(const std::string warningMessage)
+  {
+    auto frame = Frame();
+    frame.position.x = 0;
+    frame.position.y = 0;
+    frame.size = mWindowSize;
+    auto warningWidget = std::make_shared<UIErrorWidget>(&mTft, frame, 99);
+    warningWidget->setWarningMessage(warningMessage);
+    baseViews.push_back(warningWidget);
+  }
 } // namespace gfx

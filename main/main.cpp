@@ -44,10 +44,20 @@ extern "C"
 
   void setupApp()
   {
-    mpAppContext->setup();
+    mScreen.setupScreen();
+
+    try
+    {
+      mpAppContext->setup();
+    }
+    catch(const std::exception& e)
+    {
+      mScreen.showWarning(e.what());
+      return;
+    }
     const auto wifiCredentials = fs::ConfigReader::getWifiCredentials();
     mpAppContext->getWifiContext().connect(std::get<0>(wifiCredentials), std::get<1>(wifiCredentials));
-    mScreen.setup();
+    mScreen.setupData();
     mpAppContext->getMQTTConnection()->connect();
   }
 

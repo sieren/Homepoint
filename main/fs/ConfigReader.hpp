@@ -1,5 +1,6 @@
 #pragma once
 
+#include <util/warnings.h>
 #include "rapidjson/document.h"
 #include "Filesystem.h"
 #include <mqtt/MQTTConnection.h>

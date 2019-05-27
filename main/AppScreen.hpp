@@ -21,12 +21,15 @@ class AppScreen : public UIWidget
     AppScreen(std::shared_ptr<ctx::AppContext> ctx, Size size = {320, 240});
 
     AppScreen() = default;
-    void setup();
+    void setupScreen();
+    void setupData();
 
     template<class N = NavigationDriver>
     void draw(typename std::enable_if<std::is_same<N, gfx::TouchDriver>::value, N >::type* = 0);
     template<class N = NavigationDriver>
     void draw(typename std::enable_if<std::is_same<N, gfx::ButtonDriver>::value, N >::type* = 0);
+
+    void showWarning(const std::string warningMessage);
 
     void presentMenu();
     void presentScreen(const uint16_t sceneId);

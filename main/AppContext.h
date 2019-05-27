@@ -4,7 +4,7 @@
 #include <mqtt/MQTTGroup.hpp>
 #include <ntp/NTPSync.h>
 #include <wifi/WifiContext.h>
-#include "rapidjson/document.h"
+#include <fs/ConfigReader.hpp>
 #include <memory>
 #include <tuple>
 #include <string>
