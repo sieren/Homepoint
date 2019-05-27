@@ -21,7 +21,6 @@ namespace gfx
     void draw() override
     {
       mpScreen->createSprite(mFrame, mBackgroundColor);
-      mpScreen->loadFont(SmallFont);
       mpScreen->setTextColor(Color::WhiteColor(), mBackgroundColor);
       Frame textFrame;
       const auto textWidth = mpScreen->getTextWidth(mWarningMessage.c_str());

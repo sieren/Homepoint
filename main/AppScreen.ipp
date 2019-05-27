@@ -99,6 +99,7 @@ namespace gfx
     using namespace std::placeholders;
     mpAppContext->getMQTTConnection()->registerConnectionStatusCallback(std::bind(&UIStatusBarWidget::mqttConnectionChanged, mpStatusBar.get(), _1));
 
+    baseViews.clear();
     presentMenu();
   }
 
@@ -208,6 +209,7 @@ namespace gfx
     frame.size = mWindowSize;
     auto warningWidget = std::make_shared<UIErrorWidget>(&mTft, frame, 99);
     warningWidget->setWarningMessage(warningMessage);
+    baseViews.clear();
     baseViews.push_back(warningWidget);
   }
 } // namespace gfx
