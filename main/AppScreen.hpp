@@ -44,6 +44,7 @@ class AppScreen : public UIWidget
     void clearScreen();
     bool mIsPresenting{false};
     Size mWindowSize;
+    Size mViewPortSize;
     const Frame menuFrame;
     ScreenDriver mTft;
     NavigationDriver mNavigation;

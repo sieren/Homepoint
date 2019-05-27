@@ -22,15 +22,18 @@ extern "C"
 
 namespace gfx
 {
+  static const int kStatusBarHeight = 20;
+
   template<class ScreenDriver, class NavigationDriver>
   AppScreen<ScreenDriver, NavigationDriver>::AppScreen(std::shared_ptr<ctx::AppContext> ctx, Size size) :
     UIWidget(nullptr, Frame{{0,0,0}, size}, 10000),
     mWindowSize(size),
-    menuFrame({{0, 20, 0}, {320, 220}}),
+    mViewPortSize({mWindowSize.width, mWindowSize.height - kStatusBarHeight}),
+    menuFrame({{0, kStatusBarHeight, 0}, mViewPortSize}),
     mTft(size.width, size.height),
     mNavigation(mTft.getDriverRef()),
     mpAppContext(ctx),
-    mpStatusBar(new UIStatusBarWidget(&mTft, Frame{{0,0,0}, {size.width, 20}}, 999)),
+    mpStatusBar(new UIStatusBarWidget(&mTft, Frame{{0,0,0}, {size.width, kStatusBarHeight}}, 999)),
     mScreenSaver(&mTft)
   {
   };
@@ -53,7 +56,7 @@ namespace gfx
     {
       return util::UIDetailButtonBuilder<decltype(this)>()(ptr, this);
     }), *mqttScene);
-    const auto menuFrame = Frame{{0, 20, 0}, {320, 220}};
+    const auto menuFrame = Frame{{0, kStatusBarHeight, 0}, mViewPortSize};
   
     auto screenNavigator = std::make_shared<ScreenNavigator<NavigationDriver>>(&mTft, menuFrame, 1000);
     screenNavigator->presentDismissalSubviews(widgets, [&](const uint16_t tagId)
@@ -203,10 +206,7 @@ namespace gfx
   template<class ScreenDriver, class NavigationDriver>
   void AppScreen<ScreenDriver, NavigationDriver>::showWarning(const std::string warningMessage)
   {
-    auto frame = Frame();
-    frame.position.x = 0;
-    frame.position.y = 0;
-    frame.size = mWindowSize;
+    Frame frame {{0, kStatusBarHeight, 0}, mWindowSize};
     auto warningWidget = std::make_shared<UIErrorWidget>(&mTft, frame, 99);
     warningWidget->setWarningMessage(warningMessage);
     baseViews.clear();
