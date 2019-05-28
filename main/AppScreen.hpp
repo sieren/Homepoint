@@ -44,13 +44,13 @@ class AppScreen : public UIWidget
     void clearScreen();
     bool mIsPresenting{false};
     Size mWindowSize;
+    Size mViewPortSize;
     const Frame menuFrame;
     ScreenDriver mTft;
     NavigationDriver mNavigation;
     std::shared_ptr<ctx::AppContext> mpAppContext;
     std::shared_ptr<UIStatusBarWidget> mpStatusBar;
     ScreenSaver<ScreenDriver> mScreenSaver;
-    std::vector<WidgetPtr> baseViews; 
     std::mutex viewMutex;
 };
 

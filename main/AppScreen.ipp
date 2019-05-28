@@ -22,15 +22,18 @@ extern "C"
 
 namespace gfx
 {
+  static const int kStatusBarHeight = 20;
+
   template<class ScreenDriver, class NavigationDriver>
   AppScreen<ScreenDriver, NavigationDriver>::AppScreen(std::shared_ptr<ctx::AppContext> ctx, Size size) :
     UIWidget(nullptr, Frame{{0,0,0}, size}, 10000),
     mWindowSize(size),
-    menuFrame({{0, 20, 0}, {320, 220}}),
+    mViewPortSize({mWindowSize.width, mWindowSize.height - kStatusBarHeight}),
+    menuFrame({{0, kStatusBarHeight, 0}, mViewPortSize}),
     mTft(size.width, size.height),
     mNavigation(mTft.getDriverRef()),
     mpAppContext(ctx),
-    mpStatusBar(new UIStatusBarWidget(&mTft, Frame{{0,0,0}, {size.width, 20}}, 999)),
+    mpStatusBar(new UIStatusBarWidget(&mTft, Frame{{0,0,0}, {size.width, kStatusBarHeight}}, 999)),
     mScreenSaver(&mTft)
   {
   };
@@ -53,7 +56,7 @@ namespace gfx
     {
       return util::UIDetailButtonBuilder<decltype(this)>()(ptr, this);
     }), *mqttScene);
-    const auto menuFrame = Frame{{0, 20, 0}, {320, 220}};
+    const auto menuFrame = Frame{{0, kStatusBarHeight, 0}, mViewPortSize};
   
     auto screenNavigator = std::make_shared<ScreenNavigator<NavigationDriver>>(&mTft, menuFrame, 1000);
     screenNavigator->presentDismissalSubviews(widgets, [&](const uint16_t tagId)
@@ -72,8 +75,8 @@ namespace gfx
     std::thread addViewThread([&, sceneName, screenNavigator]()
     {
       std::lock_guard<std::mutex> lock(viewMutex);
-      baseViews.pop_back();
-      baseViews.push_back(screenNavigator);
+      mpSubViews.pop_back();
+      mpSubViews.push_back(screenNavigator);
       mpStatusBar->setTextLabel(sceneName);
     });
     addViewThread.detach();
@@ -99,12 +102,14 @@ namespace gfx
     using namespace std::placeholders;
     mpAppContext->getMQTTConnection()->registerConnectionStatusCallback(std::bind(&UIStatusBarWidget::mqttConnectionChanged, mpStatusBar.get(), _1));
 
+    mpSubViews.clear();
     presentMenu();
   }
 
   template<class ScreenDriver, class NavigationDriver>
   void AppScreen<ScreenDriver, NavigationDriver>::presentMenu()
   {
+    std::lock_guard<std::mutex> guard(viewMutex);
     auto screenNavigator = std::make_shared<ScreenNavigator<NavigationDriver>>(&mTft, menuFrame, 1000);
     auto& scenes = mpAppContext->getMQTTGroups();
     auto widgets = std::vector<WidgetPtr>();
@@ -118,7 +123,7 @@ namespace gfx
     }
 
     screenNavigator->addSubviews(widgets);
-    baseViews.emplace_back(screenNavigator);
+    mpSubViews.emplace_back(screenNavigator);
   }
 
   // Touch Driver Specialization
@@ -137,7 +142,7 @@ namespace gfx
     }
 
     mpStatusBar->draw();
-    std::for_each(baseViews.begin(), baseViews.end(), [&](auto& subView) {
+    std::for_each(mpSubViews.begin(), mpSubViews.end(), [&](auto& subView) {
       if (mNeedsRedraw)
       {
         subView->draw();
@@ -148,7 +153,7 @@ namespace gfx
     {
       return;
     }
-    std::for_each(baseViews.begin(), baseViews.end(), [&](auto& subView) {
+    std::for_each(mpSubViews.begin(), mpSubViews.end(), [&](auto& subView) {
         subView->didTap(*tapEvent);
     });
 
@@ -171,13 +176,13 @@ namespace gfx
 
     if (btnEvent)
     {
-      std::for_each(baseViews.begin(), baseViews.end(), [&](auto& subView) {
+      std::for_each(mpSubViews.begin(), mpSubViews.end(), [&](auto& subView) {
             subView->didTap(*btnEvent);
       });
     }
 
     mpStatusBar->draw();
-    std::for_each(baseViews.begin(), baseViews.end(), [&](auto& subView) {
+    std::for_each(mpSubViews.begin(), mpSubViews.end(), [&](auto& subView) {
       if (mNeedsRedraw)
       {
         subView->draw();
@@ -192,7 +197,7 @@ namespace gfx
     std::thread changeViewThread([&]()
     {
       std::lock_guard<std::mutex> lock(viewMutex);
-      baseViews.pop_back();
+      mpSubViews.pop_back();
       presentMenu();
     });
     changeViewThread.detach();
@@ -202,12 +207,11 @@ namespace gfx
   template<class ScreenDriver, class NavigationDriver>
   void AppScreen<ScreenDriver, NavigationDriver>::showWarning(const std::string warningMessage)
   {
-    auto frame = Frame();
-    frame.position.x = 0;
-    frame.position.y = 0;
-    frame.size = mWindowSize;
+    std::lock_guard<std::mutex> guard(viewMutex);
+    Frame frame {{0, kStatusBarHeight, 0}, mViewPortSize};
     auto warningWidget = std::make_shared<UIErrorWidget>(&mTft, frame, 99);
     warningWidget->setWarningMessage(warningMessage);
-    baseViews.push_back(warningWidget);
+    mpSubViews.clear();
+    mpSubViews.push_back(warningWidget);
   }
 } // namespace gfx

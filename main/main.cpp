@@ -39,13 +39,13 @@ extern "C"
 
     initArduino();
     setupApp();
-    xTaskCreateUniversal(runLoop, "loopTask", 8192, NULL, 1, &runLoopHandle, MAINLOOPCORE);
   }
 
   void setupApp()
   {
     mScreen.setupScreen();
-
+    xTaskCreateUniversal(runLoop, "loopTask", 8192, NULL, 1, &runLoopHandle, MAINLOOPCORE);
+    mScreen.showWarning("Initializing HomePoint");
     try
     {
       mpAppContext->setup();
@@ -55,6 +55,7 @@ extern "C"
       mScreen.showWarning(e.what());
       return;
     }
+    mScreen.showWarning("Loading Screen");
     const auto wifiCredentials = fs::ConfigReader::getWifiCredentials();
     mpAppContext->getWifiContext().connect(std::get<0>(wifiCredentials), std::get<1>(wifiCredentials));
     mScreen.setupData();
