@@ -75,8 +75,8 @@ namespace gfx
     std::thread addViewThread([&, sceneName, screenNavigator]()
     {
       std::lock_guard<std::mutex> lock(viewMutex);
-      baseViews.pop_back();
-      baseViews.push_back(screenNavigator);
+      mpSubViews.pop_back();
+      mpSubViews.push_back(screenNavigator);
       mpStatusBar->setTextLabel(sceneName);
     });
     addViewThread.detach();
@@ -102,13 +102,14 @@ namespace gfx
     using namespace std::placeholders;
     mpAppContext->getMQTTConnection()->registerConnectionStatusCallback(std::bind(&UIStatusBarWidget::mqttConnectionChanged, mpStatusBar.get(), _1));
 
-    baseViews.clear();
+    mpSubViews.clear();
     presentMenu();
   }
 
   template<class ScreenDriver, class NavigationDriver>
   void AppScreen<ScreenDriver, NavigationDriver>::presentMenu()
   {
+    std::lock_guard<std::mutex> guard(viewMutex);
     auto screenNavigator = std::make_shared<ScreenNavigator<NavigationDriver>>(&mTft, menuFrame, 1000);
     auto& scenes = mpAppContext->getMQTTGroups();
     auto widgets = std::vector<WidgetPtr>();
@@ -122,7 +123,7 @@ namespace gfx
     }
 
     screenNavigator->addSubviews(widgets);
-    baseViews.emplace_back(screenNavigator);
+    mpSubViews.emplace_back(screenNavigator);
   }
 
   // Touch Driver Specialization
@@ -141,7 +142,7 @@ namespace gfx
     }
 
     mpStatusBar->draw();
-    std::for_each(baseViews.begin(), baseViews.end(), [&](auto& subView) {
+    std::for_each(mpSubViews.begin(), mpSubViews.end(), [&](auto& subView) {
       if (mNeedsRedraw)
       {
         subView->draw();
@@ -152,7 +153,7 @@ namespace gfx
     {
       return;
     }
-    std::for_each(baseViews.begin(), baseViews.end(), [&](auto& subView) {
+    std::for_each(mpSubViews.begin(), mpSubViews.end(), [&](auto& subView) {
         subView->didTap(*tapEvent);
     });
 
@@ -175,13 +176,13 @@ namespace gfx
 
     if (btnEvent)
     {
-      std::for_each(baseViews.begin(), baseViews.end(), [&](auto& subView) {
+      std::for_each(mpSubViews.begin(), mpSubViews.end(), [&](auto& subView) {
             subView->didTap(*btnEvent);
       });
     }
 
     mpStatusBar->draw();
-    std::for_each(baseViews.begin(), baseViews.end(), [&](auto& subView) {
+    std::for_each(mpSubViews.begin(), mpSubViews.end(), [&](auto& subView) {
       if (mNeedsRedraw)
       {
         subView->draw();
@@ -196,7 +197,7 @@ namespace gfx
     std::thread changeViewThread([&]()
     {
       std::lock_guard<std::mutex> lock(viewMutex);
-      baseViews.pop_back();
+      mpSubViews.pop_back();
       presentMenu();
     });
     changeViewThread.detach();
@@ -206,10 +207,11 @@ namespace gfx
   template<class ScreenDriver, class NavigationDriver>
   void AppScreen<ScreenDriver, NavigationDriver>::showWarning(const std::string warningMessage)
   {
+    std::lock_guard<std::mutex> guard(viewMutex);
     Frame frame {{0, kStatusBarHeight, 0}, mViewPortSize};
     auto warningWidget = std::make_shared<UIErrorWidget>(&mTft, frame, 99);
     warningWidget->setWarningMessage(warningMessage);
-    baseViews.clear();
-    baseViews.push_back(warningWidget);
+    mpSubViews.clear();
+    mpSubViews.push_back(warningWidget);
   }
 } // namespace gfx

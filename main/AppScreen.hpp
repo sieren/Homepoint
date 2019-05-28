@@ -51,7 +51,6 @@ class AppScreen : public UIWidget
     std::shared_ptr<ctx::AppContext> mpAppContext;
     std::shared_ptr<UIStatusBarWidget> mpStatusBar;
     ScreenSaver<ScreenDriver> mScreenSaver;
-    std::vector<WidgetPtr> baseViews; 
     std::mutex viewMutex;
 };
 
