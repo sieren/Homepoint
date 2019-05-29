@@ -26,11 +26,17 @@ This project requires a MQTT-Broker to be running in your smarthome.
 + Screensaver saves power by switching off screen after 10 minutes.
 + Statusbar shows connectivity for WiFi and MQTT as well as time.
 
+#### Planned
++ HomeKit Button/Switch Support (for users without MQTT to setup Automations they can toggle from Homepoint)
++ Improved documentation  
+  
 Is there a feature missing? Open an issue, send me an [email](mailto:info@s-r-n.de) or fork this project and add it yourself.
 
 ## Requirements
-Homepoint should work with any ESP32 device and Touchscreen supported by [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI).
-It works out of the box and has been tested with [M5STACK](https://m5stack.com/collections/m5-core) and [ArduiTouch](https://www.hwhardsoft.de/english/webshop/arduitouch/).
+Homepoint should work with any ESP32 device and Touchscreen supported by [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI), which are:  
+ILI9341, ILI9163, ST7735, S6D02A1, ILI9481, ILI9486, ILI9488, HX8357D and ST7789 based TFT displays that support SPI.
+  
+HomePoint works out of the box and has been tested with [M5STACK](https://m5stack.com/collections/m5-core) and [ArduiTouch](https://www.hwhardsoft.de/english/webshop/arduitouch/).
 
 ## Installation
 In order to build Homepoint, you need the [ESP-IDF SDK](https://github.com/espressif/esp-idf).  
