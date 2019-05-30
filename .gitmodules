@@ -13,3 +13,15 @@
 [submodule "main/libraries/variant"]
 	path = main/libraries/variant
 	url = https://github.com/mpark/variant.git
+[submodule "components/homekit"]
+	path = components/homekit
+	url = https://github.com/sieren/esp-homekit.git
+[submodule "components/http-parser"]
+	path = components/http-parser
+	url = https://github.com/sieren/esp-http-parser.git
+[submodule "components/wolfssl"]
+	path = components/wolfssl
+	url = https://github.com/sieren/esp-wolfssl.git
+[submodule "components/cJSON"]
+	path = components/cJSON
+	url = https://github.com/sieren/esp-cjson.git
