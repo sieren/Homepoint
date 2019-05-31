@@ -3,6 +3,8 @@
 #include <util/warnings.h>
 #include "rapidjson/document.h"
 #include "Filesystem.h"
+#include <homekit/HKConfig.hpp>
+#include <homekit/HKDevice.hpp>
 #include <mqtt/MQTTConnection.h>
 #include <mqtt/MQTTGroup.hpp>
 #include <mqtt/MQTTSensorGroup.hpp>

@@ -4,8 +4,14 @@
   "mqttbroker": "mqtt://192.168.1.1",
   "mqttusername": "myusername",
   "mqttpasswd": "mypassword",
+  "homekitpin": "111-11-111",
   "timezone": "CET-1CEST-2,M3.5.0/02:00:00,M10.5.0/03:00:00",
   "scenes": [
+    {
+      "name": "Entrance",
+      "type": "HomeKitSwitch",
+      "icon": "door"
+    },
     {
       "name": "Entrance",
       "type": "Light",

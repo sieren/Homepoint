@@ -42,7 +42,7 @@ namespace gfx
   template<class ScreenDriver, class NavigationDriver>
   void AppScreen<ScreenDriver, NavigationDriver>::presentScreen(const uint16_t sceneId)
   {
-    auto& scenes = mpAppContext->getMQTTGroups();
+    auto& scenes = mpAppContext->getDeviceGroups();
     auto widgets = std::vector<WidgetPtr>();
 
     auto mqttScene = std::find_if(scenes.begin(), scenes.end(), [&](auto& scene)
@@ -110,7 +110,7 @@ namespace gfx
   void AppScreen<ScreenDriver, NavigationDriver>::presentMenu()
   {
     auto screenNavigator = std::make_shared<ScreenNavigator<NavigationDriver>>(&mTft, menuFrame, 1000);
-    auto& scenes = mpAppContext->getMQTTGroups();
+    auto& scenes = mpAppContext->getDeviceGroups();
     auto widgets = std::vector<WidgetPtr>();
     for (auto& scene : scenes)
     {

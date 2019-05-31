@@ -12,8 +12,13 @@ namespace ctx
   void AppContext::setup()
   {
     fs::FileSystem::getInstance().loadPartitions();
-    mMQTTGroups = fs::ConfigReader::getMQTTGroups();
-    mpMQTTConnection = std::make_shared<mqtt::MQTTConnection>(fs::ConfigReader::getMQTTConfig(), mMQTTGroups);
+    mDeviceGroups = fs::ConfigReader::getDeviceGroups();
+    const auto hkConfig = fs::ConfigReader::getHKConfig();
+    if (hkConfig.isEnabled)
+    {
+      mpHKConnection = std::make_shared<homekit::HKConnection>(hkConfig, mDeviceGroups);
+    }
+    mpMQTTConnection = std::make_shared<mqtt::MQTTConnection>(fs::ConfigReader::getMQTTConfig(), mDeviceGroups);
     const auto timeZone = fs::ConfigReader::getTimeZone();
     if (timeZone != "")
     {
@@ -34,12 +39,16 @@ namespace ctx
       if (cb == mqtt::MQTTConnectionStatus::CONNECTED)
       {
         mpMQTTConnection->bindScenes();
+        if (mpHKConnection)
+        {
+          mpHKConnection->start();
+        }
       }
     });
   }
 
-  std::vector<MQTTVariants> &AppContext::getMQTTGroups()
+  std::vector<DeviceVariants> &AppContext::getDeviceGroups()
   {
-    return mMQTTGroups;
+    return mDeviceGroups;
   }
 } // namespace ctx

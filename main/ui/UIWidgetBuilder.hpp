@@ -59,6 +59,39 @@ namespace util
       return button;
     };
 
+    auto operator()(HKDevicePtr ptr, ScreenType screen) -> std::shared_ptr<UIButton>
+    {
+      auto button = std::make_shared<UIButton>(&(screen->mTft), Frame(), ptr->groupId);
+      button->setBackgroundColor(Color::InactiveBgColor());
+      button->setLabel(ptr->sceneName);
+
+      const auto icons = GetIconFileNames(ptr->iconName);
+      const auto textColor = ptr->isActive() ? Color::ActiveBgColor() : Color::InactiveTextColor();
+      const auto imagePath = ptr->isActive() ? icons.first : icons.second;
+      button->setImage(imagePath);
+      button->setTextColor(textColor);
+      auto& context = screen->mpAppContext;
+      button->addTargetAction([ptr, context](const uint16_t id) {
+        const bool isActive =  ptr->isActive();
+        ptr->setDeviceState(!isActive);
+      });
+
+      auto& screenSaver = screen->mScreenSaver;
+      ptr->mSetNeedsUpdateCB = [ptr, weakBtn = std::weak_ptr<UIButton>(button), &screenSaver, icons](const bool state) {
+        const auto textColor = state ? Color::ActiveBgColor() : Color::InactiveTextColor();
+        const auto imagePath = state ? icons.first : icons.second;
+        auto button = weakBtn.lock();
+        if (!button)
+        {
+          return;
+        }
+        button->setTextColor(textColor);
+        button->setImage(imagePath);
+        screenSaver.activate();
+      };
+      return button;
+    };
+
     auto operator()(MQTTSensorGroupPtr ptr, ScreenType screen) -> std::shared_ptr<UIWidget>
     {
       auto button = std::make_shared<UISensorComboWidget>(&(screen->mTft), Frame(), ptr->groupId);

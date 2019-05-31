@@ -20,23 +20,9 @@ namespace homekit
 {
   struct HKDevice
   {
-
-    static void switch_on_callback(homekit_characteristic_t *_ch, homekit_value_t on, void *context)
-    {
-        printf("Switch On Callback\r\n");
-        printf("With ID: %i\r\n", _ch->id);
-        if (_ch->value.bool_value != on.bool_value)
-        {
-          _ch->value.bool_value = on.bool_value;
-          homekit_characteristic_notify(_ch, _ch->value);
-        }
-        (*static_cast<HKDevice*>(context)).setDeviceState(on.bool_value);
-    }
-
     static void deviceSetCallback(homekit_characteristic_t *ch, const homekit_value_t value)
     {
       (*static_cast<HKDevice*>(ch->context)).setDeviceState(value.bool_value);
-      printf("Device has been set!");
     }
 
     void setDeviceState(bool on)
@@ -54,9 +40,6 @@ namespace homekit
           mSetNeedsUpdateCB(on);
         }
       }
-      printf("Updated with new value");
-      printf(sceneName.c_str());
-      printf("\r\n");
     }
 
     HKDevice(const HKDevice&) =delete;
@@ -96,6 +79,7 @@ namespace homekit
     {
       return mIsActive;
     }
+
     std::string sceneName = "";
     std::string iconName = "";
     uint16_t groupId;
