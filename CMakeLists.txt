@@ -11,4 +11,10 @@ list(APPEND compile_definitions "ARDUINO=202000")
 # pending PR: https://github.com/VSChina/ESP32_AzureIoT_Arduino/pull/15
 list(APPEND compile_options "-Wno-maybe-uninitialized")
 
+set(EXTRA_COMPONENT_DIRS
+"components/esp-wolfssl/"
+"components/http-parser"
+)
+
+
 project(homepoint)
