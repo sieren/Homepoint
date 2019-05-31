@@ -16,7 +16,6 @@ namespace mqtt { struct MQTTSwitchGroup; struct MQTTGroup; struct MQTTSensorGrou
 using MQTTSwitchGroupPtr = std::shared_ptr<mqtt::MQTTSwitchGroup>;
 using MQTTSensorGroupPtr = std::shared_ptr<mqtt::MQTTSensorGroup>;
 using MQTTGroupBasePtr = std::shared_ptr<mqtt::MQTTGroup>;
-using MQTTVariants = mpark::variant<MQTTSwitchGroupPtr, MQTTSensorGroupPtr, MQTTGroupBasePtr>;
 using MQTTGroupsPtr = std::shared_ptr<std::vector<MQTTSwitchGroupPtr>>;
 
 namespace mqtt

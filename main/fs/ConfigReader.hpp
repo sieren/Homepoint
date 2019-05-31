@@ -83,6 +83,8 @@ namespace fs
         }
         return homekit::HKConfig{std::string(""), false};
       }
+
+      static std::vector<DeviceVariants> getDeviceGroups()
       {
         using namespace rapidjson;
         using namespace mqtt;
@@ -93,7 +95,7 @@ namespace fs
 
         uint16_t tagId = 0;
         const auto& scenes = document["scenes"].GetArray();
-        std::vector<MQTTVariants> vecScenes;
+        std::vector<DeviceVariants> vecScenes;
         for (const auto& scene : scenes)
         {
           if (std::string(scene["type"].GetString()) == "Light" ||
@@ -118,9 +120,10 @@ namespace fs
             }
             aScene->mDevices = devices;
             aScene->groupId = tagId;
-            MQTTVariants variant = aScene;
+            DeviceVariants variant = aScene;
             vecScenes.push_back(aScene);
           }
+
           else if (std::string(scene["type"].GetString()) == "Sensor")
           {
             auto aScene = std::make_shared<MQTTSensorGroup>();
@@ -177,7 +180,17 @@ namespace fs
             }
             aScene->mSensorDevices = devices;
             aScene->groupId = tagId;
-            MQTTVariants variant = aScene;
+            DeviceVariants variant = aScene;
+            vecScenes.push_back(aScene);
+          }
+
+          else if (std::string(scene["type"].GetString()) == "HomeKitSwitch")
+          {
+            auto aScene = std::make_shared<homekit::HKDevice>();
+            aScene->sceneName = scene["name"].GetString();
+            aScene->iconName = scene["icon"].GetString();
+            aScene->groupId = tagId;
+            DeviceVariants variant = aScene;
             vecScenes.push_back(aScene);
           }
           tagId += 1;

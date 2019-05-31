@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MQTTGroup.hpp"
+#include <devices/DeviceTypes.hpp>
 #include <util/dispatcher.hpp>
 
 #include <functional>
@@ -35,7 +35,7 @@ namespace mqtt
   class MQTTConnection
   {
     public:
-      MQTTConnection(MQTTConfig config, std::vector<MQTTVariants> mqttscenes);
+      MQTTConnection(MQTTConfig config, std::vector<DeviceVariants> mqttscenes);
       void connect();
       void bindScenes();
       void switchScene(const uint16_t id, bool on);
@@ -48,7 +48,7 @@ namespace mqtt
       void updateScenes(esp_mqtt_event_handle_t event);
       MQTTConfig mConfig;
       esp_mqtt_client_handle_t client;
-      std::vector<MQTTVariants> mMQTTScenes;
+      std::vector<DeviceVariants> mMQTTScenes;
       MQTTConnectionStatus mLastState;
       Dispatcher<MQTTConnectionStatus> mConnectionStatusNotifier;
   };
