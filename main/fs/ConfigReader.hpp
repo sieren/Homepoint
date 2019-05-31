@@ -67,7 +67,22 @@ namespace fs
         return conf;
       }
 
-      static std::vector<MQTTVariants> getMQTTGroups()
+      static const homekit::HKConfig getHKConfig()
+      {
+        mqtt::MQTTConfig conf;
+        using namespace rapidjson;
+        auto config = fs::FileSystem::getInstance().readJsonConfig("/spiffs/config.json");
+        const char* configChar = config.c_str();
+        Document document;
+        document.Parse<0>(configChar);
+
+        if (document.HasMember("homekitpin"))
+        {
+          Value& hkPin = document["homekitpin"];
+          return homekit::HKConfig{hkPin.GetString(), true};;
+        }
+        return homekit::HKConfig{std::string(""), false};
+      }
       {
         using namespace rapidjson;
         using namespace mqtt;

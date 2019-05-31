@@ -21,6 +21,7 @@ file(GLOB FS_SRC
 set(HOMEKIT_SRC_PATH "homekit")
 file(GLOB HOMEKIT_SRC
   "${HOMEKIT_SRC_PATH}/hkapi.c"
+  "${HOMEKIT_SRC_PATH}/HKConnection.cpp"
 )
 
 
