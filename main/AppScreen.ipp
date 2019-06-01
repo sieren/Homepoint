@@ -109,7 +109,6 @@ namespace gfx
   template<class ScreenDriver, class NavigationDriver>
   void AppScreen<ScreenDriver, NavigationDriver>::presentMenu()
   {
-    std::lock_guard<std::mutex> guard(viewMutex);
     auto screenNavigator = std::make_shared<ScreenNavigator<NavigationDriver>>(&mTft, menuFrame, 1000);
     auto& scenes = mpAppContext->getMQTTGroups();
     auto widgets = std::vector<WidgetPtr>();
