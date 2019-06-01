@@ -40,6 +40,18 @@ static const unsigned long MinsBeforeScreenSleep = 10; // Minutes before putting
     digitalWrite(TFT_LED, backLightPower);
     driver->writeCommand(screenPower);
   };
+
+// Please define PINs in libraries/TFT_ESPI/User_Setup.h
+// #define M5Stack
+// #define TFT_MISO 19
+// #define TFT_MOSI 23
+// #define TFT_SCLK 18
+// #define TFT_CS   14  // Chip select control pin
+// #define TFT_DC   27  // Data Command control pin
+// #define TFT_RST  33  // Reset pin (could connect to Arduino RESET pin)
+// #define TFT_BL   32  // LED back-light (required for M5Stack)
+// #define TFT_LED   32
+
 #else // Touch Screen
   #define BUTTON_A_PIN 0 // unused
   #define BUTTON_B_PIN 0 // unused
