@@ -43,8 +43,15 @@ It has been tested with
 
 
 ## Installation
-In order to build Homepoint, you need the [ESP-IDF SDK](https://github.com/espressif/esp-idf).  
-Installation is fairly straight forward, see [Setting up the Toolchain](https://docs.espressif.com/projects/esp-idf/en/latest/get-started-cmake/index.html#step-1-set-up-the-toolchain) in the Espressif Documentation.
+In order to build Homepoint, you need the [ESP-IDF SDK](https://github.com/espressif/esp-idf).
+### Requirements  
+
+| Software       | Version                                                                                                                 |
+| :------------- | :----------------------------------------------------------------------------------------------------------------------:|
+|  ESP-IDF       | 3.3 (current [master](https://github.com/espressif/esp-idf))                                                            |
+|  Toolchain     | [5.2.0](https://docs.espressif.com/projects/esp-idf/en/stable/get-started-cmake/index.html#step-1-set-up-the-toolchain) |
+  
+Installation is fairly straight forward, see [Setting up the Toolchain](https://docs.espressif.com/projects/esp-idf/en/stable/get-started-cmake/index.html#step-1-set-up-the-toolchain) in the Espressif Documentation.  
 ```
 git clone https://www.github.com/sieren/homepoint.git
 cd homepoint
@@ -53,7 +60,7 @@ mkdir build && cd build
 cmake ../
 make spiffs_spiffs_bin
 make -j 8 flash
-```
+```  
 For use with a Button-Based interface configure with
 ```
 cmake -DBUTTONS=ON ../
@@ -62,12 +69,12 @@ and for out of box use with [M5STACK](https://m5stack.com/collections/m5-core) r
 ```
 cmake -DM5STACK=ON ../
 ```
-
+  
 Otherwise the default configuration will be for touch-screens like [ArduiTouch](https://www.hwhardsoft.de/english/webshop/arduitouch/) or the widely used ILI9341 like the one offered by [Adafruit](https://www.adafruit.com/product/1770).
 GPIOs for the screen may have to be configured in `main/libraries/TFT_ESPI/User_Setup.h`.  
   
 Other Homepoint specific configuration settings like the time it takes before the Screensaver kicks in can be configured in `main/config/Config.h`.
-
+  
 ## Configuration
 See the `data/config.json` file as a reference.  
 Each Scene consists of one or several devices. The scene can either be a `Switch`, `Light` or a `Sensor`.  
