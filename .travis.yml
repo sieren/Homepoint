@@ -30,6 +30,10 @@ install:
   - export PATH=$PATH:$HOME/esp/xtensa-esp32-elf/bin
   # Get ESP-IDF from github
   - git clone --recursive https://github.com/espressif/esp-idf.git
+  - cd esp-idf
+  - git checkout 02f2e63662d0314b689bb4925f5d8efa08cfe033
+  - git submodule update --init --recursive
+  - cd ~
   - python -m pip install --user -r /home/travis/esp/esp-idf/requirements.txt
   # Set the path to ESP-IDF directory
   - export IDF_PATH=~/esp/esp-idf
