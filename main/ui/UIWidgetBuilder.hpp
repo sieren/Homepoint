@@ -24,6 +24,7 @@ namespace util
       const auto imagePath = ptr->isActive() ? icons.first : icons.second;
       button->setImage(imagePath);
       button->setTextColor(textColor);
+      button->setMoreIndicator(ptr->mDevices.size() > 1);
       auto& context = screen->mpAppContext;
       button->addTargetAction([ptr, context](const uint16_t id) {
         const bool isActive =  ptr->isActive();
