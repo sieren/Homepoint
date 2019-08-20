@@ -26,6 +26,7 @@ namespace gfx
     void setTextColor(Color textColor);
     void setImage(const std::string filePath);
     void setLabel(const std::string label);
+    void setMoreIndicator(const bool hasMore);
     void draw() override;
 
     // Touch Driver
@@ -40,6 +41,7 @@ namespace gfx
       Color mTextColor;
       std::string mImagePath;
       std::string mLabel;
+      bool mHasMoreIndicator = false;
       unsigned long mLastTouchEventTime;
       ButtonCallback mButtonCallback;
       ButtonCallback mButtonLongPressCallback;

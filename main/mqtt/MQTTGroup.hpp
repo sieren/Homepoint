@@ -1,6 +1,7 @@
 #pragma once
 
 #include "mpark/variant.hpp"
+#include <algorithm>
 #include <functional>
 #include <map>
 #include <memory>
@@ -44,6 +45,13 @@ namespace mqtt
     std::function<void()> mSetNeedsUpdateCB;
   };
 
+  enum class MQTTSwitchGroupState
+  {
+    None,
+    Some,
+    All
+  };
+
   struct MQTTSwitchGroup : public MQTTGroup
   {
     bool active = false;
@@ -59,6 +67,25 @@ namespace mqtt
       return true;
     }
 
+    MQTTSwitchGroupState currentState()
+    {
+      auto deviceTest = [](const auto& device)
+      {
+        return device.second.active;
+      };
+
+      if (std::all_of(mDevices.begin(), mDevices.end(), deviceTest))
+      {
+        return MQTTSwitchGroupState::All;
+      }
+
+      if (std::any_of(mDevices.begin(), mDevices.end(), deviceTest))
+      {
+        return MQTTSwitchGroupState::Some;
+      }
+
+      return MQTTSwitchGroupState::None;
+    }
     GroupDevices<MQTTSwitchDevice> mDevices;
   };
 } // namespce mqtt

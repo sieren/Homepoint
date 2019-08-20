@@ -18,7 +18,8 @@ This project requires a MQTT-Broker to be running in your smarthome.
 ## Features
 
 + See and trigger scenes (groups of devices) on the front screen.
-+ Trigger individual devices by diving into scenes (long press).
++ Trigger individual devices by diving into scenes (by tapping the indicator or long pressing a button).
++ See partially switched on scenes with multiple devices at a glance.
 + Support for temperature, humidity and air quality sensors.
 + Supports both Touch Screen or Button based navigation.
 + Screen updates automatically when devices are triggered from elsewhere.
@@ -76,7 +77,7 @@ cmake -DM5STACK=ON ../
 ```
   
 Otherwise the default configuration will be for touch-screens like [ArduiTouch](https://www.hwhardsoft.de/english/webshop/arduitouch/) or the widely used ILI9341 like the one offered by [Adafruit](https://www.adafruit.com/product/1770).
-GPIOs for the screen may have to be configured in `main/libraries/TFT_ESPI/User_Setup.h`.  
+GPIOs for the screen as well as M5Stack may have to be configured in `main/libraries/TFT_ESPI/User_Setup.h`.
   
 Other Homepoint specific configuration settings like the time it takes before the Screensaver kicks in can be configured in `main/config/Config.h`.
   

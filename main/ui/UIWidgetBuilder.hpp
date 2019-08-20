@@ -20,10 +20,15 @@ namespace util
       button->setLabel(ptr->sceneName);
 
       const auto icons = GetIconFileNames(ptr->iconName);
-      const auto textColor = ptr->isActive() ? Color::ActiveBgColor() : Color::InactiveTextColor();
+      const auto state = ptr->currentState();
+      // Switch Textlabel color based on if some or all devices are on.
+      using namespace mqtt;
+      const auto textColor = (state == MQTTSwitchGroupState::Some ||
+        state == MQTTSwitchGroupState::All) ? Color::ActiveBgColor() : Color::InactiveTextColor();
       const auto imagePath = ptr->isActive() ? icons.first : icons.second;
       button->setImage(imagePath);
       button->setTextColor(textColor);
+      button->setMoreIndicator(ptr->mDevices.size() > 1);
       auto& context = screen->mpAppContext;
       button->addTargetAction([ptr, context](const uint16_t id) {
         const bool isActive =  ptr->isActive();
@@ -35,7 +40,12 @@ namespace util
       });
       auto& screenSaver = screen->mScreenSaver; 
       ptr->mSetNeedsUpdateCB = [ptr, weakBtn = std::weak_ptr<UIButton>(button), &screenSaver, icons]() {
-        const auto textColor = ptr->isActive() ? Color::ActiveBgColor() : Color::InactiveTextColor();
+        using namespace mqtt;
+        const auto state = ptr->currentState();
+        // Switch Textlabel color based on if some or all devices are on.
+        const auto textColor = (state == MQTTSwitchGroupState::Some ||
+          state == MQTTSwitchGroupState::All) ? Color::ActiveBgColor() : Color::InactiveTextColor();
+        // Image will only change color when all devices are on.
         const auto imagePath = ptr->isActive() ? icons.first : icons.second;
         auto button = weakBtn.lock();
         if (!button)

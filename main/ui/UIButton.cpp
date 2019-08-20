@@ -47,6 +47,19 @@ namespace gfx
       const auto activeColor = mIsSelected ? Color::SelectedColor() : mTextColor; 
       mpScreen->setTextColor(activeColor, mBackgroundColor);
       mpScreen->drawText(textFrame, 1, mLabel.c_str());
+
+      if (mHasMoreIndicator)
+      {
+        Frame moreFrame;
+        const std::string moreLabel = "...";
+        const auto textWidth = mpScreen->getTextWidth(moreLabel.c_str());
+        const auto centerPoint = mFrame.getCenterPoint();
+        moreFrame.position.x = mFrame.size.width - textWidth - 13;
+        moreFrame.position.y = 10;
+        mpScreen->loadFont(BoldFont);
+        mpScreen->drawText(moreFrame, 1, moreLabel.c_str());
+      }
+
       mNeedsRedraw = false;
       mpScreen->pushSprite(mFrame.position);
       mpScreen->deleteSprite();
@@ -56,6 +69,11 @@ namespace gfx
   {
     mImagePath = filePath;
     UIWidget::setNeedsRedraw();
+  }
+
+  void UIButton::setMoreIndicator(const bool hasMore)
+  {
+    mHasMoreIndicator = hasMore;
   }
 
   void UIButton::setTextColor(Color textColor)
@@ -84,16 +102,16 @@ namespace gfx
   {
     if (mFrame.isInBounds(tapEvt.position))
     {
-      switch (tapEvt.state)
+      auto mUpperFrame = mFrame;
+      mUpperFrame.size.height = mUpperFrame.size.height / 2;
+      const auto didTapMoreArea = mUpperFrame.isInBounds(tapEvt.position);
+      if (didTapMoreArea && mHasMoreIndicator)
       {
-        case PressEvent::Tap:
-          callTapAction();
-          break;
-        case PressEvent::LongPress:
-          callLongPressAction();
-          break;
-        default:
-          break;
+        callLongPressAction();
+      }
+      else
+      {
+        callTapAction();
       }
     }
   }
