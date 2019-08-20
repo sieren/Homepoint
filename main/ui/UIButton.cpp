@@ -102,16 +102,16 @@ namespace gfx
   {
     if (mFrame.isInBounds(tapEvt.position))
     {
-      switch (tapEvt.state)
+      auto mUpperFrame = mFrame;
+      mUpperFrame.size.height = mUpperFrame.size.height / 2;
+      const auto didTapMoreArea = mUpperFrame.isInBounds(tapEvt.position);
+      if (didTapMoreArea && mHasMoreIndicator)
       {
-        case PressEvent::Tap:
-          callTapAction();
-          break;
-        case PressEvent::LongPress:
-          callLongPressAction();
-          break;
-        default:
-          break;
+        callLongPressAction();
+      }
+      else
+      {
+        callTapAction();
       }
     }
   }
