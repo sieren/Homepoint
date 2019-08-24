@@ -20,7 +20,7 @@ static const char* TAG = "MQTT";
 
 namespace mqtt
 {
-  MQTTConnection::MQTTConnection(MQTTConfig config, std::vector<MQTTVariants> mqttscenes) :
+  MQTTConnection::MQTTConnection(MQTTConfig config, std::vector<DeviceVariants> mqttscenes) :
     mConfig(config),
     mMQTTScenes(mqttscenes)
   {
@@ -107,7 +107,11 @@ namespace mqtt
   {
     auto scene = std::find_if(mMQTTScenes.begin(), mMQTTScenes.end(), [&id](auto& ele)
     {
-      return mpark::visit([&id](auto&& elem) { return elem->groupId == id; }, ele);
+      return mpark::visit(::util::overloaded([&id](MQTTSwitchGroupPtr&& elem)
+      {
+        return elem->groupId == id;
+      },
+      [](auto&& i) { return false; }), ele);
     });
     if (scene != mMQTTScenes.end())
     {
@@ -133,7 +137,11 @@ namespace mqtt
     ESP_LOGI(TAG, "Switching, grp=%d, dev=%d", groupid, deviceid);
     auto scene = std::find_if(mMQTTScenes.begin(), mMQTTScenes.end(), [&groupid](auto& ele)
     {
-      return mpark::visit([&groupid](auto&& elem) { return elem->groupId == groupid; }, ele);
+      return mpark::visit(::util::overloaded([&groupid](MQTTSwitchGroupPtr&& elem)
+      {
+        return elem->groupId == groupid;
+      },
+      [](auto&& i) { return false; }), ele);
     });
 
     if (scene != mMQTTScenes.end())

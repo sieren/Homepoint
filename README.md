@@ -1,6 +1,6 @@
 Homepoint
 =============
-#### An ESP32 based Smarthome Controller for MQTT
+#### An ESP32 based Smarthome Controller for MQTT & HomeKit
 
 ![Travis CI](https://travis-ci.org/sieren/Homepoint.svg?branch=master "Travis CI
 Status")
@@ -8,8 +8,11 @@ Status")
 "Issues")](https://github.com/sieren/Homepoint/issues)
 
 Homepoint is a screen-based interface for MQTT-connected Smarthome devices that runs
-on the cheaply available ESP32 Chipset.
-This project requires a MQTT-Broker to be running in your smarthome.
+on the cheaply available ESP32 Chipset.  
+It can also provide *Switches* to *HomeKit*. These can be used inside the Home App on iOS
+to trigger other HomeKit Devices.  
+
+For MQTT this project requires a MQTT-Broker to be running in your smarthome.
 
 <img src="https://raw.githubusercontent.com/sieren/Homepoint/master/media/img1.jpg" width="400"><img src="https://raw.githubusercontent.com/sieren/Homepoint/master/media/img2.gif" width="400">  
 [![HomePoint Youtube demo](https://raw.githubusercontent.com/sieren/Homepoint/master/media/youtube.png)](https://www.youtube.com/watch?v=bqzpkvtQSvY "HomePoint Youtube demo")
@@ -21,14 +24,17 @@ This project requires a MQTT-Broker to be running in your smarthome.
 + Trigger individual devices by diving into scenes (by tapping the indicator or long pressing a button).
 + See partially switched on scenes with multiple devices at a glance.
 + Support for temperature, humidity and air quality sensors.
++ HomeKit Switch Support (Setup Automations in Home App to toggle from Homepoint)
 + Supports both Touch Screen or Button based navigation.
 + Screen updates automatically when devices are triggered from elsewhere.
 + Easy configuration through a JSON files.
 + Screensaver saves power by switching off screen after 10 minutes.
 + Statusbar shows connectivity for WiFi and MQTT as well as time.
 
+
 #### Planned
-+ HomeKit Button/Switch Support (for users without MQTT to setup Automations they can toggle from Homepoint)
+
++ Improve HomeKit Support
 + Improved documentation  
   
 Is there a feature missing? Open an issue, send me an [email](mailto:info@s-r-n.de) or fork this project and add it yourself.
@@ -134,3 +140,28 @@ Homepoint gets its time from an NTP Server. In order to set the correct timezone
 ```
 Switches can have custom icons, the icons of sensors are currently fixed and not customizable.
 See the `data` folder for available icons or add your own following the naming scheme visible there.
+
+### HomeKit
+To active *HomeKit*, simply set a PIN in the configuration file.  
+Beware that the PIN has to follow the scheme of `xxx-xx-xxx`.  
+A single HomeKit Switch is of `type: "HomeKitSwitch"`.  
+It may not contain any devices.  
+
+```
+{
+  "wifi": "MyWifiSSID",
+  "password": "My Wifi Password",
+  "mqttbroker": "mqtt://192.168.1.2",
+  "mqttusername": "mqttusername",
+  "mqttpasswd": "mymqttpassword",
+  "homekitpin": "111-11-111",
+  "timezone": "CET-1CEST-2,M3.5.0/02:00:00,M10.5.0/03:00:00",
+  "scenes": [
+  {
+    "name": "Living Room",
+    "type": "HomeKitSwitch",
+    "icon": "livingroom"
+  }]
+}
+```
+

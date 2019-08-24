@@ -17,6 +17,14 @@ file(GLOB FS_SRC
   "${FS_SRC_PATH}/Filesystem.cpp"
 )
 
+
+set(HOMEKIT_SRC_PATH "homekit")
+file(GLOB HOMEKIT_SRC
+  "${HOMEKIT_SRC_PATH}/hkapi.c"
+  "${HOMEKIT_SRC_PATH}/HKConnection.cpp"
+)
+
+
 set(MQTT_SRC_PATH "mqtt")
 file(GLOB MQTT_SRC
   "${MQTT_SRC_PATH}/MQTTConnection.cpp"
@@ -72,6 +80,7 @@ set(COMPONENT_SRCS
     "AppContext.cpp"
     "main.cpp"
     ${FS_SRC}
+    ${HOMEKIT_SRC}
     ${UI_SRC}
     ${MQTT_SRC}
     ${NTP_SRC}
