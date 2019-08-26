@@ -47,14 +47,12 @@ It has been tested with
 In order to build Homepoint, you need the [ESP-IDF SDK](https://github.com/espressif/esp-idf).
 ### Requirements  
 
-HomePoint was built on ESP-IDF master. Unfortunately CMake Support in 3.3 is incomplete and master is currently changing a lot
-and breaking the dependency to the ESP32-Arduino submodule.  
-I plan to make HomePoint compatible to v4.0 once it gets a public release, for the time being, please 
-use commit `02f2e63662d0314b689bb4925f5d8efa08cfe033` from the ESP-IDF repo.  
+HomePoint was built on ESP-IDF master. Unfortunately CMake Support in v3.3 is incomplete.  
+In order to build HomePoint you need ESP-IDF from the `release/v4.0` branch from the ESP-IDF git repository.  
 
 | Software       | Version                                                                                                                 |
 | :------------- | :----------------------------------------------------------------------------------------------------------------------:|
-|  ESP-IDF       | master (commit [02f2e63662d0314b689bb4925f5d8efa08cfe033](https://github.com/espressif/esp-idf))                                                            |
+|  ESP-IDF       | [release/v4.0](https://github.com/espressif/esp-idf/tree/release/v4.0))                                                            |
 |  Toolchain     | [5.2.0](https://docs.espressif.com/projects/esp-idf/en/stable/get-started-cmake/index.html#step-1-set-up-the-toolchain) |
   
 Installation is fairly straight forward, see [Setting up the Toolchain](https://docs.espressif.com/projects/esp-idf/en/stable/get-started-cmake/index.html#step-1-set-up-the-toolchain) in the Espressif Documentation.  
