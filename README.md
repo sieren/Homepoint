@@ -20,8 +20,10 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
-- [Usage](#usage)
-  - [Options](#options)
+- [Configuration](#configuration)
+  - [Scenes & Devices](#devices)
+  - [WiFi & MQTT](#credentials)
+  - [NTP Time (optional)](#ntp)
   - [Examples](#examples)
 - [Roadmap](#roadmap)
 - [Known bugs & issues](#known-bugs)
@@ -106,6 +108,7 @@ Other Homepoint configuration settings like the Screensaver can be configured in
 
 The configuration lives in `data/config.json`.
 
+<a name="devices"></a>
 ## Devices & Scenes
 
 HomePoint supports two types of Scenes with a selection of devices each:
@@ -120,10 +123,12 @@ HomePoint supports two types of Scenes with a selection of devices each:
 
 Some Sensors use **JSON** as a data-format, in which case a **key** can be defined.
 
+<a name="credentials"></a>
 ## WiFi & MQTT Credentials
 
 WiFi and MQTT credentials are to be defined on the top level.
 
+<a name="ntp"></a>
 ## NTP Time (optional)
 
 In order to set the correct timezone, copy & paste your [NTP TZ Setting](https://remotemonitoringsystems.ca/time-zone-abbreviations.php) to the `timezone` key.
