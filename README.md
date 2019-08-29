@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sieren/Homepoint/master/media/homepoint.png" width="320" alt="homepoint logo" />
+  <img src="https://raw.githubusercontent.com/sieren/Homepoint/master/media/logo.png" width="320" alt="homepoint logo" />
 </p>
 <p align="center">
 <img alt="issues" src="https://travis-ci.org/sieren/Homepoint.svg?branch=master">
