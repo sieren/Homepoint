@@ -3,46 +3,46 @@
 #include <util/warnings.h>
 #include "rapidjson/document.h"
 #include "Filesystem.h"
-#include <mqtt/MQTTConnection.h>
-#include <mqtt/MQTTGroup.hpp>
-#include <mqtt/MQTTSensorGroup.hpp>
+#include <model/Model.hpp>
 
 extern "C" 
 {
-#include "esp_log.h"
+  #include "esp_log.h"
 }
-
-#include <map>
-#include <string>
-#include <tuple>
-#include <vector>
-
-using WifiCredentials = std::tuple<std::string, std::string>;
 
 namespace fs
 {
   class ConfigReader
   {
     public:
-      static const WifiCredentials getWifiCredentials()
+      const model::Model readConfiguration()
       {
+        model::Model model;
         using namespace rapidjson;
         auto config = fs::FileSystem::getInstance().readJsonConfig("/spiffs/config.json");
         const char* configChar = config.c_str();
         Document document;
         document.Parse<0>(configChar);
+
+        model.mWifiCredentials = ConfigReader::getWifiCredentials(document);
+        model.mTimeZone = getTimeZone(document);
+        model.mMQTTServerConfig = getMQTTConfig(document);
+        model.mMQTTGroups = getMQTTGroups(document);
+        return model;
+      }
+
+    private:
+      const WifiCredentials getWifiCredentials(rapidjson::Document& document)
+      {
+        using namespace rapidjson;
         Value& apName = document["wifi"];
         Value& passWd = document["password"];
         return std::make_tuple(apName.GetString(), passWd.GetString());
       }
 
-      static const std::string getTimeZone()
+      const std::string getTimeZone(rapidjson::Document& document)
       {
         using namespace rapidjson;
-        auto config = fs::FileSystem::getInstance().readJsonConfig("/spiffs/config.json");
-        const char* configChar = config.c_str();
-        Document document;
-        document.Parse<0>(configChar);
         if (!document.HasMember("timezone"))
         {
           return "";
@@ -51,14 +51,10 @@ namespace fs
         return std::string(timeZone.GetString());
       }
 
-      static const mqtt::MQTTConfig getMQTTConfig()
+      const mqtt::MQTTConfig getMQTTConfig(rapidjson::Document& document)
       {
         mqtt::MQTTConfig conf;
         using namespace rapidjson;
-        auto config = fs::FileSystem::getInstance().readJsonConfig("/spiffs/config.json");
-        const char* configChar = config.c_str();
-        Document document;
-        document.Parse<0>(configChar);
         Value& ipAddr = document["mqttbroker"];
         Value& mqttusername = document["mqttusername"];
         Value& mqttpasswd = document["mqttpasswd"];
@@ -67,14 +63,10 @@ namespace fs
         return conf;
       }
 
-      static std::vector<MQTTVariants> getMQTTGroups()
+      static std::vector<MQTTVariants> getMQTTGroups(rapidjson::Document& document)
       {
         using namespace rapidjson;
         using namespace mqtt;
-        auto config = fs::FileSystem::getInstance().readJsonConfig("/spiffs/config.json");
-        const char* configChar = config.c_str();
-        Document document;
-        document.Parse<0>(configChar);
 
         uint16_t tagId = 0;
         const auto& scenes = document["scenes"].GetArray();

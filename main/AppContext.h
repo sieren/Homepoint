@@ -1,7 +1,6 @@
 #pragma once
 
-#include <mqtt/MQTTConnection.h>
-#include <mqtt/MQTTGroup.hpp>
+#include <model/Model.hpp>
 #include <ntp/NTPSync.h>
 #include <wifi/WifiContext.h>
 #include <fs/ConfigReader.hpp>
@@ -16,7 +15,7 @@ namespace ctx
   class AppContext
   {
     public:
-      AppContext();
+      AppContext() = default;
       void setup();
 
       WifiContext& getWifiContext() { return mWifiContext; };
@@ -27,7 +26,7 @@ namespace ctx
       std::shared_ptr<mqtt::MQTTConnection> mpMQTTConnection;
       std::shared_ptr<ntp::NTPSync> mNTPSync;
       WifiContext mWifiContext;
-      std::vector<MQTTVariants> mMQTTGroups;
       rapidjson::Document mConfigDocument;
+      model::Model mModel;
   };
 } // namespace ctx
