@@ -5,19 +5,15 @@
 
 namespace ctx
 {
-  AppContext::AppContext()
-    {
-    };
-
   void AppContext::setup()
   {
     fs::FileSystem::getInstance().loadPartitions();
-    mMQTTGroups = fs::ConfigReader::getMQTTGroups();
-    mpMQTTConnection = std::make_shared<mqtt::MQTTConnection>(fs::ConfigReader::getMQTTConfig(), mMQTTGroups);
-    const auto timeZone = fs::ConfigReader::getTimeZone();
-    if (timeZone != "")
+    mModel = fs::ConfigReader().readConfiguration();
+    mpMQTTConnection = std::make_shared<mqtt::MQTTConnection>(mModel.mMQTTServerConfig, mModel.mMQTTGroups);
+    getWifiContext().connect(std::get<0>(mModel.mWifiCredentials), std::get<1>(mModel.mWifiCredentials));
+    if (mModel.mTimeZone != "")
     {
-      mNTPSync = std::make_shared<ntp::NTPSync>(timeZone);
+      mNTPSync = std::make_shared<ntp::NTPSync>(mModel.mTimeZone);
       mWifiContext.registerCallback([ntpSync = std::weak_ptr<ntp::NTPSync>(mNTPSync)](const auto& connState)
       {
         if (connState.wifiState == ctx::WifiAssociationState::CONNECTED)
@@ -40,6 +36,6 @@ namespace ctx
 
   std::vector<MQTTVariants> &AppContext::getMQTTGroups()
   {
-    return mMQTTGroups;
+    return mModel.mMQTTGroups;
   }
 } // namespace ctx

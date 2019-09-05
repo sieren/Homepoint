@@ -56,8 +56,6 @@ extern "C"
       return;
     }
     mScreen.showWarning("Loading Screen");
-    const auto wifiCredentials = fs::ConfigReader::getWifiCredentials();
-    mpAppContext->getWifiContext().connect(std::get<0>(wifiCredentials), std::get<1>(wifiCredentials));
     mScreen.setupData();
     mpAppContext->getMQTTConnection()->connect();
   }
