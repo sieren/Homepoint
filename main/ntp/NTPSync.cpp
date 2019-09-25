@@ -28,7 +28,7 @@ namespace ntp
   NTPSync::NTPSync(const std::string timeZone) :
     mTimeZone(timeZone)
   {
-
+    initialize_sntp();
   }
 
   void NTPSync::syncTime()
@@ -57,8 +57,6 @@ namespace ntp
 
 static void obtain_time(void)
 {
-    initialize_sntp();
-
     // wait for time to be set
     time_t now = 0;
     struct tm timeinfo = { };

@@ -4,6 +4,9 @@
 #include <util/stdextend.hpp>
 #include "rapidjson/document.h"
 
+// todo: remove once part below is fixed upstream
+#include <Arduino.h>
+
 #include <algorithm>
 #include <iomanip>
 #include <sstream>
@@ -71,9 +74,16 @@ namespace util
     {
       return std::string((document[key.c_str()].GetString()));
     } 
-    std::stringstream stream;
-    stream << std::fixed << std::setprecision(1) << retVal;
-    std::string s = stream.str();
+    // ESP-IDF v4.0 currently broken, returns "f"
+    // https://github.com/espressif/esp-idf/issues/4113
+    //
+    // std::stringstream stream;
+    // stream << std::fixed << std::setprecision(1) << retVal;
+    // std::string s = stream.str();
+
+    String str = String(retVal, 1);
+
+    std::string s(str.c_str());
     return s;
   }
 
