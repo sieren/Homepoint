@@ -74,7 +74,6 @@ static void initialize_sntp(void)
 {
     ESP_LOGI(TAG, "Initializing SNTP");
     sntp_setoperatingmode(SNTP_OPMODE_POLL);
-    char serverName[] = "pool.ntp.org"; // Should be const, blame the sntp API.
-    sntp_setservername(0, serverName);
+    sntp_setservername(0, "pool.ntp.org");
     sntp_init();
 }
