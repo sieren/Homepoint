@@ -23,20 +23,16 @@ install:
   # Prepare directory for the toolchain
   - mkdir -p ~/esp
   - cd ~/esp
-  # Download binary toolchain for the ESP32
-  - wget https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
-  - tar -xzf xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
-  # Make xtensa-esp32-elf available for all terminal sessions
-  - export PATH=$PATH:$HOME/esp/xtensa-esp32-elf/bin
   # Get ESP-IDF from github
   - git clone --recursive https://github.com/espressif/esp-idf.git
   - cd esp-idf
   - git checkout release/v4.0
   - git submodule update --init --recursive
-  - cd ~
-  - python -m pip install --user -r /home/travis/esp/esp-idf/requirements.txt
-  # Set the path to ESP-IDF directory
   - export IDF_PATH=~/esp/esp-idf
+  - ./install.sh
+  - source export.sh
+  - cd ~
+  # Set the path to ESP-IDF directory
   - export CFLAGS=-Wno-maybe-uninitialized
   - export CXXFLAGS=-Wno-maybe-uninitialized
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
