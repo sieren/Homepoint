@@ -74,16 +74,11 @@ namespace util
     {
       return std::string((document[key.c_str()].GetString()));
     } 
-    // ESP-IDF v4.0 currently broken, returns "f"
-    // https://github.com/espressif/esp-idf/issues/4113
-    //
-    // std::stringstream stream;
-    // stream << std::fixed << std::setprecision(1) << retVal;
-    // std::string s = stream.str();
 
-    String str = String(retVal, 1);
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(1) << retVal;
+    std::string s = stream.str();
 
-    std::string s(str.c_str());
     return s;
   }
 
