@@ -32,7 +32,12 @@ namespace mqtt
 
       const auto topicData = std::string(evt->data, evt->data_len);
       auto& device = searchDevice->second;
-      device.active = topicData == device.onValue ? true : false;
+      const auto newState = topicData == device.onValue ? true : false;
+      if (device.active == newState)
+      {
+        return; // don't need to update device
+      }
+      device.active = newState;
       if (device.mSetNeedsUpdateCB)
       {
         device.mSetNeedsUpdateCB();
