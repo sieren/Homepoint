@@ -43,7 +43,7 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 
 + Support for **temperature, humidity and air quality sensors**.
 
-+ **HomeKit Switch Support** (Setup Automations in Home App to toggle from Homepoint).
++ **HomeKit Switch Support** (Setup Automations in Home App to toggle from Homepoint)*
 
 + Supports both **Touch Screen or Button based navigation**.
 
@@ -55,7 +55,7 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 
 + **Statusbar** shows connectivity for WiFi and MQTT as well as time.
 
-
+*currently on experimental branch.
 <a name="demo">
   
 # :camera: Demo
