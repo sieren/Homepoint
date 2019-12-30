@@ -57,7 +57,6 @@ extern "C"
     }
     mScreen.showWarning("Loading Screen");
     mScreen.setupData();
-    mpAppContext->getMQTTConnection()->connect();
   }
 
   void runLoop(void *pvParameters)

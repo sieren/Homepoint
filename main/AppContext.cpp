@@ -11,21 +11,9 @@ namespace ctx
     mModel = fs::ConfigReader().readConfiguration();
     mpMQTTConnection = std::make_shared<mqtt::MQTTConnection>(mModel.mMQTTServerConfig, mModel.mMQTTGroups);
     getWifiContext().connect(std::get<0>(mModel.mWifiCredentials), std::get<1>(mModel.mWifiCredentials));
-    if (mModel.mTimeZone != "")
-    {
-      mNTPSync = std::make_shared<ntp::NTPSync>(mModel.mTimeZone);
-      mWifiContext.registerCallback([ntpSync = std::weak_ptr<ntp::NTPSync>(mNTPSync)](const auto& connState)
-      {
-        if (connState.wifiState == ctx::WifiAssociationState::CONNECTED)
-        {
-          auto ntpClient = ntpSync.lock();
-          if (ntpClient)
-          {
-            ntpClient->syncTime();
-          }
-        }
-      });
-    }
+    using namespace std::placeholders;
+    getWifiContext().registerCallback(std::bind(&AppContext::connectionStateChanged, this, _1));
+    mNTPSync = mModel.mTimeZone != "" ? std::make_shared<ntp::NTPSync>(mModel.mTimeZone) : nullptr;
     mpMQTTConnection->registerConnectionStatusCallback([&](auto cb) {
       if (cb == mqtt::MQTTConnectionStatus::CONNECTED)
       {
@@ -37,5 +25,17 @@ namespace ctx
   std::vector<MQTTVariants> &AppContext::getMQTTGroups()
   {
     return mModel.mMQTTGroups;
+  }
+
+  void AppContext::connectionStateChanged(ctx::WifiConnectionState state)
+  {
+    if (state.wifiState == ctx::WifiAssociationState::CONNECTED)
+    {
+      if (mModel.mTimeZone != "")
+      {
+        mNTPSync->syncTime();
+      }
+      mpMQTTConnection->connect();
+    }
   }
 } // namespace ctx
