@@ -57,14 +57,15 @@ extern "C"
     }
     mScreen.showWarning("Loading Screen");
     mScreen.setupData();
-    mpAppContext->getMQTTConnection()->connect();
   }
 
   void runLoop(void *pvParameters)
   {
-    for(;;) {
-        if(loopTaskWDTEnabled){
-            esp_task_wdt_reset();
+    for(;;)
+    {
+        if (loopTaskWDTEnabled)
+        {
+          esp_task_wdt_reset();
         }
         mScreen.draw();
         delay(50);

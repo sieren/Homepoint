@@ -11,7 +11,7 @@ namespace gfx
   UIStatusBarWidget::UIStatusBarWidget(ScreenDriver* screenptr, Frame frame, uint16_t tag) :
     UIWidget(screenptr, frame, tag)
     {
-      mLastUpdate = std::chrono::system_clock::now();
+      mLastUpdate = std::chrono::system_clock::now() - std::chrono::seconds(StatusBarUpdateInterval);
     }
   
   void UIStatusBarWidget::wifiChanged(ctx::WifiConnectionState connectionState)
@@ -31,6 +31,7 @@ namespace gfx
         break;
       case WifiAssociationState::DISCONNECTED:
         mIpAddressLabel = "DISCONNECTED";
+        mWifiImage = "wifi_off";
         break;
     }
     mNeedsRedraw = true;

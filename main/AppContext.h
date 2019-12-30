@@ -21,6 +21,7 @@ namespace ctx
       WifiContext& getWifiContext() { return mWifiContext; };
       std::shared_ptr<mqtt::MQTTConnection> getMQTTConnection() { return mpMQTTConnection; };
       std::vector<MQTTVariants> &getMQTTGroups();
+      void connectionStateChanged(ctx::WifiConnectionState state);
 
     private: 
       std::shared_ptr<mqtt::MQTTConnection> mpMQTTConnection;
