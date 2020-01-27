@@ -2,6 +2,7 @@
 
 #include "MQTTSensorTypes.hpp"
 #include <util/stdextend.hpp>
+#include <util/optional.hpp>
 #include "rapidjson/document.h"
 
 // todo: remove once part below is fixed upstream
@@ -57,22 +58,82 @@ namespace util
       ESP_LOGI("MQTT", "Unable to parse JSON");
       return "0";
     }
-    float retVal;
-    if (document[key.c_str()].IsDouble())
+
+    const auto& rootObj = document.GetObject();
+    float retVal = 0;
+    using JsonValue = tl::optional<const rapidjson::Value&>;
+    JsonValue result;
+    auto jsonSearch = [](rapidjson::Value obj, std::string key)
     {
-      retVal = static_cast<float>(document[key.c_str()].GetDouble());
+      auto jsonSearchImpl = [](JsonValue obj, std::string key, auto& jsonSearch_ref) mutable
+      {
+        if (!obj.has_value())
+        {
+          return obj;
+        }
+
+        for (auto i = obj.value().MemberBegin(); i != obj.value().MemberEnd(); i++)
+        {
+          if (std::string(i->name.GetString()) == key)
+          {
+            return tl::make_optional<const rapidjson::Value&>(i->value);
+          }
+          else if (i->value.IsObject())
+          {
+            auto jsonRef = tl::make_optional<const rapidjson::Value&>(i->value);
+            auto walkValue = jsonSearch_ref(jsonRef, key, jsonSearch_ref);
+            if (walkValue.has_value())
+            {
+              return walkValue;
+            }
+          }
+        }
+        return tl::make_optional<const rapidjson::Value&>(tl::nullopt);
+      };
+      return jsonSearchImpl(obj, key, jsonSearchImpl);
+    };
+
+    for (auto i = rootObj.MemberBegin(); i != rootObj.MemberEnd(); i++)
+    {
+      if (i->value.IsObject())
+      {
+        result = jsonSearch(i->value.GetObject(), key);
+        if (result.has_value())
+        {
+          break;
+        }
+      }
+      else
+      {
+        if (std::string(i->name.GetString()) == key)
+        {
+          result = tl::make_optional<const rapidjson::Value&>(i->value);
+        }
+      }
     }
-    else if (document[key.c_str()].IsFloat())
+
+    if (!result.has_value())
     {
-      retVal = document[key.c_str()].GetFloat();
+      return "0";
     }
-    else if (document[key.c_str()].IsInt())
+
+    auto& foundValue = result.value();
+
+    if (foundValue.IsDouble())
     {
-      retVal = static_cast<float>(document[key.c_str()].GetInt());
+      retVal = static_cast<float>(foundValue.GetDouble());
+    }
+    else if (foundValue.IsFloat())
+    {
+      retVal = foundValue.GetFloat();
+    }
+    else if (foundValue.IsInt())
+    {
+      retVal = static_cast<float>(foundValue.GetInt());
     }
     else
     {
-      return std::string((document[key.c_str()].GetString()));
+      return std::string((foundValue.GetString()));
     } 
 
     std::stringstream stream;
