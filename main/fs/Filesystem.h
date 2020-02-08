@@ -13,6 +13,7 @@ class FileSystem
       return instance;
     }
     std::string readJsonConfig(const std::string filepath) const;
+    void writeJsonConfig(const std::string filepath, const std::string content);
   private:
     FileSystem();
 

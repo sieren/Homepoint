@@ -56,6 +56,7 @@ set(UIINCLUDES
 
 set(WIFI_SRC_PATH "wifi")
 file(GLOB WIFI_SRC
+  "${WIFI_SRC_PATH}/CaptiveServer.cpp"
   "${WIFI_SRC_PATH}/WifiContext.cpp"
 )
 

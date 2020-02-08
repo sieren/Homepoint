@@ -2,6 +2,8 @@
 
 #include <util/warnings.h>
 #include "rapidjson/document.h"
+#include "rapidjson/stringbuffer.h"
+#include <rapidjson/prettywriter.h>
 #include "Filesystem.h"
 #include <model/Model.hpp>
 
@@ -33,6 +35,36 @@ class ConfigReader
       model.mMQTTServerConfig = getMQTTConfig(document);
       model.mMQTTGroups = getMQTTGroups(document);
       return model;
+    }
+
+  void setFirstLaunch(const WifiCredentials credentials,
+    const std::string login, const std::string password)
+    {
+      using namespace rapidjson;
+      ESP_LOGI("CONFIG READER", "Reading Config");
+      auto config = fs::FileSystem::getInstance().readJsonConfig("/spiffs/config.json");
+      Document document;
+      ParseResult res = document.Parse<0>(config.c_str());
+      if (!res)
+      {
+        Serial.println("Unable to parse file");
+        throw std::runtime_error("Could not parse config file!");
+      }
+      ESP_LOGI("CONFIG READER", "Updating DOM");
+      document["wifi"].SetString(std::get<0>(credentials).c_str(), std::get<0>(credentials).length(), document.GetAllocator());
+      Serial.println(std::get<0>(credentials).c_str());
+      document["password"].SetString(std::get<1>(credentials).c_str(), std::get<1>(credentials).length(), document.GetAllocator());
+      document["login"].SetString(login.c_str(), login.length(), document.GetAllocator());
+      document["webpass"].SetString(password.c_str(), password.length(), document.GetAllocator());
+      ESP_LOGI("CONFIG READER", "Writing JSON String Output");
+      rapidjson::StringBuffer buffer;
+      buffer.Clear();
+
+      rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+      document.Accept(writer);
+      const auto content = std::string(buffer.GetString());
+      ESP_LOGI("CONFIG READER", "Saving to file");
+      fs::FileSystem::getInstance().writeJsonConfig("/spiffs/config.json", content);
     }
 
   private:

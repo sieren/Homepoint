@@ -1,162 +1,23 @@
 {
-  "wifi": "WiFiStation",
-  "password": "Wifipasword",
+  "wifi": " ",
+  "password": " ",
+  "login": "",
+  "webpass": "",
   "mqttbroker": "mqtt://192.168.1.1",
   "mqttusername": "myusername",
   "mqttpasswd": "mypassword",
   "timezone": "CET-1CEST-2,M3.5.0/02:00:00,M10.5.0/03:00:00",
   "scenes": [
-    {
-      "name": "Entrance",
-      "type": "Light",
-      "icon": "door",
-      "devices": [{
-        "name": "Entrance Light",
-        "setTopic": "/home/devices/fiveswitch/set",
-        "getTopic": "/home/devices/fiveswitch/get",
-        "onValue": "true",
-        "offValue": "false"
-      }]
-    },
-    {
-    "name": "Living Room",
-    "type": "Light",
-    "icon": "livingroom",
-    "devices": [{
-      "name": "Side Light",
-      "setTopic": "lights/hue/00:17:88:01:02:3c:2a:6d-0b/set/on",
-      "getTopic": "lights/hue/00:17:88:01:02:3c:2a:6d-0b/get/on",
-      "onValue": "true",
-      "offValue": "false"
-    },
-    {
-      "name": "Back Light",
-      "setTopic": "lights/hue/00:17:88:01:02:3c:49:f8-0b/set/on",
-      "getTopic": "lights/hue/00:17:88:01:02:3c:49:f8-0b/get/on",
-      "onValue": "true",
-      "offValue": "false"
-    },
-    {
-      "name": "Front Light",
-      "setTopic": "lights/hue/00:17:88:01:02:3c:4d:a0-0b/set/on",
-      "getTopic": "lights/hue/00:17:88:01:02:3c:4d:a0-0b/get/on",
-      "onValue": "true",
-      "offValue": "false"
-    },
-    {
-      "name": "Light Strip",
-      "setTopic": "lights/hue/7c:b0:3e:aa:00:a5:b5:0f-03/set/on",
-      "getTopic": "lights/hue/7c:b0:3e:aa:00:a5:b5:0f-03/get/on",
-      "onValue": "true",
-      "offValue": "false"
-    },
-    {
-      "name": "Desk Light",
-      "setTopic": "/home/devices/sevenswitch/set",
-      "getTopic": "/home/devices/sevenswitch/get",
-      "onValue": "true",
-      "offValue": "false"
-    },
-    {
-      "name": "Shelf Light",
-      "setTopic": "/home/devices/eightswitch/set",
-      "getTopic": "/home/devices/eightswitch/get",
-      "onValue": "true",
-      "offValue": "false"
-    }]
-  },
   {
-    "name": "Bedroom",
+    "name": "Entrance",
     "type": "Light",
-    "icon": "bedroom",
-    "devices": [{
-      "name": "Light One",
-      "setTopic": "lights/hue/00:15:8d:00:01:94:60:2c-01/set/on",
-      "getTopic": "lights/hue/00:15:8d:00:01:94:60:2c-01/get/on",
-      "onValue": "true",
-      "offValue": "false"
-    },
-    {
-      "name": "Light Two",
-      "setTopic": "lights/hue/00:15:8d:00:01:1f:a0:61-01/set/on",
-      "getTopic": "lights/hue/00:15:8d:00:01:1f:a0:61-01/get/on",
-      "onValue": "true",
-      "offValue": "false"
-    }]
-  },
-  {
-    "name": "Living Room",
-    "type": "Sensor",
     "icon": "door",
     "devices": [{
-      "name": "Living Room DHT",
-      "type": "temperaturehumidity",
-      "jsondata": true,
-      "temperatureKey": "temperature",
-      "humidityKey": "humidity",
-      "getTopic": "livingroom/temphumidity"
-    }]
-  },
-  {
-    "name": "Bedroom",
-    "type": "Sensor",
-    "icon": "door",
-    "devices": [{
-      "name": "Bedroom DHT Temp",
-      "type": "temperature",
-      "jsondata": true,
-      "temperatureKey": "temperature",
-      "getTopic": "bedroom/esptemp"
-    },
-    {
-      "name": "Bedroom DHT Humidity",
-      "type": "humidity",
-      "jsondata": true,
-      "humidityKey": "humidity",
-      "getTopic": "bedroom/esphumi"
-    }]
-  },
-  {
-    "name": "Fans",
-    "type": "Switch",
-    "icon": "fan",
-    "devices": [{
-      "name": "Bedroom",
-      "setTopic": "/home/devices/sixswitch/set",
-      "getTopic": "/home/devices/sixswitch/get",
+      "name": "Entrance Light",
+      "setTopic": "/home/devices/fiveswitch/set",
+      "getTopic": "/home/devices/fiveswitch/get",
       "onValue": "true",
       "offValue": "false"
-    },
-    {
-      "name": "Living Room",
-      "setTopic": "/home/devices/oneswitch/set",
-      "getTopic": "/home/devices/oneswitch/get",
-      "onValue": "true",
-      "offValue": "false"
-    }]
-  },
-  {
-    "name": "Studio",
-    "type": "Switch",
-    "icon": "power",
-    "devices": [{
-      "name": "Studio",
-      "setTopic": "/home/devices/fourswitch/set",
-      "getTopic": "/home/devices/fourswitch/get",
-      "onValue": "true",
-      "offValue": "false"
-    }]
-  },
-  {
-    "name": "Air Quality",
-    "type": "Sensor",
-    "icon": "voc",
-    "devices": [{
-      "name": "Bedroom",
-      "type": "voc",
-      "jsondata": true,
-      "vocKey": "CO2",
-      "getTopic": "bedroom/co2"
     }]
   }]
 }

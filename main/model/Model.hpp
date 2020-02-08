@@ -19,5 +19,11 @@ struct Model
   std::string mTimeZone;
   mqtt::MQTTConfig mMQTTServerConfig;
   std::vector<MQTTVariants> mMQTTGroups;
+
+  bool hasWifiCredentials()
+  {
+    return !(std::get<0>(mWifiCredentials) == " " &&
+      std::get<0>(mWifiCredentials) == " ");
+  }
 };
 } // namespace model

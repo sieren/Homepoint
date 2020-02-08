@@ -9,6 +9,11 @@ namespace ctx
   {
     fs::FileSystem::getInstance().loadPartitions();
     mModel = fs::ConfigReader().readConfiguration();
+    if (!mModel.hasWifiCredentials())
+    {
+      mpCaptiveServer = std::make_unique<wifi::CaptiveServer>(shared_from_this());
+      return;
+    }
     mpMQTTConnection = std::make_shared<mqtt::MQTTConnection>(mModel.mMQTTServerConfig, mModel.mMQTTGroups);
     getWifiContext().connect(std::get<0>(mModel.mWifiCredentials), std::get<1>(mModel.mWifiCredentials));
     using namespace std::placeholders;
@@ -22,6 +27,14 @@ namespace ctx
     });
     mpWebServer = std::make_unique<web::WebServer>(shared_from_this());
   }
+
+  void AppContext::setFirstLaunch(const WifiCredentials credentials,
+    const std::string login, const std::string username)
+  {
+    fs::ConfigReader().setFirstLaunch(credentials, login, username);
+    ESP.restart();
+  }
+
 
   std::vector<MQTTVariants> &AppContext::getMQTTGroups()
   {
