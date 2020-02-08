@@ -22,7 +22,11 @@ class ConfigReader
       auto config = fs::FileSystem::getInstance().readJsonConfig("/spiffs/config.json");
       const char* configChar = config.c_str();
       Document document;
-      document.Parse<0>(configChar);
+      ParseResult res = document.Parse<0>(configChar);
+      if (!res)
+      {
+        throw std::runtime_error("Could not parse config file!");
+      }
 
       model.mWifiCredentials = ConfigReader::getWifiCredentials(document);
       model.mTimeZone = getTimeZone(document);
