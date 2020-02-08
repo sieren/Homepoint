@@ -3,6 +3,7 @@
 #include <model/Model.hpp>
 #include <ntp/NTPSync.h>
 #include <wifi/WifiContext.h>
+#include <web/WebServer.h>
 #include <fs/ConfigReader.hpp>
 #include <memory>
 #include <tuple>
@@ -12,7 +13,7 @@
 
 namespace ctx
 {
-  class AppContext
+  class AppContext : public std::enable_shared_from_this<AppContext>
   {
     public:
       AppContext() = default;
@@ -26,6 +27,7 @@ namespace ctx
     private: 
       std::shared_ptr<mqtt::MQTTConnection> mpMQTTConnection;
       std::shared_ptr<ntp::NTPSync> mNTPSync;
+      std::unique_ptr<web::WebServer> mpWebServer;
       WifiContext mWifiContext;
       rapidjson::Document mConfigDocument;
       model::Model mModel;

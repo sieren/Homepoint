@@ -20,6 +20,7 @@ namespace ctx
         mpMQTTConnection->bindScenes();
       }
     });
+    mpWebServer = std::make_unique<web::WebServer>(shared_from_this());
   }
 
   std::vector<MQTTVariants> &AppContext::getMQTTGroups()
@@ -36,6 +37,7 @@ namespace ctx
         mNTPSync->syncTime();
       }
       mpMQTTConnection->connect();
+      mpWebServer->startServer();
     }
   }
 } // namespace ctx

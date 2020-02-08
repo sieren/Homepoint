@@ -33,6 +33,7 @@ set(TOUCH_SRC
   "${TOUCH_SRC_PATH}/ButtonDriver.cpp"
 )
 endif(BUTTONS OR M5STACK)
+
 set(TOUCH_SRC
   ${TOUCH_SRC}
   "${TOUCH_SRC_PATH}/TouchDriver.cpp"
@@ -58,6 +59,16 @@ file(GLOB WIFI_SRC
   "${WIFI_SRC_PATH}/WifiContext.cpp"
 )
 
+set(WEBINCLUDES
+  "/web"
+  PARENT_SCOPE
+)
+
+set(WEBSERVER_SRC_PATH "web")
+file(GLOB WEB_SRC
+  "${WEBSERVER_SRC_PATH}/WebServer.cpp"
+)
+
 set(GLOBALINCLUDES
   "./"
   PARENT_SCOPE
@@ -76,6 +87,7 @@ set(COMPONENT_SRCS
     ${MQTT_SRC}
     ${NTP_SRC}
     ${TOUCH_SRC}
+    ${WEB_SRC}
     ${WIFI_SRC}
     ${LIBRARY_SRC}
 )
