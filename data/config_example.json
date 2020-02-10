@@ -1,6 +1,8 @@
 {
   "wifi": "",
   "password": "",
+  "login": "",
+  "webpass": "",
   "mqttbroker": "mqtt://192.168.8.15",
   "mqttusername": "",
   "mqttpasswd": "",
