@@ -125,6 +125,10 @@ class ConfigReader
     {
       mqtt::MQTTConfig conf;
       using namespace rapidjson;
+      if (!document.HasMember("mqttbroker"))
+      {
+        return {};
+      }
       Value& ipAddr = document["mqttbroker"];
       Value& mqttusername = document["mqttusername"];
       Value& mqttpasswd = document["mqttpasswd"];
@@ -139,6 +143,10 @@ class ConfigReader
       using namespace mqtt;
 
       uint16_t tagId = 0;
+      if (!document.HasMember("scenes"))
+      {
+        return {};
+      }
       const auto& scenes = document["scenes"].GetArray();
       std::vector<MQTTVariants> vecScenes;
       for (const auto& scene : scenes)
