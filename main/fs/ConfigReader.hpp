@@ -38,6 +38,22 @@ class ConfigReader
       return model;
     }
 
+    const model::Model readFailsafeConfiguration()
+    {
+      model::Model model;
+      using namespace rapidjson;
+      auto config = fs::FileSystem::getInstance().readJsonConfig("/spiffs/failsafe.json");
+      Document document;
+      ParseResult res = document.Parse<0>(config.c_str());
+      if (!res)
+      {
+        throw std::runtime_error("Could not parse failsafe file!");
+      }
+      model.mWifiCredentials = ConfigReader::getWifiCredentials(document);
+      model.mWebCredentials = ConfigReader::getWebCredentials(document);
+      return model;
+    }
+
   void setFirstLaunch(const WifiCredentials credentials,
     const std::string login, const std::string password)
     {
@@ -66,6 +82,7 @@ class ConfigReader
       const auto content = std::string(buffer.GetString());
       ESP_LOGI("CONFIG READER", "Saving to file");
       fs::FileSystem::getInstance().writeJsonConfig("/spiffs/config.json", content);
+      fs::FileSystem::getInstance().writeJsonConfig("/spiffs/failsafe.json", content);
     }
 
   private:

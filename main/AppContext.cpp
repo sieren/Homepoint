@@ -8,7 +8,16 @@ namespace ctx
   void AppContext::setup()
   {
     fs::FileSystem::getInstance().loadPartitions();
-    mModel = fs::ConfigReader().readConfiguration();
+    try
+    {
+      mModel = fs::ConfigReader().readConfiguration();
+    }
+    catch(const std::exception& e)
+    {
+      mModel = fs::ConfigReader().readFailsafeConfiguration();
+      mpWebServer = std::make_unique<web::WebServer>(shared_from_this(), mModel.mWebCredentials);
+      throw std::runtime_error("Configuration invalid! Login via browser");
+    }
     if (!mModel.hasWifiCredentials())
     {
       mpCaptiveServer = std::make_unique<wifi::CaptiveServer>(shared_from_this());
@@ -25,7 +34,7 @@ namespace ctx
         mpMQTTConnection->bindScenes();
       }
     });
-    mpWebServer = std::make_unique<web::WebServer>(shared_from_this());
+    mpWebServer = std::make_unique<web::WebServer>(shared_from_this(), mModel.mWebCredentials);
   }
 
   void AppContext::setFirstLaunch(const WifiCredentials credentials,
