@@ -35,7 +35,7 @@ namespace wifi
     dnsServer.start(DNS_PORT, "*", apIP);
     mpServer = std::make_unique<AsyncWebServer>(80);
     using namespace std::placeholders;
-    mpServer->serveStatic("/", SPIFFS, "/").setDefaultFile("/captive.html");
+    mpServer->serveStatic("/", SPIFFS, "/captive").setDefaultFile("/index.html");
     mpServer->on("/updateConfig.htm", HTTP_POST, std::bind(&CaptiveServer::handleConfigUpdateRequest, this, _1));
     mpServer->begin();
   }
