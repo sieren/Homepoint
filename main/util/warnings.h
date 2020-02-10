@@ -23,4 +23,5 @@
 
 #include <exception>
 // Override rapidjson assertions to throw exceptions by default
-#define RAPIDJSON_ASSERT(x) if(!(x)) throw std::logic_error("JSON Parsing failed. Check your config!");
+#undef RAPIDJSON_ASSERT
+#define RAPIDJSON_ASSERT(x) if(!(x)) throw std::runtime_error("JSON Parsing failed. Check your config!");
