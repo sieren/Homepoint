@@ -29,6 +29,7 @@ namespace ctx
         const std::string login, const std::string username);
 
     private: 
+      void connectWireless();
       std::shared_ptr<mqtt::MQTTConnection> mpMQTTConnection;
       std::shared_ptr<ntp::NTPSync> mNTPSync;
       std::unique_ptr<wifi::CaptiveServer> mpCaptiveServer;

@@ -32,6 +32,7 @@ class AppScreen : public UIWidget
     void showWarning(const std::string warningMessage);
 
     void presentMenu();
+    void registerWifiCallback();
     void presentScreen(const uint16_t sceneId);
     void dismissPresentingScreen(const uint16_t tag);
     void didTouch(const TouchEvent& evt);

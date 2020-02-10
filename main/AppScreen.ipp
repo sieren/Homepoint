@@ -96,9 +96,15 @@ namespace gfx
   }
 
   template<class ScreenDriver, class NavigationDriver>
-  void AppScreen<ScreenDriver, NavigationDriver>::setupData()
+  void AppScreen<ScreenDriver, NavigationDriver>::registerWifiCallback()
   {
     mpStatusBar->registerCallback(&mpAppContext->getWifiContext());
+  }
+
+  template<class ScreenDriver, class NavigationDriver>
+  void AppScreen<ScreenDriver, NavigationDriver>::setupData()
+  {
+    registerWifiCallback();
     using namespace std::placeholders;
     mpAppContext->getMQTTConnection()->registerConnectionStatusCallback(std::bind(&UIStatusBarWidget::mqttConnectionChanged, mpStatusBar.get(), _1));
 
