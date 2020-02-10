@@ -14,14 +14,18 @@ static const char* TAG = "WEB";
 namespace web
 {
 
-  WebServer::WebServer(std::shared_ptr<ctx::AppContext> appCtx) :
-    mpAppContext(appCtx)
+  WebServer::WebServer(std::shared_ptr<ctx::AppContext> appCtx, WebCredentials webCredentials) :
+    mpAppContext(appCtx),
+    mCredentials(webCredentials)
   {
     mpServer = std::make_unique<AsyncWebServer>(80);
     using namespace std::placeholders;
     mpServer->addHandler(new SPIFFSEditor(SPIFFS, "admin","admin"));
+    const auto username = std::get<0>(mCredentials);
+    const auto password = std::get<1>(mCredentials);
+    mpServer->serveStatic("/", SPIFFS, "/").setDefaultFile("/index.htm").setAuthentication(username.c_str(), password.c_str());
  
-    mpServer->on("/updateConfig.htm", HTTP_GET, std::bind(&WebServer::handleConfigUpdateRequest, this, _1));
+    mpServer->on("/updateConfig.htm", HTTP_GET, std::bind(&WebServer::handleRebootRequest, this, _1));
   }
 
   void WebServer::startServer()

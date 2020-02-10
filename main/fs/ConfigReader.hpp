@@ -31,6 +31,7 @@ class ConfigReader
       }
 
       model.mWifiCredentials = ConfigReader::getWifiCredentials(document);
+      model.mWebCredentials = ConfigReader::getWebCredentials(document);
       model.mTimeZone = getTimeZone(document);
       model.mMQTTServerConfig = getMQTTConfig(document);
       model.mMQTTGroups = getMQTTGroups(document);
@@ -74,6 +75,14 @@ class ConfigReader
       Value& apName = document["wifi"];
       Value& passWd = document["password"];
       return std::make_tuple(apName.GetString(), passWd.GetString());
+    }
+
+    const WifiCredentials getWebCredentials(rapidjson::Document& document)
+    {
+      using namespace rapidjson;
+      Value& webLogin = document["login"];
+      Value& webPassword = document["webpass"];
+      return std::make_tuple(webLogin.GetString(), webPassword.GetString());
     }
 
     const std::string getTimeZone(rapidjson::Document& document)
