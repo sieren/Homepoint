@@ -15,6 +15,7 @@ extern "C"
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <sstream>
 
 static const char *FSTAG = "example";
 
@@ -40,8 +41,16 @@ namespace fs
   std::string FileSystem::readJsonConfig(const std::string filepath) const
   {
     std::ifstream ifs(filepath);
-    std::string content((std::istreambuf_iterator<char>(ifs)),
-      (std::istreambuf_iterator<char>()));
-    return content;
+    std::stringstream buffer;
+    buffer << ifs.rdbuf();
+    return buffer.str();
   }
+
+  void FileSystem::writeJsonConfig(const std::string filepath, const std::string content)
+  {
+    std::ofstream ofs(filepath);
+    ofs << content;
+    ofs.close();
+  }
+
 } // namespace fs

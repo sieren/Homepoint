@@ -44,7 +44,7 @@ extern "C"
   void setupApp()
   {
     mScreen.setupScreen();
-    xTaskCreateUniversal(runLoop, "loopTask", 8192, NULL, 1, &runLoopHandle, MAINLOOPCORE);
+    xTaskCreateUniversal(runLoop, "loopTask", 4096, NULL, 1, &runLoopHandle, MAINLOOPCORE);
     mScreen.showWarning("Initializing HomePoint");
     try
     {
@@ -53,6 +53,12 @@ extern "C"
     catch(const std::exception& e)
     {
       mScreen.showWarning(e.what());
+      mScreen.registerWifiCallback();
+      return;
+    }
+    if (!mpAppContext->getModel().hasWifiCredentials())
+    {
+      mScreen.showWarning("AP: HomePoint-Config, IP: 192.168.99.1");
       return;
     }
     mScreen.showWarning("Loading Screen");

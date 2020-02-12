@@ -10,14 +10,22 @@
 #include <vector>
 
 using WifiCredentials = std::tuple<std::string, std::string>;
+using WebCredentials = std::tuple<std::string, std::string>;
 
 namespace model
 {
 struct Model
 {
   WifiCredentials mWifiCredentials;
+  WebCredentials mWebCredentials;
   std::string mTimeZone;
   mqtt::MQTTConfig mMQTTServerConfig;
   std::vector<MQTTVariants> mMQTTGroups;
+
+  bool hasWifiCredentials()
+  {
+    return !(std::get<0>(mWifiCredentials) == " " &&
+      std::get<0>(mWifiCredentials) == " ");
+  }
 };
 } // namespace model

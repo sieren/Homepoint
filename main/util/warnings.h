@@ -20,7 +20,3 @@
     #define DISABLE_WARNINGS
     #define ENABLE_WARNINGS
 #endif
-
-#include <exception>
-// Override rapidjson assertions to throw exceptions by default
-#define RAPIDJSON_ASSERT(x) if(!(x)) throw std::logic_error("JSON Parsing failed. Check your config!");

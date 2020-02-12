@@ -14,6 +14,7 @@ file(GLOB JPEGDEC_SRC
 
 set(FS_SRC_PATH "fs")
 file(GLOB FS_SRC
+  "${FS_SRC_PATH}/ConfigReader.cpp"
   "${FS_SRC_PATH}/Filesystem.cpp"
 )
 
@@ -33,6 +34,7 @@ set(TOUCH_SRC
   "${TOUCH_SRC_PATH}/ButtonDriver.cpp"
 )
 endif(BUTTONS OR M5STACK)
+
 set(TOUCH_SRC
   ${TOUCH_SRC}
   "${TOUCH_SRC_PATH}/TouchDriver.cpp"
@@ -55,7 +57,18 @@ set(UIINCLUDES
 
 set(WIFI_SRC_PATH "wifi")
 file(GLOB WIFI_SRC
+  "${WIFI_SRC_PATH}/CaptiveServer.cpp"
   "${WIFI_SRC_PATH}/WifiContext.cpp"
+)
+
+set(WEBINCLUDES
+  "/web"
+  PARENT_SCOPE
+)
+
+set(WEBSERVER_SRC_PATH "web")
+file(GLOB WEB_SRC
+  "${WEBSERVER_SRC_PATH}/WebServer.cpp"
 )
 
 set(GLOBALINCLUDES
@@ -76,6 +89,7 @@ set(COMPONENT_SRCS
     ${MQTT_SRC}
     ${NTP_SRC}
     ${TOUCH_SRC}
+    ${WEB_SRC}
     ${WIFI_SRC}
     ${LIBRARY_SRC}
 )

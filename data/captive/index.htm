@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+<head>
+  <!-- basic.html -->
+  <title>HomeControl - WiFi Setup</title>
+  <meta charset = "UTF-8" />
+</head>
+<body>
+  <h1>HomeControl - Initial Setup</h1>
+  <form id="form-msg" action="updateConfig.htm" method="post"  onsubmit="return validateForm()">
+    SSID:<br>
+    <input type="text" name="ssid"><br>
+    Password:<br>
+    <input type="text" name="ssidPassword">
+    <hr>
+    Login:<br>
+    <input type="text" name="loginName" value="admin"><br>
+    Password:<br>
+    <input type="password" id="pass" name="loginPassword" required><br><br>
+    <button type="submit">Update Config</button>
+  </form>
+</body>
+</html>
