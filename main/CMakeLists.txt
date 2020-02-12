@@ -14,6 +14,7 @@ file(GLOB JPEGDEC_SRC
 
 set(FS_SRC_PATH "fs")
 file(GLOB FS_SRC
+  "${FS_SRC_PATH}/ConfigReader.cpp"
   "${FS_SRC_PATH}/Filesystem.cpp"
 )
 
