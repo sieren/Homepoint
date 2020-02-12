@@ -17,7 +17,7 @@ namespace ctx
       mModel = fs::ConfigReader().readFailsafeConfiguration();
       connectWireless();
       mpWebServer = std::make_unique<web::WebServer>(shared_from_this(), mModel.mWebCredentials);
-      throw std::runtime_error("Configuration invalid! Login via browser");
+      throw std::runtime_error("Configuration invalid! Login via browser" + std::string(e.what()));
     }
     if (!mModel.hasWifiCredentials())
     {
