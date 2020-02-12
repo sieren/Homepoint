@@ -4,13 +4,6 @@
 #include "SPIFFS.h"
 #include "SPIFFSEditor.h"
 
-extern "C" 
-{
-  #include "esp_log.h"
-}
-
-static const char* TAG = "WEB";
-
 namespace web
 {
 
@@ -20,12 +13,12 @@ namespace web
   {
     mpServer = std::make_unique<AsyncWebServer>(80);
     using namespace std::placeholders;
-    mpServer->addHandler(new SPIFFSEditor(SPIFFS, "admin","admin"));
     const auto username = std::get<0>(mCredentials);
     const auto password = std::get<1>(mCredentials);
-    mpServer->serveStatic("/", SPIFFS, "/").setDefaultFile("/index.htm").setAuthentication(username.c_str(), password.c_str());
+    mpServer->serveStatic("/", SPIFFS, "/web").setAuthentication(username.c_str(), password.c_str());
+    mpServer->addHandler(new SPIFFSEditor(SPIFFS, username.c_str(), password.c_str()));
  
-    mpServer->on("/updateConfig.htm", HTTP_GET, std::bind(&WebServer::handleRebootRequest, this, _1));
+    mpServer->on("/reboot.htm", HTTP_POST, std::bind(&WebServer::handleRebootRequest, this, _1));
   }
 
   void WebServer::startServer()
@@ -35,7 +28,6 @@ namespace web
 
   void WebServer::handleRebootRequest(AsyncWebServerRequest *request)
   {
-  // Stub Out
-  request->redirect("/index.html");
+    ESP.restart();
   }
 } // namespace web
