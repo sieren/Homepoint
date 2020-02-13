@@ -81,6 +81,10 @@ Steps to install:
 2. Install ESPTools with `python setup.py install`
 3. Run `esptool.py write_flash -fs 4MB -fm dout 0x0 homepoint_espgeneric.bin` (or homepoint_m5stack.bin for M5Stack)
 
+Alternatively, watch the installation video below:
+
+[![HomePoint Installation demo](https://raw.githubusercontent.com/sieren/Homepoint/master/media/installvideo.png)](https://www.youtube.com/watch?v=Ql9BQKl_Yuk "HomePoint Install demo")
+
 <a name="build"></a>
 
 # :house: Build
