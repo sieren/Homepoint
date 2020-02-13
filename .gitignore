@@ -13,3 +13,6 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+scripts/ESP32
+scripts/M5Stack
+scripts/release
