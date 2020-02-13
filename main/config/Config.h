@@ -12,7 +12,7 @@ static const unsigned long MSBeforeLongPress = 500; // 1.5s before long press
 static const unsigned long MSBeforeTap = 300; // 0.2s before tap
 static const unsigned long MSBeforeInvalid = 1500; // 2s before invalidate presses
 
-static const unsigned long StatusBarUpdateInterval = 10; // update status bar every 10s to keep time up to date
+static const unsigned long StatusBarUpdateInterval = 4; // update status bar every 10s to keep time up to date
 static const unsigned long MinsBeforeScreenSleep = 10; // Minutes before putting Screen to sleep
 
 //    _____  _            _______ ______ ____  _____  __  __ 
