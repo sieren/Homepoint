@@ -61,6 +61,7 @@ namespace gfx
     {
       mLastUpdate = std::chrono::system_clock::now();
       mNeedsRedraw = true;
+      mIsWifiDisplayed = !mIsWifiDisplayed;
     }
     if (mNeedsRedraw == false) 
     {
@@ -78,7 +79,8 @@ namespace gfx
     mpScreen->drawJpg(util::GetIconFilePath(mMqttImage), mMqttImageFrame.position);
 
     auto textLabelFrame = mFrame;
-    const auto textLabel = mTextLabel == "" ? ntp::util::GetCurrentTime() : mTextLabel;
+    const auto timeIpAddrLabel = mIsWifiDisplayed ? mIpAddressLabel : ntp::util::GetCurrentTime();
+    const auto textLabel = mTextLabel == "" ? timeIpAddrLabel : mTextLabel;
     const auto textWidth = mpScreen->getTextWidth(textLabel.c_str());
     const auto centerPoint = mFrame.getCenterPoint();
     textLabelFrame.position.x = centerPoint.x - textWidth / 2;

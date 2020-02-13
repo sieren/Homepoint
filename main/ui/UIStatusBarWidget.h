@@ -32,5 +32,6 @@ namespace gfx
       std::string mTimeLabel = "0:00";
       std::string mTextLabel = "";
       std::chrono::system_clock::time_point mLastUpdate;
+      bool mIsWifiDisplayed = false;
   };
 } // namespace gfx
