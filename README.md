@@ -41,7 +41,9 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 
 + **See partially switched on scenes** with multiple devices at a glance.
 
-+ Support for **temperature, humidity and air quality sensors**.
++ Support for **temperature, humidity, air quality sensors & tasmoto energy readings**.
+
++ **Remote Configuration**: Configure and reboot HomePoint through a web interface. No need to reflash.
 
 + **HomeKit Switch Support** (Setup Automations in Home App to toggle from Homepoint)*
 
@@ -54,6 +56,10 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 + **Screensaver** saves power by switching off screen after 10 minutes.
 
 + **Statusbar** shows connectivity for WiFi and MQTT as well as time.
+
++ **Failsafe Mode**: In case of corrupt configuration, failsafe mode for remote access is provided.
+
++ **Coming soon**: Pre-compiled binaries. Just flash HomePoint on your ESP32 device without compiling.
 
 *currently on experimental branch.
 <a name="demo">
