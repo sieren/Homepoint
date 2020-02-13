@@ -4,12 +4,42 @@
   <!-- basic.html -->
   <title>HomeControl - WiFi Setup</title>
   <meta charset = "UTF-8" />
+  <title>HomeControl - WiFi Setup</title>
+  <meta charset = "UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <script src="app.js"></script>
+  <style>
+    html, body {
+    height:100%;
+    width:100%;
+    margin:0;
+}
+.h_iframe iframe {
+    width:100%;
+    height:100%;
+}
+.h_iframe {
+    height: 100%;
+    width:100%;
+}
+  </style>
 </head>
 <body>
-  <h1>HomeControl - Admin</h1>
-  <form id="form-msg" action="reboot.htm" method="post"  onsubmit="return validateForm()">
-    <button type="submit">Reboot</button>
-  </form><br>
-  <iframe width="1400" height="1000" src="/edit"></iframe>
+  <div class="container"></div>
+  <div class="nine columns" style="margin-top: 5%">
+    <h1>HomePoint</h1>
+    <p>Modify <i>config.json</i> or use <i>config_example.json</i> as a reference.<br/>
+    Reboot after making changes for the configuration to be loaded.<br/>
+    Further information is available on <a href="https://github.com/sieren/Homepoint" target="_blank">GitHub</a>.</p>
+    <form id="form-msg" onsubmit="reboot()">
+      <button class="button-primary" type="submit">Reboot</button>
+    </form><br>
+    <div class="h_iframe" style="height: 1000px;">
+      <iframe  src="/edit" frameborder="0" height="1300" ></iframe>
+    </div>
+  </div>
 </body>
 </html>

@@ -4,20 +4,46 @@
   <!-- basic.html -->
   <title>HomeControl - WiFi Setup</title>
   <meta charset = "UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <script src="app.js"></script>
 </head>
 <body>
-  <h1>HomeControl - Initial Setup</h1>
-  <form id="form-msg" action="updateConfig.htm" method="post"  onsubmit="return validateForm()">
-    SSID:<br>
-    <input type="text" name="ssid"><br>
-    Password:<br>
-    <input type="text" name="ssidPassword">
-    <hr>
-    Login:<br>
-    <input type="text" name="loginName" value="admin"><br>
-    Password:<br>
-    <input type="password" id="pass" name="loginPassword" required><br><br>
-    <button type="submit">Update Config</button>
-  </form>
+  <div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 5%">
+      <h1>HomePoint</h1>
+      <h4>Initial Setup</h4>
+      <p>This is the first-time use configuration for HomePoint.<br/>Your module will reboot once you hit <i>Save</i>.</i></p>
+      <form id="form-msg" onsubmit="reboot()">
+        <h5>Wifi Configuration</h5>
+        <div class="row">
+          <div class="six columns">
+            <label for="ssid">SSID</label>
+            <input type="text" name="ssid">
+          </div>
+          <div class="six columns">
+            <label for="ssidPassword">Password</label>
+            <input type="text" name="ssidPassword">
+          </div>
+        </div>
+        <hr>
+        <h5>Web Login</h5>
+        <div class="row">
+          <div class="six columns">
+            <label for="loginName">Login</label>
+            <input type="text" name="loginName" value="admin">
+          </div>
+          <div class="six columns"></div>
+            <label for="loginPasssword">Password</label>
+            <input type="password" id="pass" name="loginPassword" required><br><br>
+        </div>
+          <button class="button-primary type="submit">Save</button>
+        </div>
+      </form>
+      </div>
+    </div>
 </body>
 </html>
