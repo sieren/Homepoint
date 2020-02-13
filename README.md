@@ -19,7 +19,7 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 
 - [Features](#features)
 - [Demo](#demo)
-- [Installation](#installation)
+- [Build](#build)
 - [Configuration](#configuration)
   - [Scenes & Devices](#devices)
   - [WiFi & MQTT](#credentials)
@@ -59,7 +59,7 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 
 + **Failsafe Mode**: In case of corrupt configuration, failsafe mode for remote access is provided.
 
-+ **Coming soon**: Pre-compiled binaries. Just flash HomePoint on your ESP32 device without compiling.
++ **Pre-compiled binaries**: Just flash HomePoint on your ESP32 device without compiling.
 
 *currently on experimental branch.
 <a name="demo">
@@ -68,10 +68,22 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 
 [![HomePoint Youtube demo](https://raw.githubusercontent.com/sieren/Homepoint/master/media/youtube.png)](https://www.youtube.com/watch?v=bqzpkvtQSvY "HomePoint Youtube demo")
 
-
 <a name="installation"></a>
 
 # :house: Installation
+
+HomePoint comes in 2 pre-compiled .bin files ready to be flashed on either a generic ESP32 Module or M5Stack.
+The PIN Layout required for generic ESP32 modules can be found inside the readme.txt in the [releases](https://github.com/sieren/Homepoint/releases).
+
+Steps to install:
+
+1. Download ESPTools from [https://github.com/espressif/esptool/releases](https://github.com/espressif/esptool/releases)
+2. Install ESPTools with `python setup.py install`
+3. Run `esptool.py write_flash -fs 4MB -fm dout 0x0 homepoint_espgeneric.bin` (or homepoint_m5stack.bin for M5Stack)
+
+<a name="build"></a>
+
+# :house: Build
 
 Homepoint was created using the [ESP-IDF SDK](https://github.com/espressif/esp-idf).
 
