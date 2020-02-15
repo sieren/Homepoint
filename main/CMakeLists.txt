@@ -94,7 +94,7 @@ set(COMPONENT_SRCS
     ${LIBRARY_SRC}
 )
 
-set_property(SOURCE ${LIBRARY_SRC} PROPERTY COMPILE_FLAGS -Wno-all)
+set_property(SOURCE ${LIBRARY_SRC} PROPERTY COMPILE_FLAGS "-Wno-all -Wno-shift-negative-value -Wno-cpp")
 
 set(COMPONENT_ADD_INCLUDEDIRS
     "."
@@ -110,7 +110,7 @@ register_component()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DESP32")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DESP32")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTOUCH_CS")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTOUCH_CS")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTOUCH_CS -fconcepts -Wno-shift-negative-value -Wno-cpp")
 
 option(M5STACK "Compile for M5Stack" OFF) # Enabled by default
 option(BUTTONS "Compile for M5Stack" OFF) # Enabled by default

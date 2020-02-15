@@ -1,4 +1,3 @@
-#pragma once
 #include "Color.hpp"
 #include "UIWidget.hpp"
 

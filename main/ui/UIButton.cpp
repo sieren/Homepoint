@@ -53,7 +53,6 @@ namespace gfx
         Frame moreFrame;
         const std::string moreLabel = "...";
         const auto textWidth = mpScreen->getTextWidth(moreLabel.c_str());
-        const auto centerPoint = mFrame.getCenterPoint();
         moreFrame.position.x = mFrame.size.width - textWidth - 13;
         moreFrame.position.y = 10;
         mpScreen->loadFont(BoldFont);
