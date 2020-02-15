@@ -6,6 +6,7 @@
 #include <wifi/WifiContext.h>
 #include <web/WebServer.h>
 #include <fs/ConfigReader.hpp>
+#include <hue/HueScanner.h>
 #include <memory>
 #include <tuple>
 #include <string>
@@ -34,6 +35,7 @@ namespace ctx
       std::shared_ptr<ntp::NTPSync> mNTPSync;
       std::unique_ptr<wifi::CaptiveServer> mpCaptiveServer;
       std::unique_ptr<web::WebServer> mpWebServer;
+      std::shared_ptr<hue::HueScanner> mpHueScanner;
       WifiContext mWifiContext;
       rapidjson::Document mConfigDocument;
       model::Model mModel;

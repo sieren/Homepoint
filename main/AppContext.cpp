@@ -25,6 +25,7 @@ namespace ctx
       return;
     }
     mpMQTTConnection = std::make_shared<mqtt::MQTTConnection>(mModel.mMQTTServerConfig, mModel.mMQTTGroups);
+    mpHueScanner = std::make_shared<hue::HueScanner>();
     connectWireless();
     mpMQTTConnection->registerConnectionStatusCallback([&](auto cb) {
       if (cb == mqtt::MQTTConnectionStatus::CONNECTED)
@@ -67,6 +68,7 @@ namespace ctx
       {
         mpMQTTConnection->connect();
       }
+      mpHueScanner->scan();
       mpWebServer->startServer();
     }
   }

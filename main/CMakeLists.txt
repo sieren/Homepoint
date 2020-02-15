@@ -18,6 +18,13 @@ file(GLOB FS_SRC
   "${FS_SRC_PATH}/Filesystem.cpp"
 )
 
+set(HUE_SRC_PATH "hue")
+set(HUE_SRC
+  ${HUE_SRC}
+  "${HUE_SRC_PATH}/HueScanner.cpp"
+)
+
+
 set(MQTT_SRC_PATH "mqtt")
 file(GLOB MQTT_SRC
   "${MQTT_SRC_PATH}/MQTTConnection.cpp"
@@ -85,6 +92,7 @@ set(COMPONENT_SRCS
     "AppContext.cpp"
     "main.cpp"
     ${FS_SRC}
+    ${HUE_SRC}
     ${UI_SRC}
     ${MQTT_SRC}
     ${NTP_SRC}
@@ -128,5 +136,9 @@ if(BUTTONS)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DBUTTONS")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUTTONS")
 endif(BUTTONS)
+
+
+add_subdirectory(libraries/hueplusplus)
+target_link_libraries(${COMPONENT_LIB} PUBLIC hueplusplusstatic)
 
 spiffs_create_partition_image(spiffs ../data FLASH_IN_PROJECT)
