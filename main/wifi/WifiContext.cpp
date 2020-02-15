@@ -25,7 +25,6 @@ extern "C"
 static EventGroupHandle_t s_wifi_event_group;
 const int WIFI_CONNECTED_BIT = BIT0;
 static const char *TAG = "wifi station";
-static int s_retry_num = 0;
 
 static void event_handler(void* arg, esp_event_base_t event_base, 
                                 int32_t event_id, void* event_data)
