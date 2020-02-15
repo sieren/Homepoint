@@ -85,6 +85,10 @@ namespace gfx
           pageDown();
           mCurrentButtonSelected = mpSubViews.at(mCurrentScreenPage)->getSubViews().size() - 1;
         }
+        if (currentViews.size() == 0)
+        {
+          return;
+        }
         mpSubViews.at(mCurrentScreenPage)->getSubViews().at(mCurrentButtonSelected)->setSelected(true);
       }
 
