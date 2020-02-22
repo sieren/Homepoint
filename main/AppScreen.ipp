@@ -47,12 +47,12 @@ namespace gfx
 
     auto mqttScene = std::find_if(scenes.begin(), scenes.end(), [&](auto& scene)
     {
-      return mpark::visit(::util::overloaded([&](auto&& ptr) {
+      return std::visit(::util::overloaded([&](auto&& ptr) {
         return ptr->groupId == sceneId;
       }), scene);
     });
 
-    widgets = mpark::visit(::util::overloaded([&](auto&& ptr)
+    widgets = std::visit(::util::overloaded([&](auto&& ptr)
     {
       return util::UIDetailButtonBuilder<decltype(this)>()(ptr, this);
     }), *mqttScene);
@@ -65,7 +65,7 @@ namespace gfx
     });
     using namespace std::placeholders;
     mIsPresenting = true;
-    const std::string sceneName = mpark::visit(::util::overloaded([&](auto&& ptr)
+    const std::string sceneName = std::visit(::util::overloaded([&](auto&& ptr)
       {
         return ptr->sceneName;
       }), *mqttScene);
@@ -120,7 +120,7 @@ namespace gfx
     auto widgets = std::vector<WidgetPtr>();
     for (auto& scene : scenes)
     {
-      mpark::visit(::util::overloaded([&](auto&& ptr)
+      std::visit(::util::overloaded([&](auto&& ptr)
       {
         auto button = util::UISceneButtonBuilder<decltype(this)>()(ptr, this);
         widgets.push_back(button);

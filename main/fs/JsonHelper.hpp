@@ -1,7 +1,7 @@
 #pragma once
 
 #include "rapidjson/document.h"
-#include <util/optional.hpp>
+#include <optional>
 
 namespace json
 {
@@ -119,7 +119,7 @@ struct PropertyFinder
 };
 
 template<typename T>
-struct PropertyFinder<tl::optional<T>>
+struct PropertyFinder<std::optional<T>>
 {
   template<typename ConsumerFc>
   void read(const rapidjson::Value::ConstObject root, const char* name, ConsumerFc consumer)
@@ -131,7 +131,7 @@ struct PropertyFinder<tl::optional<T>>
     }
     else
     {
-      consumer(tl::optional<T>{});
+      consumer(std::optional<T>{});
     }
   }
 };

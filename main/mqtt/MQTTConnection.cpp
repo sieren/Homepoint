@@ -85,7 +85,7 @@ namespace mqtt
   {
     for (auto& scene : mMQTTScenes)
     {
-      mpark::visit(::util::overloaded([&](MQTTSwitchGroupPtr ptr)
+      std::visit(::util::overloaded([&](MQTTSwitchGroupPtr ptr)
         {
           for (auto device : ptr->mDevices)
           {
@@ -107,11 +107,11 @@ namespace mqtt
   {
     auto scene = std::find_if(mMQTTScenes.begin(), mMQTTScenes.end(), [&id](auto& ele)
     {
-      return mpark::visit([&id](auto&& elem) { return elem->groupId == id; }, ele);
+      return std::visit([&id](auto&& elem) { return elem->groupId == id; }, ele);
     });
     if (scene != mMQTTScenes.end())
     {
-      mpark::visit(::util::overloaded([&](MQTTSwitchGroupPtr ptr)
+      std::visit(::util::overloaded([&](MQTTSwitchGroupPtr ptr)
       {
         for (auto& device : ptr->mDevices)
         {
@@ -133,12 +133,12 @@ namespace mqtt
     ESP_LOGI(TAG, "Switching, grp=%d, dev=%d", groupid, deviceid);
     auto scene = std::find_if(mMQTTScenes.begin(), mMQTTScenes.end(), [&groupid](auto& ele)
     {
-      return mpark::visit([&groupid](auto&& elem) { return elem->groupId == groupid; }, ele);
+      return std::visit([&groupid](auto&& elem) { return elem->groupId == groupid; }, ele);
     });
 
     if (scene != mMQTTScenes.end())
     {
-      mpark::visit(::util::overloaded([&](MQTTSwitchGroupPtr ptr)
+      std::visit(::util::overloaded([&](MQTTSwitchGroupPtr ptr)
       {
         auto device = std::find_if(ptr->mDevices.begin(), ptr->mDevices.end(), [&deviceid](auto& ele)
         {
@@ -160,7 +160,7 @@ namespace mqtt
   {
     for (auto& scene : mMQTTScenes)
     {
-      mpark::visit(::util::overloaded(
+      std::visit(::util::overloaded(
         [event](auto&& ptr)
       { 
         mqtt::MQTTStateUpdater()(ptr, event);

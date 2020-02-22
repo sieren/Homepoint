@@ -1,11 +1,11 @@
 #pragma once
 
-#include "mpark/variant.hpp"
 #include <algorithm>
 #include <functional>
 #include <map>
 #include <memory>
 #include <string>
+#include <variant>
 #include <vector>
 
 using GroupDevice = std::map<std::string, std::string>;
@@ -16,7 +16,7 @@ namespace mqtt { struct MQTTSwitchGroup; struct MQTTGroup; struct MQTTSensorGrou
 using MQTTSwitchGroupPtr = std::shared_ptr<mqtt::MQTTSwitchGroup>;
 using MQTTSensorGroupPtr = std::shared_ptr<mqtt::MQTTSensorGroup>;
 using MQTTGroupBasePtr = std::shared_ptr<mqtt::MQTTGroup>;
-using MQTTVariants = mpark::variant<MQTTSwitchGroupPtr, MQTTSensorGroupPtr, MQTTGroupBasePtr>;
+using MQTTVariants = std::variant<MQTTSwitchGroupPtr, MQTTSensorGroupPtr, MQTTGroupBasePtr>;
 using MQTTGroupsPtr = std::shared_ptr<std::vector<MQTTSwitchGroupPtr>>;
 
 namespace mqtt

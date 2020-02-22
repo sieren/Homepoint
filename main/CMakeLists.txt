@@ -102,8 +102,7 @@ set(COMPONENT_ADD_INCLUDEDIRS
     "libraries/TFT_eSPI/"
     "libraries/TFT_eFEX/"
     "libraries/JPEGDecoder/src"
-    "libraries/rapidjson/include/"
-    "libraries/variant/include/")
+    "libraries/rapidjson/include/")
 
 register_component()
 

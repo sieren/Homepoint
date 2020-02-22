@@ -10,7 +10,7 @@ namespace gfx
     mCurrentEvent = {{0,0,0}, TouchState::NoTouch, xTaskGetTickCount()};
   };
 
-  auto TouchDriver::touchPoint() -> tl::optional<TouchEvent>
+  auto TouchDriver::touchPoint() -> std::optional<TouchEvent>
   {
     // TODO: Should probably average over 3 points with timestamps
     // because occasionally touches would "drop" out and lead
@@ -40,7 +40,7 @@ namespace gfx
       newEvent.position = {x, y, 0};
       newEvent.state = newState;
       mCurrentEvent = newEvent;
-      return tl::make_optional(mCurrentEvent);
+      return std::make_optional(mCurrentEvent);
     }
     else
     {
@@ -61,19 +61,19 @@ namespace gfx
       if (newState != mCurrentEvent.state)
       {
         mCurrentEvent.state = newState;
-        return tl::make_optional(mCurrentEvent);
+        return std::make_optional(mCurrentEvent);
       }
     }
-    return tl::nullopt;    
+    return std::nullopt;
   }
 
 
-  auto TouchDriver::tapEvent() -> tl::optional<TapEvent>
+  auto TouchDriver::tapEvent() -> std::optional<TapEvent>
   {
     auto touchEvt = touchPoint();
     if (!touchEvt)
     {
-      return tl::nullopt;
+      return std::nullopt;
     }
     auto evt = *touchEvt;
     if (evt.state == TouchState::TouchStart)
@@ -84,7 +84,7 @@ namespace gfx
     const auto isValid = pressDelta < MSBeforeInvalid;
     if (!isValid)
     {
-      return tl::nullopt;
+      return std::nullopt;
     }
     const auto isLongPress =  pressDelta > MSBeforeLongPress;
     const auto isShortPress = pressDelta < MSBeforeTap;
@@ -96,14 +96,14 @@ namespace gfx
       if (isShortPress)
       {
         tapEvent.state = PressEvent::Tap;
-        return tl::make_optional(tapEvent);
+        return std::make_optional(tapEvent);
       }
       if (isLongPress)
       {
         tapEvent.state = PressEvent::LongPress;
-        return tl::make_optional(tapEvent);
+        return std::make_optional(tapEvent);
       }
     }
-    return tl::nullopt;
+    return std::nullopt;
   }
 } // namespace gfx

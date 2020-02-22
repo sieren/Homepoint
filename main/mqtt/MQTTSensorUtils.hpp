@@ -2,7 +2,6 @@
 
 #include "MQTTSensorTypes.hpp"
 #include <util/stdextend.hpp>
-#include <util/optional.hpp>
 #include "rapidjson/document.h"
 
 // todo: remove once part below is fixed upstream
@@ -10,6 +9,7 @@
 
 #include <algorithm>
 #include <iomanip>
+#include <optional>
 #include <sstream>
 #include <tuple>
 
@@ -61,9 +61,10 @@ namespace util
 
     const auto& rootObj = document.GetObject();
     float retVal = 0;
-    using JsonValue = tl::optional<const rapidjson::Value&>;
+    using JsonValueRef = std::reference_wrapper<const rapidjson::Value>;
+    using JsonValue = std::optional<JsonValueRef>;
     JsonValue result;
-    auto jsonSearch = [](rapidjson::Value obj, std::string key)
+    auto jsonSearch = [](const rapidjson::Value obj, std::string key)
     {
       auto jsonSearchImpl = [](JsonValue obj, std::string key, auto& jsonSearch_ref) mutable
       {
@@ -72,15 +73,16 @@ namespace util
           return obj;
         }
 
-        for (auto i = obj.value().MemberBegin(); i != obj.value().MemberEnd(); i++)
+        auto &objRef = obj.value().get();
+        for (auto i = objRef.MemberBegin(); i != objRef.MemberEnd(); i++)
         {
           if (std::string(i->name.GetString()) == key)
           {
-            return tl::make_optional<const rapidjson::Value&>(i->value);
+            return std::optional<JsonValueRef>{i->value};
           }
           else if (i->value.IsObject())
           {
-            auto jsonRef = tl::make_optional<const rapidjson::Value&>(i->value);
+            auto jsonRef = std::optional<JsonValueRef>{i->value};
             auto walkValue = jsonSearch_ref(jsonRef, key, jsonSearch_ref);
             if (walkValue.has_value())
             {
@@ -88,9 +90,10 @@ namespace util
             }
           }
         }
-        return tl::make_optional<const rapidjson::Value&>(tl::nullopt);
+        return obj;
       };
-      return jsonSearchImpl(obj, key, jsonSearchImpl);
+      auto objOpt = std::make_optional<JsonValueRef>(std::ref(obj));
+      return jsonSearchImpl(objOpt, key, jsonSearchImpl);
     };
 
     for (auto i = rootObj.MemberBegin(); i != rootObj.MemberEnd(); i++)
@@ -107,7 +110,7 @@ namespace util
       {
         if (std::string(i->name.GetString()) == key)
         {
-          result = tl::make_optional<const rapidjson::Value&>(i->value);
+          result = std::make_optional<JsonValueRef>(i->value);
         }
       }
     }
@@ -117,7 +120,7 @@ namespace util
       return "0";
     }
 
-    auto& foundValue = result.value();
+    auto& foundValue = result.value().get();
 
     if (foundValue.IsDouble())
     {
