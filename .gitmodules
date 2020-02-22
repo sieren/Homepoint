@@ -10,9 +10,6 @@
 [submodule "main/libraries/JPEGDecoder"]
 	path = main/libraries/JPEGDecoder
 	url = https://github.com/sieren/JPEGDecoder.git 
-[submodule "main/libraries/variant"]
-	path = main/libraries/variant
-	url = https://github.com/mpark/variant.git
 [submodule "components/ESPAsyncWebServer"]
 	path = components/ESPAsyncWebServer
 	url = https://github.com/me-no-dev/ESPAsyncWebServer.git

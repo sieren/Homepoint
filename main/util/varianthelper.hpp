@@ -1,5 +1,5 @@
-#include "mpark/variant.hpp"
 #include <type_traits>
+#include <variant>
 
 namespace util
 {
