@@ -5,10 +5,10 @@
 #include <touch/TouchTypes.hpp>
 #include <ui/Color.hpp>
 #include <ui/UIPosition.hpp>
-#include <util/optional.hpp>
 
 #include <array>
 #include <memory>
+#include <optional>
 #include <vector>
 
 namespace gfx

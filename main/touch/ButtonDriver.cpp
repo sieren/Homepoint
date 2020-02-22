@@ -18,13 +18,13 @@ namespace gfx
     mCurrentPressState.state = PressState::None;
   }
   
-  tl::optional<ButtonEvent> ButtonDriver::buttonEvent()
+  std::optional<ButtonEvent> ButtonDriver::buttonEvent()
   {
     auto now = std::chrono::system_clock::now();
     auto button = buttonState();
     if (!button)
     {
-      return tl::nullopt;
+      return std::nullopt;
     }
     auto btn = *button;
     if (btn.state == PressState::Start)
@@ -35,7 +35,7 @@ namespace gfx
     const auto isValid = pressDelta < MSBeforeInvalid;
     if (!isValid)
     {
-      return tl::nullopt;
+      return std::nullopt;
     }
     const auto isLongPress = pressDelta > MSBeforeLongPress;
     const auto isShortPress = pressDelta < MSBeforeTap;
@@ -46,18 +46,18 @@ namespace gfx
       if (isShortPress)
       {
         btnEvent.state = ButtonPress::Tap;
-        return tl::make_optional(btnEvent);
+        return std::make_optional(btnEvent);
       }
       if (isLongPress)
       {
         btnEvent.state = ButtonPress::LongPress;
-        return tl::make_optional(btnEvent);
+        return std::make_optional(btnEvent);
       }
     }
-    return tl::nullopt;
+    return std::nullopt;
   }
 
-  tl::optional<ButtonPressState> ButtonDriver::buttonState()
+  std::optional<ButtonPressState> ButtonDriver::buttonState()
   {
     Button btn = digitalRead(BUTTON_A_PIN) == 0 ? Button::A : Button::NONE;
     btn = digitalRead(BUTTON_B_PIN) == 0 ? Button::B : btn;
@@ -80,7 +80,7 @@ namespace gfx
       }
       mCurrentPressState = newState;
       mCurrentPressState.btn = btn;
-      return tl::make_optional(mCurrentPressState);
+      return std::make_optional(mCurrentPressState);
     }
     else
     {
@@ -105,10 +105,10 @@ namespace gfx
         evt.btn = mCurrentPressState.btn;
         evt.state = newState.state;
         mCurrentPressState.state = newState.state;
-        return tl::make_optional(evt);
+        return std::make_optional(evt);
       }
       mCurrentPressState = newState;
-      return tl::nullopt;
+      return std::nullopt;
     }
   }
 } // namespace gfx

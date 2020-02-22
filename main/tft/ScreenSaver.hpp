@@ -2,9 +2,9 @@
 
 #include <config/Config.h>
 #include <touch/TouchTypes.hpp>
-#include <util/optional.hpp>
 
 #include <chrono>
+#include <optional>
 
 namespace gfx
 {

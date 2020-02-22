@@ -119,7 +119,7 @@ namespace fs
     {
       using namespace rapidjson;
       std::string timeZone = "";
-      read(document, "timezone", [&timeZone] (tl::optional<std::string> tz) {
+      read(document, "timezone", [&timeZone] (std::optional<std::string> tz) {
         if (tz.has_value())
         {
           timeZone = *tz;
@@ -162,7 +162,7 @@ namespace fs
 
       sensorDevice.dataType = MQTTSensorDataType::Raw;
 
-      read(device, "jsondata", [&sensorDevice](tl::optional<bool> val) { 
+      read(device, "jsondata", [&sensorDevice](std::optional<bool> val) {
         if (!val.has_value()) { return; }
         sensorDevice.dataType = *val ? MQTTSensorDataType::JSON : MQTTSensorDataType::Raw;
       });

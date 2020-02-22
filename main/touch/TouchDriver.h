@@ -1,8 +1,9 @@
 #pragma once
 
 #include "TFT_eSPI.h"
-#include <util/optional.hpp>
 #include <touch/TouchTypes.hpp>
+
+#include <optional>
 
 class TFT_eSPI;
 
@@ -15,10 +16,10 @@ namespace gfx
       void begin();
       void setRotation(int rotation);
 
-      tl::optional<TapEvent> tapEvent();
+      std::optional<TapEvent> tapEvent();
       
     private:
-      tl::optional<TouchEvent> touchPoint();
+      std::optional<TouchEvent> touchPoint();
       unsigned long mLastTouchEventTime;
       TFT_eSPI* mTouch;
       TouchEvent mCurrentEvent;
