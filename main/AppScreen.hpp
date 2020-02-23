@@ -37,6 +37,8 @@ class AppScreen : public UIWidget
     void dismissPresentingScreen(const uint16_t tag);
     void didTouch(const TouchEvent& evt);
 
+    void appContextChanged(ctx::ContextState state);
+
   private:
     template<class>
     friend struct util::UISceneButtonBuilder;

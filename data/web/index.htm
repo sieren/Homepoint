@@ -32,11 +32,15 @@
   <div class="nine columns" style="margin-top: 5%">
     <h1>HomePoint</h1>
     <p>Modify <i>config.json</i> or use <i>config_example.json</i> as a reference.<br/>
-    Reboot after making changes for the configuration to be loaded.<br/>
+    Reboot if wifi credentials changed. 
     Further information is available on <a href="https://github.com/sieren/Homepoint" target="_blank">GitHub</a>.</p>
+    <div class="two columns"></div>
+    <form id="form-msg" onsubmit="reload()">
+      <button class="button-primary" type="submit">Reload</button>
+    </form>
     <form id="form-msg" onsubmit="reboot()">
       <button class="button-primary" type="submit">Reboot</button>
-    </form><br>
+    </form></div><br>
     <div class="h_iframe" style="height: 1000px;">
       <iframe  src="/edit" frameborder="0" height="1300" ></iframe>
     </div>
