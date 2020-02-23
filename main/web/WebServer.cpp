@@ -19,6 +19,7 @@ namespace web
     mpServer->addHandler(new SPIFFSEditor(SPIFFS, username.c_str(), password.c_str()));
  
     mpServer->on("/reboot.htm", HTTP_POST, std::bind(&WebServer::handleRebootRequest, this, _1));
+    mpServer->on("/reload.htm", HTTP_POST, std::bind(&WebServer::handleReloadRequest, this, _1));
   }
 
   void WebServer::startServer()
@@ -29,5 +30,10 @@ namespace web
   void WebServer::handleRebootRequest(AsyncWebServerRequest *request)
   {
     ESP.restart();
+  }
+
+  void WebServer::handleReloadRequest(AsyncWebServerRequest *request)
+  {
+    mpAppContext->reload();
   }
 } // namespace web

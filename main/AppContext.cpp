@@ -35,11 +35,39 @@ namespace ctx
     mpWebServer = std::make_unique<web::WebServer>(shared_from_this(), mModel.mWebCredentials);
   }
 
+  void AppContext::reload()
+  {
+    mAppStateNotifier.broadcast(ContextState::Reload);
+    try
+    {
+      mModel = fs::ConfigReader().readConfiguration();
+    }
+    catch(const std::exception& e)
+    {
+      // Reboot to failsafe
+      ESP.restart();
+    }
+    mpMQTTConnection = std::make_shared<mqtt::MQTTConnection>(mModel.mMQTTServerConfig, mModel.mMQTTGroups);
+    mpMQTTConnection->registerConnectionStatusCallback([&](auto cb) {
+      if (cb == mqtt::MQTTConnectionStatus::CONNECTED)
+      {
+        mpMQTTConnection->bindScenes();
+      }
+    });
+    mpMQTTConnection->connect();
+    mAppStateNotifier.broadcast(ContextState::Ready);
+  }
+
   void AppContext::setFirstLaunch(const WifiCredentials credentials,
     const std::string login, const std::string username)
   {
     fs::ConfigReader().setFirstLaunch(credentials, login, username);
     ESP.restart();
+  }
+
+  void AppContext::registerStateCallback(AppStateCB callback)
+  {
+    mAppStateNotifier.addCB(callback);
   }
 
   void AppContext::connectWireless()

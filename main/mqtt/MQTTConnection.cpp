@@ -81,6 +81,13 @@ namespace mqtt
     esp_mqtt_client_start(client);
   }
 
+  MQTTConnection::~MQTTConnection()
+  {
+    ESP_LOGI(TAG, "Shutting down MQTT Client");
+    esp_mqtt_client_stop(client);
+    esp_mqtt_client_destroy(client);
+  }
+
   void MQTTConnection::bindScenes()
   {
     for (auto& scene : mMQTTScenes)

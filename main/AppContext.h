@@ -2,6 +2,7 @@
 
 #include <model/Model.hpp>
 #include <ntp/NTPSync.h>
+#include <util/dispatcher.hpp>
 #include <wifi/CaptiveServer.h>
 #include <wifi/WifiContext.h>
 #include <web/WebServer.h>
@@ -14,6 +15,13 @@
 
 namespace ctx
 {
+  enum class ContextState: int {
+    Reload,
+    Ready
+  };
+
+  using AppStateCB = std::function<void(ctx::ContextState)>;
+
   class AppContext : public std::enable_shared_from_this<AppContext>
   {
     public:
@@ -24,12 +32,15 @@ namespace ctx
       model::Model& getModel() { return mModel; }
       std::shared_ptr<mqtt::MQTTConnection> getMQTTConnection() { return mpMQTTConnection; };
       std::vector<MQTTVariants> &getMQTTGroups();
+      void reload();
       void connectionStateChanged(ctx::WifiConnectionState state);
       void setFirstLaunch(const WifiCredentials credentials,
         const std::string login, const std::string username);
+      void registerStateCallback(AppStateCB callback);
 
     private: 
       void connectWireless();
+      Dispatcher<ContextState> mAppStateNotifier;
       std::shared_ptr<mqtt::MQTTConnection> mpMQTTConnection;
       std::shared_ptr<ntp::NTPSync> mNTPSync;
       std::unique_ptr<wifi::CaptiveServer> mpCaptiveServer;

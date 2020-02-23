@@ -12,6 +12,13 @@ html {
   -webkit-text-size-adjust: 100%; /* 2 */
 }
 
+form {
+  /* Float both forms to the left */
+  float: left; 
+  padding-right: 5px;
+
+ }
+
 /**
  * Remove default margin.
  */

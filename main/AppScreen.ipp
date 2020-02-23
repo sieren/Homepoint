@@ -96,6 +96,29 @@ namespace gfx
   }
 
   template<class ScreenDriver, class NavigationDriver>
+  void AppScreen<ScreenDriver, NavigationDriver>::appContextChanged(ctx::ContextState state)
+  {
+    using namespace ctx;
+    switch (state) {
+      case ContextState::Reload:
+      {
+        std::lock_guard<std::mutex> guard(viewMutex);
+        mpSubViews.clear();
+        break;
+      }
+      case ContextState::Ready:
+      {
+        std::lock_guard<std::mutex> guard(viewMutex);
+        using namespace std::placeholders;
+        mpAppContext->getMQTTConnection()->registerConnectionStatusCallback(
+          std::bind(&UIStatusBarWidget::mqttConnectionChanged, mpStatusBar.get(), _1));
+        presentMenu();
+        break;
+      }
+    }
+  }
+
+  template<class ScreenDriver, class NavigationDriver>
   void AppScreen<ScreenDriver, NavigationDriver>::registerWifiCallback()
   {
     mpStatusBar->registerCallback(&mpAppContext->getWifiContext());
@@ -104,8 +127,9 @@ namespace gfx
   template<class ScreenDriver, class NavigationDriver>
   void AppScreen<ScreenDriver, NavigationDriver>::setupData()
   {
-    registerWifiCallback();
     using namespace std::placeholders;
+    registerWifiCallback();
+    mpAppContext->registerStateCallback(std::bind(&AppScreen::appContextChanged, this, _1));
     mpAppContext->getMQTTConnection()->registerConnectionStatusCallback(std::bind(&UIStatusBarWidget::mqttConnectionChanged, mpStatusBar.get(), _1));
 
     mpSubViews.clear();

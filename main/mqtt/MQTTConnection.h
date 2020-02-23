@@ -36,6 +36,7 @@ namespace mqtt
   {
     public:
       MQTTConnection(MQTTConfig config, std::vector<MQTTVariants> mqttscenes);
+      ~MQTTConnection();
       void connect();
       void bindScenes();
       void switchScene(const uint16_t id, bool on);
