@@ -105,7 +105,7 @@ Please refer to the [documentation](https://docs.espressif.com/projects/esp-idf/
 On Linux:
 
 ```
-$ md ~/esp
+$ mkdir ~/esp
 $ cd ~/esp
 $ git clone -b v4.0 --recursive https://github.com/espressif/esp-idf.git
 $ cd esp-idf
