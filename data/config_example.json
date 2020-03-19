@@ -91,7 +91,7 @@
     "icon": "door",
     "devices": [{
       "name": "Living Room DHT",
-      "type": "twoValues",
+      "type": "combinedValues",
       "firstIcon": "temperature_small",
       "secondIcon": "humidity_small",
       "jsondata": true,
@@ -106,7 +106,7 @@
     "icon": "door",
     "devices": [{
       "name": "Bedroom DHT Temp",
-      "type": "oneValue",
+      "type": "singleValue",
       "jsondata": true,
       "firstIcon": "temperature_small",
       "firstKey": "temperature",
@@ -114,7 +114,7 @@
     },
     {
       "name": "Bedroom DHT Humidity",
-      "type": "oneValue",
+      "type": "singleValue",
       "jsondata": true,
       "firstIcon": "humidity_small",
       "firstKey": "humidity",
@@ -139,17 +139,5 @@
       "onValue": "true",
       "offValue": "false"
     }]
-  },
-  {
-    "name": "Air Quality",
-    "type": "Sensor",
-    "icon": "voc",
-    "devices": [{
-      "name": "Bedroom",
-      "type": "voc",
-      "jsondata": true,
-      "vocKey": "CO2",
-      "getTopic": "bedroom/co2"
-    }]
-  }]
+  }
 }

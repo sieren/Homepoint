@@ -156,7 +156,7 @@ HomePoint supports two types of Scenes with a selection of devices each:
 | SCENE Types   | DEVICE Types                                                                             |
 | --------------| ----------------------------------------------------------------------------------------- |
 | Light, Switch | (none, all devices expected to be switches)                                               |
-| Sensor        | display one or two values at once with customizable icons                                 |
+| Sensor        | display one or two values at once with customizable icons (singleValue / combinedValues)  |
 
 **Grouped Sensors** support up to two devices (due to screen space).  
 **Lights & Switches** support an infinite number of devices in a group.
@@ -206,7 +206,7 @@ In order to set the correct timezone, copy & paste your [NTP TZ Setting](https:/
     "icon": "door",
     "devices": [{
       "name": "Temperature DHT Sensor",
-      "type": "oneValue",
+      "type": "singleValue",
       "jsondata": true,
       "firstIcon": "temperature_small",
       "firstKey": "temperature",

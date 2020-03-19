@@ -98,7 +98,7 @@ namespace util
       {
         switch(sensor.second.sensorType)
         {
-          case MQTTSensorType::MQTTTwoValues:
+          case MQTTSensorType::MQTTCombinedValues:
           {
             const auto firstValue = sensor.second.getFirstValue();
             const auto secondValue = sensor.second.getSecondValue();
@@ -111,7 +111,7 @@ namespace util
             break;
           }
 
-          case MQTTSensorType::MQTTValue:
+          case MQTTSensorType::MQTTSingleValue:
           {
             const auto firstValue = sensor.second.getFirstValue();
             const auto firstValueIcon = util::GetIconFilePath(sensor.second.firstIconName);

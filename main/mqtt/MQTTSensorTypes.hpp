@@ -6,8 +6,8 @@ namespace mqtt
   enum class MQTTSensorType
   {
     // comments are JSON type values
-    MQTTValue, // = single value
-    MQTTTwoValues, // = temperaturehumidityjson
+    MQTTSingleValue, // = single value
+    MQTTCombinedValues, // = two values in UI
     MQTTINVALID // Invalid Type
   };
 
