@@ -120,9 +120,23 @@ $ cd ..
 $ git clone https://www.github.com/sieren/homepoint.git
 $ cd homepoint
 $ git submodule update --init --recursive
-$ cd scripts
-$ sh ./build_all.sh
+$ mkdir build && cd build
+$ cmake ../
+$ make spiffs_spiffs_bin
+$ make -j 8 flash
 ```  
+
+For use with a Button-Based interface:
+
+```
+$ cmake -DBUTTONS=ON ../
+```
+
+For out-of-the-box use with M5STACK:
+
+```
+$ cmake -DM5STACK=ON ../
+```
 
 Depending on your hardware, you may have to uncommented the relevant sections in `main/libraries/TFT_ESPI/User_Setup.h`.
   
