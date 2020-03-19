@@ -161,7 +161,7 @@ HomePoint supports two types of Scenes with a selection of devices each:
 **Grouped Sensors** support up to two devices (due to screen space).  
 **Lights & Switches** support an infinite number of devices in a group.
 
-Some Sensors use **JSON** as a data-format, in which case a **key** can be defined.
+Some Sensors use **JSON** as a data-format, in which case a **key** can be defined. These can be on any level of the sensor json payload, for Tasmota smart plugs the key value "Power" can be used to display the current power consumption.
 
 <a name="credentials"></a>
 ## WiFi & MQTT Credentials
