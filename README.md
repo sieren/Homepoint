@@ -156,7 +156,7 @@ HomePoint supports two types of Scenes with a selection of devices each:
 | SCENE Types   | DEVICE Types                                                                             |
 | --------------| ----------------------------------------------------------------------------------------- |
 | Light, Switch | (none, all devices expected to be switches)                                               |
-| Sensor        | temperature, humidity, voc                                                                |
+| Sensor        | display one or two values at once with customizable icons (singleValue / combinedValues)  |
 
 **Grouped Sensors** support up to two devices (due to screen space).  
 **Lights & Switches** support an infinite number of devices in a group.
@@ -182,6 +182,8 @@ In order to set the correct timezone, copy & paste your [NTP TZ Setting](https:/
 {
   "wifi": "MyWifiSSID",
   "password": "My Wifi Password",
+  "login": "admin",
+  "webpass": "admin",
   "mqttbroker": "mqtt://192.168.1.2",
   "mqttusername": "mqttusername",
   "mqttpasswd": "mymqttpassword",
@@ -204,9 +206,10 @@ In order to set the correct timezone, copy & paste your [NTP TZ Setting](https:/
     "icon": "door",
     "devices": [{
       "name": "Temperature DHT Sensor",
-      "type": "temperature",
+      "type": "singleValue",
       "jsondata": true,
-      "temperatureKey": "temperature",
+      "firstIcon": "temperature_small",
+      "firstKey": "temperature",
       "getTopic": "bedroom/esptemp"
     }]
   }]

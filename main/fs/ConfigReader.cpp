@@ -170,25 +170,24 @@ namespace fs
       if (sensorDevice.dataType == MQTTSensorDataType::JSON)
       {
         std::vector<ValueTuple> vals;
-        if (sensorDevice.sensorType == MQTTSensorType::MQTTTemperatureHumidity)
+        if (sensorDevice.sensorType == MQTTSensorType::MQTTCombinedValues)
         {
-          ValueTuple temperatureTuple;
-          read(device, MQTTTemperatureKeyJSON.c_str(), [&](std::string temp) {
-            temperatureTuple = {MQTTTemperatureKeyJSON, temp, std::string("0")};
+          ValueTuple firstValueTuple;
+          read(device, MQTTFirstKey.c_str(), [&](std::string temp) {
+            firstValueTuple = {MQTTFirstKey, temp, std::string("0")};
           });
-          ValueTuple humidityTuple;
-          read(device, MQTTHumidityKeyJSON.c_str(), [&](std::string humi) {
-            humidityTuple = {MQTTHumidityKeyJSON, humi, std::string("0")};
+          ValueTuple secondValueTuple;
+          read(device, MQTTSecondKey.c_str(), [&](std::string humi) {
+            secondValueTuple = {MQTTSecondKey, humi, std::string("0")};
           });
-          vals.push_back(std::move(temperatureTuple));
-          vals.push_back(std::move(humidityTuple));
+          vals.push_back(std::move(firstValueTuple));
+          vals.push_back(std::move(secondValueTuple));
         }
         else
         {
-          const auto sensorType = MQTTSensorTypeJSONKey(sensorDevice.sensorType);
           ValueTuple mappedValues;
-          read(device, sensorType.c_str(), [&](std::string val) {
-            mappedValues = {sensorType, val, std::string("0")};
+          read(device, MQTTFirstKey.c_str(), [&](std::string val) {
+            mappedValues = {MQTTFirstKey, val, std::string("0")};
           });
           vals.push_back(std::move(mappedValues));
         }
@@ -196,6 +195,8 @@ namespace fs
       }
       read(device, "name", [&](std::string name) { sensorDevice.name = name; });
       read(device, "getTopic", [&](std::string topic) { sensorDevice.getTopic = topic; });
+      read(device, "firstIcon", [&](std::string icon) { sensorDevice.firstIconName = icon; });
+      read(device, "secondIcon", [&](std::optional<std::string> icon) { sensorDevice.secondIconName = icon; });
       return sensorDevice;
     };
 

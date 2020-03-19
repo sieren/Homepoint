@@ -4,6 +4,7 @@
 #include "MQTTSensorUtils.hpp"
 #include "MQTTSensorTypes.hpp"
 
+#include <optional>
 #include <vector>
 
 namespace mqtt
@@ -16,29 +17,20 @@ namespace mqtt
     std::string value;
     std::vector<ValueTuple> mappedValues;
 
-    std::string getTemperature()
+    std::string getFirstValue()
     {
       if (dataType == MQTTSensorDataType::JSON)
       {
-        return util::FindValue(mappedValues, MQTTTemperatureKeyJSON);
+        return util::FindValue(mappedValues, MQTTFirstKey);
       }
       return value;
     }
 
-    std::string getHumidity()
+    std::string getSecondValue()
     {
       if (dataType == MQTTSensorDataType::JSON)
       {
-        return util::FindValue(mappedValues, MQTTHumidityKeyJSON);
-      }
-      return value;
-    }
-    
-    std::string getVOC()
-    {
-      if (dataType == MQTTSensorDataType::JSON)
-      {
-        return util::FindValue(mappedValues, MQTTVOCKeyJSON);
+        return util::FindValue(mappedValues, MQTTSecondKey);
       }
       return value;
     }
@@ -63,6 +55,8 @@ namespace mqtt
     int deviceId = 0;
     MQTTSensorType sensorType;
     MQTTSensorDataType dataType;
+    std::string firstIconName;
+    std::optional<std::string> secondIconName;
   };
 
   struct MQTTSensorGroup : public MQTTGroup
