@@ -102,8 +102,10 @@ namespace util
           {
             const auto firstValue = sensor.second.getFirstValue();
             const auto secondValue = sensor.second.getSecondValue();
-            const auto secondValueIcon = util::GetSmallIcon(util::secondValueIcon);
-            const auto firstValueIcon = util::GetSmallIcon(util::firstValueIcon);
+
+            const auto firstValueIcon = util::GetIconFilePath(sensor.second.firstIconName);
+            const auto secondValueIcon = sensor.second.secondIconName.has_value() ?
+              util::GetIconFilePath(*sensor.second.secondIconName) : firstValueIcon; // fallback
             button->setImageWithValue({firstValueIcon, firstValue});
             button->setImageWithValue({secondValueIcon, secondValue});
             break;
@@ -112,7 +114,7 @@ namespace util
           case MQTTSensorType::MQTTValue:
           {
             const auto firstValue = sensor.second.getFirstValue();
-            const auto firstValueIcon = util::GetSmallIcon(util::firstValueIcon);
+            const auto firstValueIcon = util::GetIconFilePath(sensor.second.firstIconName);
             button->setImageWithValue({firstValueIcon, firstValue});
             break;
           }

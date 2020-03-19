@@ -195,6 +195,8 @@ namespace fs
       }
       read(device, "name", [&](std::string name) { sensorDevice.name = name; });
       read(device, "getTopic", [&](std::string topic) { sensorDevice.getTopic = topic; });
+      read(device, "firstIcon", [&](std::string icon) { sensorDevice.firstIconName = icon; });
+      read(device, "secondIcon", [&](std::optional<std::string> icon) { sensorDevice.secondIconName = icon; });
       return sensorDevice;
     };
 

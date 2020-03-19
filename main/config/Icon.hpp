@@ -23,13 +23,6 @@ namespace util
     return std::make_pair(activeIcon, inActiveIcon);
   }
 
-  inline static const std::string GetSmallIcon(const std::string iconName)
-  {
-    const auto smallAppend = "/" + iconName + "_small.jpg";
-
-    return smallAppend;
-  }
-
   inline static const std::string GetIconFilePath(const std::string name)
   {
     const auto fullPath = "/" + name + ".jpg";

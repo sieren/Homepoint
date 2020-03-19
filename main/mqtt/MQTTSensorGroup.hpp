@@ -4,6 +4,7 @@
 #include "MQTTSensorUtils.hpp"
 #include "MQTTSensorTypes.hpp"
 
+#include <optional>
 #include <vector>
 
 namespace mqtt
@@ -54,6 +55,8 @@ namespace mqtt
     int deviceId = 0;
     MQTTSensorType sensorType;
     MQTTSensorDataType dataType;
+    std::string firstIconName;
+    std::optional<std::string> secondIconName;
   };
 
   struct MQTTSensorGroup : public MQTTGroup
