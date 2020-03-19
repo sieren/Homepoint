@@ -41,7 +41,7 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 
 + **See partially switched on scenes** with multiple devices at a glance.
 
-+ Support for **temperature, humidity, air quality sensors & tasmoto energy readings**.
++ Support for **temperature, humidity, air quality sensors & Tasmota energy readings**.
 
 + **Remote Configuration**: Configure and reboot HomePoint through a web interface. No need to reflash.
 
@@ -97,7 +97,23 @@ In order to build HomePoint you need ESP-IDF from the `release/v4.0` branch from
 | :------------- | :----------------------------------------------------------------------------------------------------------------------:|
 |  ESP-IDF       | [release/v4.0](https://github.com/espressif/esp-idf/tree/release/v4.0))                                                           |
 |  Toolchain     | [5.2.0](https://docs.espressif.com/projects/esp-idf/en/stable/get-started-cmake/index.html#step-1-set-up-the-toolchain) |
-  
+
+**Setup your build environment** if necessary:
+
+Please refer to the [documentation](https://docs.espressif.com/projects/esp-idf/en/v4.0/), especially the [prerequisites](https://docs.espressif.com/projects/esp-idf/en/v4.0/get-started/linux-setup.html) but in general the steps are as follows:
+
+On Linux:
+
+```
+$ md ~/esp
+$ cd ~/esp
+$ git clone -b v4.0 --recursive https://github.com/espressif/esp-idf.git
+$ cd esp-idf
+$ ./install.sh
+$ . ~/esp/esp-idf/export.sh
+$ cd ..
+```
+
 **Clone and build** HomePoint with the following commands:
 
 ```bash
@@ -110,13 +126,15 @@ $ make spiffs_spiffs_bin
 $ make -j 8 flash
 ```  
 
-For use with a **Button-Based** interface:
-```bash
+For use with a Button-Based interface:
+
+```
 $ cmake -DBUTTONS=ON ../
 ```
 
-For out-of-the-box use with [**M5STACK**](https://m5stack.com/collections/m5-core):
-```bash
+For out-of-the-box use with M5STACK:
+
+```
 $ cmake -DM5STACK=ON ../
 ```
 
@@ -143,7 +161,7 @@ HomePoint supports two types of Scenes with a selection of devices each:
 **Grouped Sensors** support up to two devices (due to screen space).  
 **Lights & Switches** support an infinite number of devices in a group.
 
-Some Sensors use **JSON** as a data-format, in which case a **key** can be defined.
+Some Sensors use **JSON** as a data-format, in which case a **key** can be defined. These can be on any level of the sensor json payload, for Tasmota smart plugs the key value "Power" can be used to display the current power consumption.
 
 <a name="credentials"></a>
 ## WiFi & MQTT Credentials
