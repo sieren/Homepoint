@@ -99,16 +99,19 @@ In order to build HomePoint you need ESP-IDF from the `release/v4.0` branch from
 |  Toolchain     | [5.2.0](https://docs.espressif.com/projects/esp-idf/en/stable/get-started-cmake/index.html#step-1-set-up-the-toolchain) |
 
 **Setup your build environment** if necessary:
-Please refer to the [documentation](https://docs.espressif.com/projects/esp-idf/en/v4.0/), but in general the steps are as follows:
+
+Please refer to the [documentation](https://docs.espressif.com/projects/esp-idf/en/v4.0/), especially the [prerequisites](https://docs.espressif.com/projects/esp-idf/en/v4.0/get-started/linux-setup.html) but in general the steps are as follows:
+
 On Linux:
 
 ```
-md ~/esp
-cd ~/esp
-git clone -b v4.0 --recursive https://github.com/espressif/esp-idf.git
-cd esp-idf
-./install.sh
-. ~/esp/esp-idf/export.sh
+$ md ~/esp
+$ cd ~/esp
+$ git clone -b v4.0 --recursive https://github.com/espressif/esp-idf.git
+$ cd esp-idf
+$ ./install.sh
+$ . ~/esp/esp-idf/export.sh
+$ cd ..
 ```
 
 **Clone and build** HomePoint with the following commands:
@@ -117,21 +120,9 @@ cd esp-idf
 $ git clone https://www.github.com/sieren/homepoint.git
 $ cd homepoint
 $ git submodule update --init --recursive
-$ mkdir build && cd build
-$ cmake ../
-$ make spiffs_spiffs_bin
-$ make -j 8 flash
+$ cd scripts
+$ sh ./build_all.sh
 ```  
-
-For use with a **Button-Based** interface:
-```bash
-$ cmake -DBUTTONS=ON ../
-```
-
-For out-of-the-box use with [**M5STACK**](https://m5stack.com/collections/m5-core):
-```bash
-$ cmake -DM5STACK=ON ../
-```
 
 Depending on your hardware, you may have to uncommented the relevant sections in `main/libraries/TFT_ESPI/User_Setup.h`.
   
