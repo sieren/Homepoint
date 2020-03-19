@@ -91,10 +91,12 @@
     "icon": "door",
     "devices": [{
       "name": "Living Room DHT",
-      "type": "temperaturehumidity",
+      "type": "twoValues",
+      "firstIcon": "temperature_small",
+      "secondIcon": "humidity_small",
       "jsondata": true,
-      "temperatureKey": "temperature",
-      "humidityKey": "humidity",
+      "firstKey": "temperature",
+      "secondKey": "humidity",
       "getTopic": "livingroom/temphumidity"
     }]
   },
@@ -104,16 +106,18 @@
     "icon": "door",
     "devices": [{
       "name": "Bedroom DHT Temp",
-      "type": "temperature",
+      "type": "oneValue",
       "jsondata": true,
-      "temperatureKey": "temperature",
+      "firstIcon": "temperature_small",
+      "firstKey": "temperature",
       "getTopic": "bedroom/esptemp"
     },
     {
       "name": "Bedroom DHT Humidity",
-      "type": "humidity",
+      "type": "oneValue",
       "jsondata": true,
-      "humidityKey": "humidity",
+      "firstIcon": "humidity_small",
+      "firstKey": "humidity",
       "getTopic": "bedroom/esphumi"
     }]
   },
