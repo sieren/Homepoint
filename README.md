@@ -97,7 +97,20 @@ In order to build HomePoint you need ESP-IDF from the `release/v4.0` branch from
 | :------------- | :----------------------------------------------------------------------------------------------------------------------:|
 |  ESP-IDF       | [release/v4.0](https://github.com/espressif/esp-idf/tree/release/v4.0))                                                           |
 |  Toolchain     | [5.2.0](https://docs.espressif.com/projects/esp-idf/en/stable/get-started-cmake/index.html#step-1-set-up-the-toolchain) |
-  
+
+**Setup your build environment** if necessary:
+Please refer to the [documentation](https://docs.espressif.com/projects/esp-idf/en/v4.0/), but in general the steps are as follows:
+On Linux:
+
+```
+md ~/esp
+cd ~/esp
+git clone -b v4.0 --recursive https://github.com/espressif/esp-idf.git
+cd esp-idf
+./install.sh
+. ~/esp/esp-idf/export.sh
+```
+
 **Clone and build** HomePoint with the following commands:
 
 ```bash
