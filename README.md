@@ -41,7 +41,7 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 
 + **See partially switched on scenes** with multiple devices at a glance.
 
-+ Support for **temperature, humidity, air quality sensors & tasmoto energy readings**.
++ Support for **temperature, humidity, air quality sensors & Tasmota energy readings**.
 
 + **Remote Configuration**: Configure and reboot HomePoint through a web interface. No need to reflash.
 
