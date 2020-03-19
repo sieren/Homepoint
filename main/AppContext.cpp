@@ -88,7 +88,7 @@ namespace ctx
     {
       if (mModel.mTimeZone != "")
       {
-        mNTPSync = mModel.mTimeZone != "" ? std::make_shared<ntp::NTPSync>(mModel.mTimeZone) : nullptr;
+        mNTPSync = std::make_shared<ntp::NTPSync>(mModel.mTimeZone);
         mNTPSync->syncTime();
       }
       if (mpMQTTConnection && !mModel.mMQTTServerConfig.addr.empty())
