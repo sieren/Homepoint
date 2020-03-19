@@ -16,29 +16,20 @@ namespace mqtt
     std::string value;
     std::vector<ValueTuple> mappedValues;
 
-    std::string getTemperature()
+    std::string getFirstValue()
     {
       if (dataType == MQTTSensorDataType::JSON)
       {
-        return util::FindValue(mappedValues, MQTTTemperatureKeyJSON);
+        return util::FindValue(mappedValues, MQTTFirstKey);
       }
       return value;
     }
 
-    std::string getHumidity()
+    std::string getSecondValue()
     {
       if (dataType == MQTTSensorDataType::JSON)
       {
-        return util::FindValue(mappedValues, MQTTHumidityKeyJSON);
-      }
-      return value;
-    }
-    
-    std::string getVOC()
-    {
-      if (dataType == MQTTSensorDataType::JSON)
-      {
-        return util::FindValue(mappedValues, MQTTVOCKeyJSON);
+        return util::FindValue(mappedValues, MQTTSecondKey);
       }
       return value;
     }

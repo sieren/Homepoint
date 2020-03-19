@@ -8,8 +8,8 @@ namespace gfx
 namespace util
 {
 
-  static const std::string temperatureIcon = "temperature";
-  static const std::string humidityIcon = "humidity";
+  static const std::string firstValueIcon = "temperature";
+  static const std::string secondValueIcon = "humidity";
   static const std::string vocIcon = "voc";
 
   static const int SmallIconSize = 25; // 25x25px
