@@ -216,7 +216,7 @@ In order to set the correct timezone, copy & paste your [NTP TZ Setting](https:/
 }
 ```
 
-A more **fully-configured example** is available [here](https://github.com/sieren/Homepoint/blob/master/data/config.json).
+A more **fully-configured example** is available [here](https://github.com/sieren/Homepoint/blob/master/data/config_example.json).
 
 
 <a name="roadmap"></a>
