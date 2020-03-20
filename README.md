@@ -211,6 +211,14 @@ In order to set the correct timezone, copy & paste your [NTP TZ Setting](https:/
       "firstIcon": "temperature_small",
       "firstKey": "temperature",
       "getTopic": "bedroom/esptemp"
+    },
+    {
+      "name": "Tasmota Smart Plug",
+      "type": "singleValue",
+      "jsondata": true,
+      "firstKey": "Power",
+      "firstIcon":"wattage_small",
+      "getTopic": "tele/DVES_2F73BE/SENSOR"
     }]
   }]
 }

@@ -113,12 +113,12 @@
       "getTopic": "bedroom/esptemp"
     },
     {
-      "name": "Bedroom DHT Humidity",
+      "name": "Tasmota Smart Plug",
       "type": "singleValue",
       "jsondata": true,
-      "firstIcon": "humidity_small",
-      "firstKey": "humidity",
-      "getTopic": "bedroom/esphumi"
+      "firstKey": "Power",
+      "firstIcon":"wattage_small",
+      "getTopic": "tele/DVES_2F73BE/SENSOR"
     }]
   },
   {
@@ -139,5 +139,5 @@
       "onValue": "true",
       "offValue": "false"
     }]
-  }
+  }]
 }
