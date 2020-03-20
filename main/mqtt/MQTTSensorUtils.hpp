@@ -25,10 +25,8 @@ namespace util
   inline static auto GetSensorType(const std::string typeName) -> MQTTSensorType
   {
     // map JSON Keys to Enum
-    if (typeName == "temperature") { return MQTTSensorType::MQTTTemperature; }
-    if (typeName == "humidity") { return MQTTSensorType::MQTTHumidity; }
-    if (typeName == "temperaturehumidity") { return MQTTSensorType::MQTTTemperatureHumidity; }
-    if (typeName == "voc") { return MQTTSensorType::MQTTVOC; }
+    if (typeName == "singleValue") { return MQTTSensorType::MQTTSingleValue; }
+    if (typeName == "combinedValues") { return MQTTSensorType::MQTTCombinedValues; }
     return MQTTSensorType::MQTTINVALID;
   }
 

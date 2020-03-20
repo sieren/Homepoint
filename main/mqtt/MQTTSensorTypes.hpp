@@ -6,10 +6,8 @@ namespace mqtt
   enum class MQTTSensorType
   {
     // comments are JSON type values
-    MQTTTemperature, // = temperature
-    MQTTHumidity, // = humidity
-    MQTTTemperatureHumidity, // = temperaturehumidityjson
-    MQTTVOC, // = voc
+    MQTTSingleValue, // = single value
+    MQTTCombinedValues, // = two values in UI
     MQTTINVALID // Invalid Type
   };
 
@@ -19,21 +17,8 @@ namespace mqtt
     JSON
   };
 
-  inline static const std::string MQTTSensorTypeJSONKey(MQTTSensorType sensorType)
-  {
-    const std::map<MQTTSensorType, const std::string> sensorTypes {
-      {MQTTSensorType::MQTTHumidity, "humidityKey"},
-      {MQTTSensorType::MQTTTemperature, "temperatureKey"},
-      {MQTTSensorType::MQTTTemperatureHumidity, "temperaturehumidity"},
-      {MQTTSensorType::MQTTVOC, "vocKey"}
-    };
-    auto it = sensorTypes.find(sensorType);
-    return it == sensorTypes.end() ? "Out of range" : it->second;
-  }
-
-  static const std::string MQTTHumidityKeyJSON = "humidityKey";
-  static const std::string MQTTTemperatureKeyJSON = "temperatureKey";
-  static const std::string MQTTVOCKeyJSON = "vocKey";
+  static const std::string MQTTFirstKey = "firstKey";
+  static const std::string MQTTSecondKey = "secondKey";
 
   using DataTypeKey = std::string;
   using JSONValueKey = std::string;

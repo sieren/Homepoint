@@ -98,38 +98,27 @@ namespace util
       {
         switch(sensor.second.sensorType)
         {
-          case MQTTSensorType::MQTTTemperatureHumidity:
+          case MQTTSensorType::MQTTCombinedValues:
           {
-            const auto temperature = sensor.second.getTemperature();
-            const auto humidity = sensor.second.getHumidity();
-            const auto humidityIcon = util::GetSmallIcon(util::humidityIcon);
-            const auto temperatureIcon = util::GetSmallIcon(util::temperatureIcon);
-            button->setImageWithValue({temperatureIcon, temperature});
-            button->setImageWithValue({humidityIcon, humidity});
-            break;
-          }
-          case MQTTSensorType::MQTTTemperature:
-          {
-            const auto temperature = sensor.second.getTemperature();
-            const auto temperatureIcon = util::GetSmallIcon(util::temperatureIcon);
-            button->setImageWithValue({temperatureIcon, temperature});
-            break;
-          }
-          case MQTTSensorType::MQTTHumidity:
-          {
-            const auto humidityIcon = util::GetSmallIcon(util::humidityIcon);
-            const auto humidity = sensor.second.getHumidity();
-            button->setImageWithValue({humidityIcon, humidity});
+            const auto firstValue = sensor.second.getFirstValue();
+            const auto secondValue = sensor.second.getSecondValue();
+
+            const auto firstValueIcon = util::GetIconFilePath(sensor.second.firstIconName);
+            const auto secondValueIcon = sensor.second.secondIconName.has_value() ?
+              util::GetIconFilePath(*sensor.second.secondIconName) : firstValueIcon; // fallback
+            button->setImageWithValue({firstValueIcon, firstValue});
+            button->setImageWithValue({secondValueIcon, secondValue});
             break;
           }
 
-          case MQTTSensorType::MQTTVOC:
+          case MQTTSensorType::MQTTSingleValue:
           {
-            const auto vocIcon = util::GetSmallIcon(util::vocIcon);
-            const auto vocVal = sensor.second.getVOC();
-            button->setImageWithValue({vocIcon, vocVal});
+            const auto firstValue = sensor.second.getFirstValue();
+            const auto firstValueIcon = util::GetIconFilePath(sensor.second.firstIconName);
+            button->setImageWithValue({firstValueIcon, firstValue});
             break;
           }
+
           default:
             break;
         }
