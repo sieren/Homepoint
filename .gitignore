@@ -16,3 +16,4 @@ _deps
 scripts/ESP32
 scripts/M5Stack
 scripts/release
+data/config_jholthusen_live.json
