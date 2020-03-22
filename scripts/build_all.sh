@@ -3,7 +3,7 @@
 cd ..
 # Prepare M5Stack
 rm -rf build
-cp main/libraries/TFT_eSPI/User_Setup_M5Stack.h main/libraries/TFT_eSPI/User_Setup.h
+cp scripts/TFT_eSPI/User_Setup_M5Stack.h main/libraries/TFT_eSPI/User_Setup.h
 mkdir build
 cd build
 cmake -DM5STACK=ON ../
@@ -22,7 +22,7 @@ mkdir release
 cp ./M5Stack/output/homepoint_m5stack.bin ./release
 
 cd ..
-cp main/libraries/TFT_eSPI/User_Setup_espgeneric.h main/libraries/TFT_eSPI/User_Setup.h
+cp scripts/TFT_eSPI//User_Setup_espgeneric.h main/libraries/TFT_eSPI/User_Setup.h
 rm -rf build
 mkdir build
 cd build
