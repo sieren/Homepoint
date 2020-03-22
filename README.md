@@ -138,7 +138,7 @@ For out-of-the-box use with M5STACK:
 $ cmake -DM5STACK=ON ../
 ```
 
-Depending on your hardware, you may have to uncommented the relevant sections in `main/libraries/TFT_ESPI/User_Setup.h`.
+Depending on your hardware, you may have to uncommented the relevant sections in `main/config/TFT_eSPI/Generic/User_Setup.h`. This configuration file gets copied to `main/libraries/TFT_eSPI` every time CMake is run.
   
 Other Homepoint configuration settings like the Screensaver can be configured in `main/config/Config.h`.
 
