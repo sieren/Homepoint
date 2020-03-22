@@ -114,12 +114,22 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTOUCH_CS -fconcepts -Wno-shift-negativ
 option(M5STACK "Compile for M5Stack" OFF) # Enabled by default
 option(BUTTONS "Compile for M5Stack" OFF) # Enabled by default
 
+file(REMOVE ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI/User_Setup.h)
+
 if(M5STACK)
   message(STATUS "Compiling for M5Stack")
   list(APPEND compile_definitions "M5Stack")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DM5Stack")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DM5Stack")
+  file(COPY ${CMAKE_SOURCE_DIR}/main/config/TFT_eSPI/M5Stack/User_Setup.h
+    DESTINATION ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI)
 endif(M5STACK)
+
+if(NOT M5STACK)
+message(STATUS "Compiling for Generic ESP23")
+  file(COPY ${CMAKE_SOURCE_DIR}/main/config/TFT_eSPI/Generic/User_Setup.h
+    DESTINATION ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI)
+endif(NOT M5STACK)
 
 if(BUTTONS)
   message(STATUS "Compiling for Button Interface")
