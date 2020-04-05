@@ -173,6 +173,18 @@ WiFi and MQTT credentials are to be defined on the top level.
 
 In order to set the correct timezone, copy & paste your [NTP TZ Setting](https://remotemonitoringsystems.ca/time-zone-abbreviations.php) to the `timezone` key.
 
+<a name="hardware"></a>
+## Hardware (optional)
+
+Some of the IL9341 Display units seem to differ in e.g. how the touch-screen coordinates corresponds to the display
+or how the LED backlight is controlled. Therefore we offer some options to override the defaults in the configuration file.
+
+| Key   | Value                                                                                             |
+| --------------| ----------------------------------------------------------------------------------------- |
+| "ledPinPullup" | `true` or `false` - control backlight power which can be pull-up/down depending on unit  |
+| "screenRotationAngle" | The rotation parameter can be 0, 1, 2 or 3 - incrementing in 90deg angles         |
+| "screenSaverMinutes" | Minutes (int) until display is switched off (default 10)                          |
+
 
 <a name="examples"></a>
 
