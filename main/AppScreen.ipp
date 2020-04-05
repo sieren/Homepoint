@@ -34,7 +34,7 @@ namespace gfx
     mNavigation(mTft.getDriverRef()),
     mpAppContext(ctx),
     mpStatusBar(new UIStatusBarWidget(&mTft, Frame{{0,0,0}, {size.width, kStatusBarHeight}}, 999)),
-    mScreenSaver(&mTft)
+    mScreenSaver(&mTft, ctx)
   {
   };
 
@@ -87,7 +87,7 @@ namespace gfx
   void AppScreen<ScreenDriver, NavigationDriver>::setupScreen()
   {
     mTft.begin(320000000);
-    mTft.setRotation(Rotation);
+    mTft.setRotation(mpAppContext->getModel().mHardwareConfig.mScreenRotationAngle);
     mpStatusBar->setBackgroundColor(Color::BlackColor());
     mpStatusBar->setTextColor(Color::WhiteColor());
 
