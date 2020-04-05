@@ -30,7 +30,7 @@ class ConfigReader
     const std::string getTimeZone(const rapidjson::Value::ConstObject document);
     const mqtt::MQTTConfig getMQTTConfig(const rapidjson::Value::ConstObject document);
     const std::vector<MQTTVariants> getMQTTGroups(const rapidjson::Value::ConstObject document);
-  //  std::vector<MQTTVariants> getScenes(json::JsonArray scenes);
+    const config::HardwareConfig getHardwareConfig(const rapidjson::Value::ConstObject document);
 
 };
 } // namespace fs

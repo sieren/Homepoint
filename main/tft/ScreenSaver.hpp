@@ -1,5 +1,6 @@
 #pragma once
 
+#include <AppContext.h>
 #include <config/Config.h>
 #include <touch/TouchTypes.hpp>
 
@@ -12,8 +13,9 @@ namespace gfx
   struct ScreenSaver
   {
     public:
-      ScreenSaver(ScreenDriver* driver) :
-        mDriver(driver)
+      ScreenSaver(ScreenDriver* driver, std::shared_ptr<ctx::AppContext> ctx) :
+        mpDriver(driver),
+        mpCtx(ctx)
       {
         mLastTouch = std::chrono::system_clock::now();
         pinMode(TFT_LED, OUTPUT);
@@ -23,7 +25,8 @@ namespace gfx
       void operator()()
       {
         auto now = std::chrono::system_clock::now();
-        if (std::chrono::duration_cast<std::chrono::minutes>(now - mLastTouch).count() > MinsBeforeScreenSleep)
+        const auto timeOut = mpCtx->getModel().mHardwareConfig.mScreensaverMins;
+        if (std::chrono::duration_cast<std::chrono::minutes>(now - mLastTouch).count() > timeOut)
         {
           switchScreen(false);
         }
@@ -61,13 +64,14 @@ namespace gfx
         {
           return;
         }
-        ScreenOnOffSwitch(mDriver, on);
+        ScreenOnOffSwitch(mpDriver, on, mpCtx->getModel().mHardwareConfig.mIsLEDPinInverted);
         mCurrentState = on;
       }
 
       std::chrono::system_clock::time_point mLastTouch;
       bool mCurrentState = true;
-      ScreenDriver* mDriver;
+      ScreenDriver* mpDriver;
+      std::shared_ptr<ctx::AppContext> mpCtx;
 
   };
 } // namespace gfx

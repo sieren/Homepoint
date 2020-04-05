@@ -278,5 +278,29 @@ namespace fs
       return vecScenes;
     };
 
+    const config::HardwareConfig ConfigReader::getHardwareConfig(const rapidjson::Value::ConstObject document)
+    {
+      using namespace rapidjson;
+      config::HardwareConfig hwConfig;
+      read(document, "ledPinPullup", [&] (bool isPullUp)
+        {
+          hwConfig.mIsLEDPinInverted = isPullUp;
+        }
+      );
+
+      read(document, "screenSaverMinutes", [&] (int mins)
+          {
+            hwConfig.mScreensaverMins = mins;
+          }
+        );
+
+      read(document, "screenRotationAngle", [&] (int angle)
+          {
+            hwConfig.mScreenRotationAngle = angle;
+          }
+        );
+
+      return hwConfig;
+    }
   
 } // namespace fs
