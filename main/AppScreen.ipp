@@ -131,7 +131,7 @@ namespace gfx
     registerWifiCallback();
     mpAppContext->registerStateCallback(std::bind(&AppScreen::appContextChanged, this, _1));
     mpAppContext->getMQTTConnection()->registerConnectionStatusCallback(std::bind(&UIStatusBarWidget::mqttConnectionChanged, mpStatusBar.get(), _1));
-
+    mTft.setRotation(mpAppContext->getModel().mHardwareConfig.mScreenRotationAngle);
     mpSubViews.clear();
     presentMenu();
   }
