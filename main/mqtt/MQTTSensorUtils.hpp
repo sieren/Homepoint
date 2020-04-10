@@ -46,7 +46,7 @@ namespace util
     return std::get<2>(*it);
   }
 
-  inline auto JsonToValues(const std::string data, std::string key) -> std::string
+  inline auto JsonToValues(const std::string data, std::string key) -> std::optional<std::string>
   {
     using namespace rapidjson;
     Document document;
@@ -57,6 +57,10 @@ namespace util
       return "0";
     }
 
+    if(!document.IsObject())
+    {
+      return std::nullopt;
+    }
     const auto& rootObj = document.GetObject();
     float retVal = 0;
     using JsonValueRef = std::reference_wrapper<const rapidjson::Value>;
