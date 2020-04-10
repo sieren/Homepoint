@@ -35,6 +35,7 @@ namespace fs
       model.mTimeZone = getTimeZone(rootObj);
       model.mMQTTServerConfig = getMQTTConfig(rootObj);
       model.mMQTTGroups = getMQTTGroups(rootObj);
+      model.mHardwareConfig = getHardwareConfig(rootObj);
       return model;
     }
 
