@@ -42,8 +42,10 @@ namespace mqtt
         for (auto& dev : mappedValues)
         {
           const auto key = std::get<1>(dev);
-          const auto val = util::JsonToValues(topicData, key);
-          std::get<2>(dev) = val;
+          if (const auto val = util::JsonToValues(topicData, key))
+          {
+            std::get<2>(dev) = *val;
+          }
         }
       }
       else
