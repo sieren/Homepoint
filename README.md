@@ -190,6 +190,8 @@ or how the LED backlight is controlled. Therefore we offer some options to overr
 
 ## Example
 
+MQTT Topics are case-sensitive as per MQTT specification.
+
 ```json
 {
   "wifi": "MyWifiSSID",
