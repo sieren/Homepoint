@@ -13,12 +13,13 @@
   <img src="https://raw.githubusercontent.com/sieren/Homepoint/master/media/img1.jpg" width="400"><img src="https://raw.githubusercontent.com/sieren/Homepoint/master/media/img2.gif" width="400"> 
 </p>
 
-Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome devices that runs on the cheaply available ESP32 Chipset.  
+Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome devices that runs on the ESP32 Chipset.  
 
 ## Table of Contents
 
 - [Features](#features)
 - [Demo](#demo)
+- [Installation](#installation)
 - [Build](#build)
 - [Configuration](#configuration)
   - [Scenes & Devices](#devices)
@@ -73,7 +74,7 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 # :house: Installation
 
 HomePoint comes in 2 pre-compiled .bin files ready to be flashed on either a generic ESP32 Module or M5Stack.
-The PIN Layout required for generic ESP32 modules can be found inside the readme.txt in the [releases](https://github.com/sieren/Homepoint/releases).
+More details on the hardware setup are available in the [Wiki](https://github.com/sieren/Homepoint/wiki/Hardware).
 
 Steps to install:
 
@@ -87,60 +88,11 @@ Alternatively, watch the installation video below:
 
 <a name="build"></a>
 
-# :house: Build
+# :house: Build from source
 
 Homepoint was created using the [ESP-IDF SDK](https://github.com/espressif/esp-idf).
 
-In order to build HomePoint you need ESP-IDF from the `release/v4.0` branch from the ESP-IDF git repository.  
-
-| Software       | Version                                                                                                                 |
-| :------------- | :----------------------------------------------------------------------------------------------------------------------:|
-|  ESP-IDF       | [release/v4.0](https://github.com/espressif/esp-idf/tree/release/v4.0))                                                           |
-|  Toolchain     | [5.2.0](https://docs.espressif.com/projects/esp-idf/en/stable/get-started-cmake/index.html#step-1-set-up-the-toolchain) |
-
-**Setup your build environment** if necessary:
-
-Please refer to the [documentation](https://docs.espressif.com/projects/esp-idf/en/v4.0/), especially the [prerequisites](https://docs.espressif.com/projects/esp-idf/en/v4.0/get-started/linux-setup.html) but in general the steps are as follows:
-
-On Linux:
-
-```
-$ mkdir ~/esp
-$ cd ~/esp
-$ git clone -b v4.0 --recursive https://github.com/espressif/esp-idf.git
-$ cd esp-idf
-$ ./install.sh
-$ . ~/esp/esp-idf/export.sh
-$ cd ..
-```
-
-**Clone and build** HomePoint with the following commands:
-
-```bash
-$ git clone https://www.github.com/sieren/homepoint.git
-$ cd homepoint
-$ git submodule update --init --recursive
-$ mkdir build && cd build
-$ cmake ../
-$ make spiffs_spiffs_bin
-$ make -j 8 flash
-```  
-
-For use with a Button-Based interface:
-
-```
-$ cmake -DBUTTONS=ON ../
-```
-
-For out-of-the-box use with M5STACK:
-
-```
-$ cmake -DM5STACK=ON ../
-```
-
-Depending on your hardware, you may have to uncommented the relevant sections in `main/config/TFT_eSPI/Generic/User_Setup.h`. This configuration file gets copied to `main/libraries/TFT_eSPI` every time CMake is run.
-  
-Other Homepoint configuration settings like the Screensaver can be configured in `main/config/Config.h`.
+Detailed build instructions are available in the [Wiki](https://github.com/sieren/Homepoint/wiki/Build-from-source).
 
 <a name="configuration"></a>
 
@@ -176,7 +128,7 @@ In order to set the correct timezone, copy & paste your [NTP TZ Setting](https:/
 <a name="hardware"></a>
 ## Hardware (optional)
 
-Some of the IL9341 Display units seem to differ in e.g. how the touch-screen coordinates corresponds to the display
+Some of the IL9341 Display units seem to differ in e.g. how the touch-screen coordinates correspond to the display
 or how the LED backlight is controlled. Therefore we offer some options to override the defaults in the configuration file.
 
 | Key   | Value                                                                                             |
