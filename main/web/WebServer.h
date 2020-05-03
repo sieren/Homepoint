@@ -19,6 +19,8 @@ namespace web
     private:
       void handleRebootRequest(AsyncWebServerRequest *request);
       void handleReloadRequest(AsyncWebServerRequest *request);
+      void handleOTA(AsyncWebServerRequest *request, const String& filename,
+        size_t index, uint8_t *data, size_t len, bool final);
       String processor(const String& var);
       std::unique_ptr<AsyncWebServer> mpServer;
       std::unique_ptr<AsyncWebSocket> mpSocket;
