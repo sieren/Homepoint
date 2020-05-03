@@ -106,7 +106,7 @@ namespace fs
       return std::make_tuple(ssid, password);
     }
 
-    const WifiCredentials ConfigReader::getWebCredentials(const rapidjson::Value::ConstObject document)
+    const WebCredentials ConfigReader::getWebCredentials(const rapidjson::Value::ConstObject document)
     {
       using namespace rapidjson;
       std::string web;
