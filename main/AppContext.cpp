@@ -72,7 +72,8 @@ namespace ctx
 
   void AppContext::connectWireless()
   {
-    getWifiContext().connect(std::get<0>(mModel.mWifiCredentials), std::get<1>(mModel.mWifiCredentials));
+    auto& wifi = mModel.mWifiCredentials;
+    getWifiContext().connect(wifi.mSSID, wifi.mPassword, wifi.mHostname);
     using namespace std::placeholders;
     getWifiContext().registerCallback(std::bind(&AppContext::connectionStateChanged, this, _1));
   }

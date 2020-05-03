@@ -32,7 +32,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
     auto& callback = *reinterpret_cast<ctx::wificallback_t*>(arg);
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
         esp_wifi_connect();
-        callback(ctx::WifiAssociationState::CONNECTING);
+        callback(ctx::WifiAssociationState::READY);
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
         esp_wifi_connect();
         xEventGroupClearBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
@@ -56,10 +56,12 @@ namespace ctx
 
   }
 
-  void WifiContext::connect(const std::string ssid, const std::string passwd)
+  void WifiContext::connect(const std::string ssid, const std::string passwd,
+    const std::optional<std::string> hostname)
   {
     mSSID = ssid;
     mPassword = passwd;
+    mHostname = hostname;
     init();
   }
 
@@ -117,6 +119,13 @@ namespace ctx
   void WifiContext::wifiStateChanged(WifiAssociationState state)
   {
     WifiConnectionState wifiConnState;
+    if (mHostname.has_value() && state == WifiAssociationState::READY) {
+      esp_err_t err;
+      if ((err = tcpip_adapter_set_hostname(TCPIP_ADAPTER_IF_STA, (*mHostname).c_str())) != ESP_OK)
+      {
+        ESP_LOGI(TAG, "Unable to set hostname.");
+      }
+    }
     if (state == WifiAssociationState::CONNECTED) {
       wifiConnState.ipAddr = getIpAddrStr();
     }
