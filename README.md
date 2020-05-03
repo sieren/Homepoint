@@ -148,6 +148,7 @@ MQTT Topics are case-sensitive as per MQTT specification.
 {
   "wifi": "MyWifiSSID",
   "password": "My Wifi Password",
+  "hostname": "optionalhostname",
   "login": "admin",
   "webpass": "admin",
   "mqttbroker": "mqtt://192.168.1.2",

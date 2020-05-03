@@ -26,7 +26,7 @@ class ConfigReader
 
   private:
     const WifiCredentials getWifiCredentials(const rapidjson::Value::ConstObject document);
-    const WifiCredentials getWebCredentials(const rapidjson::Value::ConstObject document);
+    const WebCredentials getWebCredentials(const rapidjson::Value::ConstObject document);
     const std::string getTimeZone(const rapidjson::Value::ConstObject document);
     const mqtt::MQTTConfig getMQTTConfig(const rapidjson::Value::ConstObject document);
     const std::vector<MQTTVariants> getMQTTGroups(const rapidjson::Value::ConstObject document);

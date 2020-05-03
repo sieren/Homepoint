@@ -77,7 +77,7 @@ namespace wifi
     }
 
     ESP_LOGI(TAG, "Updating Configuration");
-    const auto credentials = std::make_tuple(ssid, ssidPassword);
+    const auto credentials = WifiCredentials{ssid, ssidPassword, std::nullopt};
     mpAppContext->setFirstLaunch(credentials, webLogin, webPassword);
     request->redirect("/index.html");
   }

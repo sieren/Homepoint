@@ -33,6 +33,10 @@ namespace gfx
         mIpAddressLabel = "DISCONNECTED";
         mWifiImage = "wifi_off";
         break;
+      case WifiAssociationState::READY:
+        mIpAddressLabel = "READY";
+        mWifiImage = "wifi_off";
+        break;
     }
     mNeedsRedraw = true;
   }

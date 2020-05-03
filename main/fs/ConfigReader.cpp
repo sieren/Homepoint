@@ -69,11 +69,11 @@ namespace fs
 
       document.SetObject();
       ElemType ssidName(kStringType);
-      ssidName.SetString(std::get<0>(credentials).c_str(), std::get<0>(credentials).length(), document.GetAllocator());
+      ssidName.SetString(credentials.mSSID.c_str(), credentials.mSSID.length(), document.GetAllocator());
       document.AddMember("wifi", ssidName.Move(), document.GetAllocator());
 
       ElemType wifiPassword(kStringType);
-      wifiPassword.SetString(std::get<1>(credentials).c_str(), std::get<1>(credentials).length(), document.GetAllocator());
+      wifiPassword.SetString(credentials.mPassword.c_str(), credentials.mPassword.length(), document.GetAllocator());
       document.AddMember("password", wifiPassword.Move(), document.GetAllocator());
 
       ElemType webLogin(kStringType);
@@ -101,12 +101,20 @@ namespace fs
       using namespace rapidjson;
       std::string ssid;
       std::string password;
-      read(document, "wifi", [&ssid] (std::string wifi) { ssid = wifi; });
-      read(document, "password", [&password] (std::string passwd) { password = passwd; });
-      return std::make_tuple(ssid, password);
+      WifiCredentials wifiCredentials;
+      read(document, "wifi", [&wifiCredentials] (std::string wifi) {
+        wifiCredentials.mSSID = wifi;
+      });
+      read(document, "password", [&wifiCredentials] (std::string passwd) {
+        wifiCredentials.mPassword = passwd;
+      });
+      read(document, "hostname", [&wifiCredentials] (std::optional<std::string> hostname) {
+        wifiCredentials.mHostname = hostname;
+      });
+      return wifiCredentials;
     }
 
-    const WifiCredentials ConfigReader::getWebCredentials(const rapidjson::Value::ConstObject document)
+    const WebCredentials ConfigReader::getWebCredentials(const rapidjson::Value::ConstObject document)
     {
       using namespace rapidjson;
       std::string web;
