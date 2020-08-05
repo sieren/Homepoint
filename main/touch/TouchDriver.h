@@ -6,13 +6,14 @@
 #include <optional>
 
 class TFT_eSPI;
+namespace config { struct HardwareConfig; }
 
 namespace gfx
 {
   class TouchDriver
   {
     public:
-      TouchDriver(TFT_eSPI* tftDriver);
+      TouchDriver(TFT_eSPI* tftDriver, config::HardwareConfig& hwConfig);
       void begin();
       void setRotation(int rotation);
 
@@ -23,5 +24,8 @@ namespace gfx
       unsigned long mLastTouchEventTime;
       TFT_eSPI* mTouch;
       TouchEvent mCurrentEvent;
+      int mXAxisInversionAmount;
+      int mYAxisInversionAmount;
+
   };
 } // namespace gfx

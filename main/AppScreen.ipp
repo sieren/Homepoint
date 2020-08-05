@@ -31,7 +31,7 @@ namespace gfx
     mViewPortSize({mWindowSize.width, mWindowSize.height - kStatusBarHeight}),
     menuFrame({{0, kStatusBarHeight, 0}, mViewPortSize}),
     mTft(size.width, size.height),
-    mNavigation(mTft.getDriverRef()),
+    mNavigation(mTft.getDriverRef(), ctx->getModel().mHardwareConfig),
     mpAppContext(ctx),
     mpStatusBar(new UIStatusBarWidget(&mTft, Frame{{0,0,0}, {size.width, kStatusBarHeight}}, 999)),
     mScreenSaver(&mTft, ctx)
