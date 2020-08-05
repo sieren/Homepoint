@@ -61,6 +61,9 @@ namespace mqtt
         case MQTT_EVENT_ERROR:
             ESP_LOGI(TAG, "MQTT_EVENT_ERROR");
             break;
+        case MQTT_EVENT_ANY:
+            ESP_LOGI(TAG, "MQTT_EVENT_ANY");
+            break;
     }
   }
 
