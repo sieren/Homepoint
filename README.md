@@ -131,11 +131,15 @@ In order to set the correct timezone, copy & paste your [NTP TZ Setting](https:/
 Some of the IL9341 Display units seem to differ in e.g. how the touch-screen coordinates correspond to the display
 or how the LED backlight is controlled. Therefore we offer some options to override the defaults in the configuration file.
 
-| Key   | Value                                                                                             |
+| Key   | Type | Value                                                                                             |
 | --------------| ----------------------------------------------------------------------------------------- |
-| "ledPinPullup" | `true` or `false` - control backlight power which can be pull-up/down depending on unit  |
-| "screenRotationAngle" | The rotation parameter can be 0, 1, 2 or 3 - incrementing in 90deg angles         |
-| "screenSaverMinutes" | Minutes (int) until display is switched off (default 10)                          |
+| "ledPinPullup" | Boolean | `true` or `false` - control backlight power which can be pull-up/down depending on unit  |
+| "screenRotationAngle" | Int | The rotation parameter can be 0, 1, 2 or 3 - incrementing in 90deg angles         |
+| "screenSaverMinutes" | Int | Minutes until display is switched off (default 10)                          |
+| "screenSaverMinutes" | Int | Minutes until display is switched off (default 10)                          |
+| "screenSaverMinutes" | Int | Minutes until display is switched off (default 10)                          |
+| "touchXAxisInverted" | Bool | default: `false`, invert the X Axis of the touch screen in case it is misaligned |
+| "touchYAxisInverted" | Bool | default: `true`, invert the Y Axis of the touch screen in case it is misaligned |
 
 
 <a name="examples"></a>

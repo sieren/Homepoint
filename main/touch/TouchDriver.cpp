@@ -1,13 +1,16 @@
 
 #include "TouchDriver.h"
+#include <config/Config.h>
 #include <tft/ScreenSaver.hpp>
 
 namespace gfx
 {
-  TouchDriver::TouchDriver(TFT_eSPI* tftDriver) :
+  TouchDriver::TouchDriver(TFT_eSPI* tftDriver, config::HardwareConfig& hwConfig) :
     mTouch(tftDriver)
   {
     mCurrentEvent = {{0,0,0}, TouchState::NoTouch, xTaskGetTickCount()};
+    mXAxisInversionAmount = hwConfig.mIsTouchXAxisInverted ? ScreenWidth : 0;
+    mYAxisInversionAmount = hwConfig.mIsTouchXAxisInverted ? ScreenHeight : 0;
   };
 
   auto TouchDriver::touchPoint() -> std::optional<TouchEvent>
@@ -36,7 +39,8 @@ namespace gfx
         default:
           break;
       }
-      y = std::abs(240 - y); // NEED TO INVERT FOR SOME REASON
+      y = std::abs(mYAxisInversionAmount - y);
+      x = std::abs(mXAxisInversionAmount - x);
       newEvent.position = {x, y, 0};
       newEvent.state = newState;
       mCurrentEvent = newEvent;

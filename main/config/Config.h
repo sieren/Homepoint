@@ -17,6 +17,9 @@ static const unsigned long MSBeforeInvalid = 1500; // 2s before invalidate press
 static const unsigned long StatusBarUpdateInterval = 4; // update status bar every 10s to keep time up to date
 static const unsigned long MinsBeforeScreenSleep = 10; // Minutes before putting Screen to sleep
 
+static const int ScreenWidth = 320;
+static const int ScreenHeight = 240;
+
 //    _____  _            _______ ______ ____  _____  __  __ 
 //   |  __ \| |        /\|__   __|  ____/ __ \|  __ \|  \/  |
 //   | |__) | |       /  \  | |  | |__ | |  | | |__) | \  / |
@@ -71,5 +74,7 @@ namespace config
     bool mIsLEDPinInverted = LED_PIN_INVERTED;
     int mScreensaverMins = 10;
     int mScreenRotationAngle = SCREEN_ROTATION_ANGLE;
+    bool mIsTouchXAxisInverted = false;
+    bool mIsTouchYAxisInverted = true;
   };
 }

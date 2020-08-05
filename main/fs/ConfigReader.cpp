@@ -309,6 +309,18 @@ namespace fs
           }
         );
 
+      read(document, "touchXAxisInverted", [&] (bool touchXAxisInverted)
+        {
+          hwConfig.mIsTouchXAxisInverted = touchXAxisInverted;
+        }
+      );
+
+      read(document, "touchYAxisInverted", [&] (bool touchYAxisInverted)
+        {
+          hwConfig.mIsTouchYAxisInverted = touchYAxisInverted;
+        }
+      );
+
       return hwConfig;
     }
   
