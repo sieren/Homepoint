@@ -6,11 +6,13 @@
 #include <chrono>
 #include <optional>
 
+namespace config { struct HardwareConfig; }
+
 namespace gfx
 {
   struct ButtonDriver
   {
-    ButtonDriver(TFT_eSPI* tftDriver);
+    ButtonDriver(TFT_eSPI* tftDriver, config::HardwareConfig& hwConfig);
 
     std::optional<ButtonEvent> buttonEvent();
 

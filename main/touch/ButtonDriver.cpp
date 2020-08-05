@@ -6,7 +6,7 @@
 namespace gfx
 {
 
-  ButtonDriver::ButtonDriver(TFT_eSPI* tftDriver)
+  ButtonDriver::ButtonDriver(TFT_eSPI* tftDriver, config::HardwareConfig& hwConfig)
   {
     if (ButtonsArePullUp)
     {
