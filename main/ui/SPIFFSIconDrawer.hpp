@@ -1,6 +1,5 @@
 #pragma once
 
-#include <ui/PROGMEMIcons.h>
 #include <ui/UIPosition.hpp>
 
 #include <string>

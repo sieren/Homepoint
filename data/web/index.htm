@@ -40,10 +40,13 @@
     </form>
     <form id="form-msg" onsubmit="reboot()">
       <button class="button-primary" type="submit">Reboot</button>
+    </form>
+    <form method='POST' action='/otaUpdate' enctype='multipart/form-data'>
+      <input type='file' name='update'><input class="button-primary" type='submit' value='Update Firmware'>
     </form></div><br>
     <div class="h_iframe" style="height: 1000px;">
       <iframe  src="/edit" frameborder="0" height="1300" ></iframe>
-    </div>
-  </div>
+    </div><br>
+
 </body>
 </html>
