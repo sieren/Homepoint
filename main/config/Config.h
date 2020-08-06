@@ -74,7 +74,7 @@ namespace config
     bool mIsLEDPinInverted = LED_PIN_INVERTED;
     int mScreensaverMins = 10;
     int mScreenRotationAngle = SCREEN_ROTATION_ANGLE;
-    bool mIsTouchXAxisInverted = false;
-    bool mIsTouchYAxisInverted = true;
+    bool mIsTouchXAxisInverted = true;
+    bool mIsTouchYAxisInverted = false;
   };
 }

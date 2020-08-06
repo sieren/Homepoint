@@ -138,8 +138,8 @@ or how the LED backlight is controlled. Therefore we offer some options to overr
 | "screenSaverMinutes" | Int | Minutes until display is switched off (default 10)                          |
 | "screenSaverMinutes" | Int | Minutes until display is switched off (default 10)                          |
 | "screenSaverMinutes" | Int | Minutes until display is switched off (default 10)                          |
-| "touchXAxisInverted" | Bool | default: `false`, invert the X Axis of the touch screen in case it is misaligned |
-| "touchYAxisInverted" | Bool | default: `true`, invert the Y Axis of the touch screen in case it is misaligned |
+| "touchXAxisInverted" | Bool | default: `true`, invert the X Axis of the touch screen in case it is misaligned |
+| "touchYAxisInverted" | Bool | default: `false`, invert the Y Axis of the touch screen in case it is misaligned |
 
 
 <a name="examples"></a>
