@@ -12,7 +12,8 @@ namespace gfx
 {
   struct ButtonDriver
   {
-    ButtonDriver(TFT_eSPI* tftDriver, config::HardwareConfig& hwConfig);
+    ButtonDriver(TFT_eSPI* tftDriver);
+    void updateHardwareConfig(config::HardwareConfig& hwConfig) { }; // noop
 
     std::optional<ButtonEvent> buttonEvent();
 

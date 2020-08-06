@@ -5,13 +5,17 @@
 
 namespace gfx
 {
-  TouchDriver::TouchDriver(TFT_eSPI* tftDriver, config::HardwareConfig& hwConfig) :
+  TouchDriver::TouchDriver(TFT_eSPI* tftDriver) :
     mTouch(tftDriver)
   {
     mCurrentEvent = {{0,0,0}, TouchState::NoTouch, xTaskGetTickCount()};
+  };
+
+  void TouchDriver::updateHardwareConfig(config::HardwareConfig& hwConfig)
+  {
     mXAxisInversionAmount = hwConfig.mIsTouchXAxisInverted ? ScreenWidth : 0;
     mYAxisInversionAmount = hwConfig.mIsTouchXAxisInverted ? ScreenHeight : 0;
-  };
+  }
 
   auto TouchDriver::touchPoint() -> std::optional<TouchEvent>
   {

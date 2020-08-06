@@ -31,7 +31,7 @@ namespace gfx
     mViewPortSize({mWindowSize.width, mWindowSize.height - kStatusBarHeight}),
     menuFrame({{0, kStatusBarHeight, 0}, mViewPortSize}),
     mTft(size.width, size.height),
-    mNavigation(mTft.getDriverRef(), ctx->getModel().mHardwareConfig),
+    mNavigation(mTft.getDriverRef()),
     mpAppContext(ctx),
     mpStatusBar(new UIStatusBarWidget(&mTft, Frame{{0,0,0}, {size.width, kStatusBarHeight}}, 999)),
     mScreenSaver(&mTft, ctx)
@@ -132,6 +132,7 @@ namespace gfx
     mpAppContext->registerStateCallback(std::bind(&AppScreen::appContextChanged, this, _1));
     mpAppContext->getMQTTConnection()->registerConnectionStatusCallback(std::bind(&UIStatusBarWidget::mqttConnectionChanged, mpStatusBar.get(), _1));
     mTft.setRotation(mpAppContext->getModel().mHardwareConfig.mScreenRotationAngle);
+    mNavigation.updateHardwareConfig(mpAppContext->getModel().mHardwareConfig);
     mpSubViews.clear();
     presentMenu();
   }

@@ -13,7 +13,8 @@ namespace gfx
   class TouchDriver
   {
     public:
-      TouchDriver(TFT_eSPI* tftDriver, config::HardwareConfig& hwConfig);
+      TouchDriver(TFT_eSPI* tftDriver);
+      void updateHardwareConfig(config::HardwareConfig& hwConfig);
       void begin();
       void setRotation(int rotation);
 
@@ -24,8 +25,8 @@ namespace gfx
       unsigned long mLastTouchEventTime;
       TFT_eSPI* mTouch;
       TouchEvent mCurrentEvent;
-      int mXAxisInversionAmount;
-      int mYAxisInversionAmount;
+      int mXAxisInversionAmount = 0;
+      int mYAxisInversionAmount = 0;
 
   };
 } // namespace gfx
