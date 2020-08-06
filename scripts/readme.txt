@@ -2,7 +2,7 @@ Steps to install:
 
 1. Download ESPTools from https://github.com/espressif/esptool/releases
 2. Install ESPTools with python setup.py install
-3. Run esptool.py write_flash -fs 4MB -fm dout 0x0 homepoint_m5stack.bin (or homepoint_espgeneric.bin)
+3. Run esptool.py write_flash -fs 4MB -fm dout 0x0 homepoint_m5stack_full.bin (or homepoint_espgeneric_full.bin)
 
 -----
 
