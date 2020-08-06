@@ -46,6 +46,8 @@ Homepoint is a screen-based interface for MQTT & HomeKit-connected Smarthome dev
 
 + **Remote Configuration**: Configure and reboot HomePoint through a web interface. No need to reflash.
 
++ **Over-The-Air Updates (Beta)**: Flash new versions of HomePoint wirelessly over the air.
+
 + **HomeKit Switch Support** (Setup Automations in Home App to toggle from Homepoint)*
 
 + Supports both **Touch Screen or Button based navigation**.
