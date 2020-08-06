@@ -15,10 +15,11 @@ cp ../build/bootloader/bootloader.bin ./ESP32/
 cp ../build/homepoint.bin ./ESP32/
 cp ../build/spiffs.bin ./ESP32
 cd ESP32
-python ../merge_bin_esp.py --output_name homepoint_espgeneric.bin --bin_path partition-table.bin ota_data_initial.bin bootloader.bin homepoint.bin spiffs.bin --bin_address 0x8000 0xd000 0x1000 0x10000 0x2b0000
+python ../merge_bin_esp.py --output_name homepoint_espgeneric_full.bin --bin_path partition-table.bin ota_data_initial.bin bootloader.bin homepoint.bin spiffs.bin --bin_address 0x8000 0xd000 0x1000 0x10000 0x2b0000
 cd ..
 mkdir release
-cp ./ESP32/output/homepoint_espgeneric.bin ./release
+cp ./ESP32/output/homepoint_espgeneric_full.bin ./release
+cp ./ESP32/homepoint.bin ./release/homepoint_espgeneric_oat_update.bin
 
 # Prepare M5Stack
 cd ..
@@ -36,10 +37,11 @@ cp ../build/bootloader/bootloader.bin ./M5Stack/
 cp ../build/homepoint.bin ./M5Stack/
 cp ../build/spiffs.bin ./M5Stack
 cd M5Stack
-python ../merge_bin_esp.py --output_name homepoint_m5stack.bin --bin_path partition-table.bin ota_data_initial.bin bootloader.bin homepoint.bin spiffs.bin --bin_address 0x8000 0xd000 0x1000 0x10000 0x2b0000
+python ../merge_bin_esp.py --output_name homepoint_m5stack_full.bin --bin_path partition-table.bin ota_data_initial.bin bootloader.bin homepoint.bin spiffs.bin --bin_address 0x8000 0xd000 0x1000 0x10000 0x2b0000
 cd ..
 mkdir release
-cp ./M5Stack/output/homepoint_m5stack.bin ./release
+cp ./M5Stack/output/homepoint_m5stack_full.bin ./release
+cp ./M5Stack/homepoint.bin ./release/homepoint_m5stack_ota_update.bin
 
 cp readme.txt ./release
 zip -r homepoint_release.zip ./release
