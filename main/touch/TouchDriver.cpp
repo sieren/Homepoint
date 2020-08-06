@@ -14,7 +14,7 @@ namespace gfx
   void TouchDriver::updateHardwareConfig(config::HardwareConfig& hwConfig)
   {
     mXAxisInversionAmount = hwConfig.mIsTouchXAxisInverted ? ScreenWidth : 0;
-    mYAxisInversionAmount = hwConfig.mIsTouchXAxisInverted ? ScreenHeight : 0;
+    mYAxisInversionAmount = hwConfig.mIsTouchYAxisInverted ? ScreenHeight : 0;
   }
 
   auto TouchDriver::touchPoint() -> std::optional<TouchEvent>
