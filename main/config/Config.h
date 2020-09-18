@@ -76,5 +76,6 @@ namespace config
     int mScreenRotationAngle = SCREEN_ROTATION_ANGLE;
     bool mIsTouchXAxisInverted = false;
     bool mIsTouchYAxisInverted = true;
+    bool mIsDisplayColorInverted = false;
   };
 }

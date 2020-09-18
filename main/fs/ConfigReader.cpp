@@ -321,6 +321,12 @@ namespace fs
         }
       );
 
+      read(document, "displayColorInverted", [&](bool displayColorInverted)
+        {
+          hwConfig.mIsDisplayColorInverted = displayColorInverted;
+        }
+      );
+
       return hwConfig;
     }
   
