@@ -52,6 +52,11 @@ namespace driver
         mDriver.setRotation(rot);
       }
 
+      void setDisplayInverted(bool inverted)
+      {
+        mDriver.invertDisplay(inverted);
+      }
+
       void drawRect(Frame frame, Color color)
       {
         mSprite.drawRect(frame.position.x, frame.position.y, frame.size.width, frame.size.height, color.getColorInt());
