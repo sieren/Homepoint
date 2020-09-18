@@ -297,25 +297,25 @@ namespace fs
         }
       );
 
-      read(document, "screenSaverMinutes", [&] (int mins)
+      read(document, "screenSaverMinutes", [&](int mins)
           {
             hwConfig.mScreensaverMins = mins;
           }
         );
 
-      read(document, "screenRotationAngle", [&] (int angle)
+      read(document, "screenRotationAngle", [&](int angle)
           {
             hwConfig.mScreenRotationAngle = angle;
           }
         );
 
-      read(document, "touchXAxisInverted", [&] (bool touchXAxisInverted)
+      read(document, "touchXAxisInverted", [&](bool touchXAxisInverted)
         {
           hwConfig.mIsTouchXAxisInverted = touchXAxisInverted;
         }
       );
 
-      read(document, "touchYAxisInverted", [&] (bool touchYAxisInverted)
+      read(document, "touchYAxisInverted", [&](bool touchYAxisInverted)
         {
           hwConfig.mIsTouchYAxisInverted = touchYAxisInverted;
         }
