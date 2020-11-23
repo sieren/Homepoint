@@ -150,11 +150,11 @@
 #define TFT_SCLK  18
 #define TFT_RST  22
 #define TFT_MISO 19
-#define TFT_LED  15  
+#define TFT_LED  15
 
 #define HAVE_TOUCHPAD
 #define TOUCH_CS 14
-#define TOUCH_IRQ 2
+#define TOUCH_IRQ 27
 
 
 
