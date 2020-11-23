@@ -19,7 +19,7 @@ python ../merge_bin_esp.py --output_name homepoint_espgeneric_full.bin --bin_pat
 cd ..
 mkdir release
 cp ./ESP32/output/homepoint_espgeneric_full.bin ./release
-cp ./ESP32/homepoint.bin ./release/homepoint_espgeneric_oat_update.bin
+cp ./ESP32/homepoint.bin ./release/homepoint_espgeneric_ota_update.bin
 
 # Prepare M5Stack
 # cd ..
