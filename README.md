@@ -215,8 +215,6 @@ A more **fully-configured example** is available [here](https://github.com/siere
 
 # :bug: Known bugs & issues :bug:
 
-- ESP IDF 4.0 has not been released yet and is in influx. Therefore breaking changes might happen.
-
 > If you find any bugs or need assistance, don't hesitate and open an issue :)
 
 <a name="contributing"></a>
