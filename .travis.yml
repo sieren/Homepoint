@@ -57,5 +57,5 @@ script:
   - cd build
   - cmake ../
   - make -j 8
-  - cmake -DM5STACK=ON ../
+  - cmake -DBOARD=M5STACK ../
   - make -j 8

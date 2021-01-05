@@ -26,7 +26,7 @@ cd ..
 rm -rf build
 mkdir build
 cd build
-cmake -DM5STACK=ON ../
+cmake -DBOARD=M5STACK ../
 make -j 12
 make spiffs_spiffs_bin
 cd ../scripts
