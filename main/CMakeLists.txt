@@ -125,6 +125,12 @@ if(BOARD STREQUAL "M5STACK")
     DESTINATION ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI)
 endif(BOARD STREQUAL "M5STACK")
 
+if(BOARD STREQUAL "AZTOUCHMOD")
+  message(STATUS "Compiling for AZ-Touch MOD")
+  file(COPY ${CMAKE_SOURCE_DIR}/main/config/TFT_eSPI/AZTouch-MOD/User_Setup.h
+    DESTINATION ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI)
+endif(BOARD STREQUAL "AZTOUCHMOD")
+
 if(NOT BOARD)
 message(STATUS "Compiling for Generic ESP23")
   file(COPY ${CMAKE_SOURCE_DIR}/main/config/TFT_eSPI/Generic/User_Setup.h
