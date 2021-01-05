@@ -116,20 +116,26 @@ option(BUTTONS "Compile for M5Stack" OFF) # Enabled by default
 
 file(REMOVE ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI/User_Setup.h)
 
-if(M5STACK)
+if(BOARD STREQUAL "M5STACK")
   message(STATUS "Compiling for M5Stack")
   list(APPEND compile_definitions "M5Stack")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DM5Stack")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DM5Stack")
   file(COPY ${CMAKE_SOURCE_DIR}/main/config/TFT_eSPI/M5Stack/User_Setup.h
     DESTINATION ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI)
-endif(M5STACK)
+endif(BOARD STREQUAL "M5STACK")
 
-if(NOT M5STACK)
+if(BOARD STREQUAL "AZTOUCHMOD")
+  message(STATUS "Compiling for AZ-Touch MOD")
+  file(COPY ${CMAKE_SOURCE_DIR}/main/config/TFT_eSPI/AZTouch-MOD/User_Setup.h
+    DESTINATION ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI)
+endif(BOARD STREQUAL "AZTOUCHMOD")
+
+if(NOT BOARD)
 message(STATUS "Compiling for Generic ESP23")
   file(COPY ${CMAKE_SOURCE_DIR}/main/config/TFT_eSPI/Generic/User_Setup.h
     DESTINATION ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI)
-endif(NOT M5STACK)
+endif(NOT BOARD)
 
 if(BUTTONS)
   message(STATUS "Compiling for Button Interface")
