@@ -136,10 +136,14 @@ namespace util
     {
       retVal = static_cast<float>(foundValue.GetInt());
     }
-    else
+    else if (foundValue.IsString())
     {
       return std::string((foundValue.GetString()));
     } 
+    else if (foundValue.IsBool())
+    {
+      return foundValue.GetBool() ? "true" : "false";
+    }
 
     std::stringstream stream;
     stream << std::fixed << std::setprecision(1) << retVal;
