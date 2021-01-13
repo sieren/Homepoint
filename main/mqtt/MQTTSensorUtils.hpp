@@ -100,19 +100,17 @@ namespace util
 
     for (auto i = rootObj.MemberBegin(); i != rootObj.MemberEnd(); i++)
     {
-      if (i->value.IsObject())
+      if (std::string(i->name.GetString()) == key)
+      {
+        result = std::make_optional<JsonValueRef>(i->value);
+        break;
+      }
+      else if (i->value.IsObject())
       {
         result = jsonSearch(i->value.GetObject(), key);
         if (result.has_value())
         {
           break;
-        }
-      }
-      else
-      {
-        if (std::string(i->name.GetString()) == key)
-        {
-          result = std::make_optional<JsonValueRef>(i->value);
         }
       }
     }
@@ -136,10 +134,14 @@ namespace util
     {
       retVal = static_cast<float>(foundValue.GetInt());
     }
-    else
+    else if (foundValue.IsString())
     {
       return std::string((foundValue.GetString()));
     } 
+    else if (foundValue.IsBool())
+    {
+      return foundValue.GetBool() ? "true" : "false";
+    }
 
     std::stringstream stream;
     stream << std::fixed << std::setprecision(1) << retVal;
