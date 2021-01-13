@@ -204,13 +204,9 @@ A more **fully-configured example** is available [here](https://github.com/siere
 
 # :crystal_ball: Roadmap
 
-- [x] Release 0.01
-- [x] Add Button support
-- [x] Build on CI
-- [x] Migrate to 4.0 Release Branch
-- [ ] Productionize [HomeKit Support](https://github.com/sieren/Homepoint/pull/10)
-- [ ] Better NTP Time Syncing
-- [ ] Add Unit-Tests
+- [ ] Documentation for integrating with [Homebridge-Hue](https://github.com/ebaauw/homebridge-hue) and [HomeAssistant / ZigBee2MQTT](https://www.zigbee2mqtt.io/integration/home_assistant.html)
+- [ ] [HomeKit Support](https://github.com/sieren/Homepoint/pull/10)
+- [ ] Testing
 
 <a name="known-bugs"></a>
 
