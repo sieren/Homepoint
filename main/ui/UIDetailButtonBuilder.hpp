@@ -19,26 +19,26 @@ namespace util
     {
       std::vector<std::shared_ptr<UIWidget>> buttons;
       auto& context = screen->mpAppContext;
-      for (auto& sensor : ptr->mDevices)
+      for (auto& switchDevice : ptr->mDevices)
       {
         auto button = std::make_shared<UIButton>(&(screen->mTft), Frame(), ptr->groupId);
         button->setBackgroundColor(Color::InactiveBgColor());
         // TODO use Icons for Devices
         const auto icons = GetIconFileNames(ptr->iconName);
 
-        button->setLabel(sensor.second.name);
-        const auto textColor = sensor.second.active ? Color::ActiveBgColor() : Color::InactiveTextColor();
-        const auto imagePath = sensor.second.active ? icons.first : icons.second;
+        button->setLabel(switchDevice.second.name);
+        const auto textColor = switchDevice.second.active ? Color::ActiveBgColor() : Color::InactiveTextColor();
+        const auto imagePath = switchDevice.second.active ? icons.first : icons.second;
         button->setImage(imagePath);
         button->setTextColor(textColor);
         auto groupId = ptr->groupId;
-        auto deviceId = sensor.second.deviceId;
-        button->addTargetAction([groupId, deviceId, &sensor, context](const uint16_t id) {
-          const bool isActive = sensor.second.active;
+        auto deviceId = switchDevice.second.deviceId;
+        button->addTargetAction([groupId, deviceId, &switchDevice, context](const uint16_t id) {
+          const bool isActive = switchDevice.second.active;
           context->getMQTTConnection()->switchDevice(groupId, deviceId, !isActive);
         });
 
-        sensor.second.mSetNeedsUpdateCB = [ptr, deviceId, weakBtn = std::weak_ptr<UIButton>(button), icons]() {
+        switchDevice.second.mSetNeedsUpdateCB = [ptr, deviceId, weakBtn = std::weak_ptr<UIButton>(button), icons]() {
           auto findSensor = std::find_if(ptr->mDevices.begin(), ptr->mDevices.end(), [&deviceId](auto& ele)
           {
             return ele.second.deviceId == deviceId;
