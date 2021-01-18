@@ -32,6 +32,7 @@ namespace mqtt
 
     uint16_t deviceId = 0;
     bool active = false;
+    std::optional<std::string> iconName;
     std::function<void()> mSetNeedsUpdateCB;
   };
 

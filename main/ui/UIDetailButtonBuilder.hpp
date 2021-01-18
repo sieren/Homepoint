@@ -23,8 +23,10 @@ namespace util
       {
         auto button = std::make_shared<UIButton>(&(screen->mTft), Frame(), ptr->groupId);
         button->setBackgroundColor(Color::InactiveBgColor());
-        // TODO use Icons for Devices
-        const auto icons = GetIconFileNames(ptr->iconName);
+
+        // Check if device has icon, else fallback to group icon
+        const bool hasIcon = switchDevice.second.iconName.has_value();
+        const auto icons = hasIcon ? GetIconFileNames(*switchDevice.second.iconName) : GetIconFileNames(ptr->iconName);
 
         button->setLabel(switchDevice.second.name);
         const auto textColor = switchDevice.second.active ? Color::ActiveBgColor() : Color::InactiveTextColor();
