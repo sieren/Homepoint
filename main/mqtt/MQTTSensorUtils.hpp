@@ -143,8 +143,9 @@ namespace util
       return foundValue.GetBool() ? "true" : "false";
     }
 
+    auto precision = (fmod(retVal, 1.0) == 0.0) ? 0 : 1;
     std::stringstream stream;
-    stream << std::fixed << std::setprecision(1) << retVal;
+    stream << std::fixed << std::setprecision(precision) << retVal;
     std::string s = stream.str();
 
     return s;
