@@ -166,12 +166,21 @@ MQTT Topics are case-sensitive as per MQTT specification.
     "type": "Light",
     "icon": "livingroom",
     "devices": [{
-      "name": "Side Light",
+      "name": "Some Light",
       "setTopic": "lights/hue/00:17:88:01:02:3c:2a:6d-0b/set/on",
       "getTopic": "hue/status/lights/Hue color lamp 1",
       "onValue": "true",
       "offValue": "false"
-    }]
+    },
+    {
+      "name": "Door Light",
+      "setTopic": "lights/hue/00:17:88:01:02:3c:2a:6d-0b/set/on",
+      "getTopic": "hue/status/lights/Hue color lamp 1",
+      "onValue": "true",
+      "offValue": "false",
+      "icon": "door"
+    },
+    ]
   },
   {
     "name": "Bedroom",
