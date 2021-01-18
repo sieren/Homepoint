@@ -28,25 +28,35 @@
   </style>
 </head>
 <body>
-  <div class="container"></div>
+  <div class="container">
+  <div class="row">
   <div class="nine columns" style="margin-top: 5%">
     <h1>HomePoint</h1>
     <p>Modify <i>config.json</i> or use <i>config_example.json</i> as a reference.<br/>
     Reboot if wifi credentials changed. 
     Further information is available on <a href="https://github.com/sieren/Homepoint" target="_blank">GitHub</a>.</p>
-    <div class="two columns"></div>
     <form id="form-msg" onsubmit="reload()">
       <button class="button-primary" type="submit">Reload</button>
     </form>
     <form id="form-msg" onsubmit="reboot()">
       <button class="button-primary" type="submit">Reboot</button>
-    </form>
-    <form method='POST' action='/otaUpdate' enctype='multipart/form-data'>
-      <input type='file' name='update'><input class="button-primary" type='submit' value='Update Firmware'>
-    </form></div><br>
+    </form></div></div>
+
+    <h3>Configuration</h3>
     <div class="h_iframe" style="height: 1000px;">
       <iframe  src="/edit" frameborder="0" height="1300" ></iframe>
     </div><br>
+        <div class="row">
+      <div class="five columns">
+        <h3>Firmware Update</h3>
+        <p>Choose the OTA File to perform a firmware update.</p>
+        <form method='POST' action='/otaUpdate' enctype='multipart/form-data'>
+          <input type='file' name='update'><input class="button-primary" type='submit' value='Update Firmware'>
+        </form>
+      </div>
+    </div><br>
+  </div>
+
 
 </body>
 </html>
