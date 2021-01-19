@@ -238,6 +238,9 @@ namespace fs
                 read(device, "setTopic", [&switchDevice] (std::string topic) { switchDevice.setTopic = topic; });
                 read(device, "onValue", [&switchDevice] (std::string value) { switchDevice.onValue = value; });
                 read(device, "offValue", [&switchDevice] (std::string value) { switchDevice.offValue = value; });
+                read(device, "icon", [&switchDevice] (std::optional<std::string> value) {
+                  switchDevice.iconName = value;
+                });
                 devices.push_back({switchDevice.getTopic, std::move(switchDevice)});
                 deviceId += 1;
               }

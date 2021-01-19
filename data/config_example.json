@@ -16,7 +16,8 @@
       "setTopic": "lights/hue/00:17:88:01:02:3c:2a:6d-0b/set/on",
       "getTopic": "hue/status/lights/Hue color lamp 1",
       "onValue": "true",
-      "offValue": "false"
+      "offValue": "false",
+      "icon": "bedroom"
     },
     {
       "name": "Back Light",
