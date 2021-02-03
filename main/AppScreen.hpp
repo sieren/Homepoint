@@ -25,7 +25,7 @@ class AppScreen : public UIWidget
     void setupData();
 
     template<class N = NavigationDriver>
-    void draw(typename std::enable_if<std::is_same<N, gfx::TouchDriver>::value, N >::type* = 0);
+    void draw(typename std::enable_if<std::is_same<N, gfx::TouchDriver<typename N::MyDriver>>::value, N >::type* = 0);
     template<class N = NavigationDriver>
     void draw(typename std::enable_if<std::is_same<N, gfx::ButtonDriver>::value, N >::type* = 0);
 

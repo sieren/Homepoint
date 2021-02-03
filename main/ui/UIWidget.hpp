@@ -1,7 +1,7 @@
 #pragma once
 
 #include <config/Fonts.hpp>
-#include <config/Config.h>
+#include <config/PlatformInject.hpp>
 #include <touch/TouchTypes.hpp>
 #include <ui/Color.hpp>
 #include <ui/UIPosition.hpp>

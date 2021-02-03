@@ -1,11 +1,11 @@
 #pragma once
 
-#include "TFT_eSPI.h"
 #include <touch/ButtonTypes.h>
 
 #include <chrono>
 #include <optional>
 
+class TFT_eSPI;
 namespace config { struct HardwareConfig; }
 
 namespace gfx

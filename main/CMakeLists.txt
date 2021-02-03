@@ -37,7 +37,6 @@ endif(BUTTONS OR BOARD STREQUAL "M5STACK")
 
 set(TOUCH_SRC
   ${TOUCH_SRC}
-  "${TOUCH_SRC_PATH}/TouchDriver.cpp"
 )
 
 set(UI_SRC_PATH "ui")
@@ -77,10 +76,14 @@ set(GLOBALINCLUDES
 )
 
 set(LIBRARY_SRC
-    ${TFTESPI_SRC}
-    ${TFTEFEX_SRC}
     ${JPEGDEC_SRC}
 )
+
+set(PLATFORM_SRC
+    ${TFTESPI_SRC}
+    ${TFTEFEX_SRC}
+)
+
 set(COMPONENT_SRCS 
     "AppContext.cpp"
     "main.cpp"
@@ -96,20 +99,49 @@ set(COMPONENT_SRCS
 
 set_property(SOURCE ${LIBRARY_SRC} PROPERTY COMPILE_FLAGS "-Wno-all -Wno-shift-negative-value -Wno-cpp")
 
-set(COMPONENT_ADD_INCLUDEDIRS
-    "."
-    ${UIINCLUDES}
-    "libraries/TFT_eSPI/"
-    "libraries/TFT_eFEX/"
-    "libraries/JPEGDecoder/src"
-    "libraries/rapidjson/include/")
+  set(PLATFORM_INCLUDES
+      "libraries/TFT_eSPI/"
+      "libraries/TFT_eFEX/"
+  )
+  
+  set(COMPONENT_ADD_INCLUDEDIRS
+      "."
+      ${UIINCLUDES}
+      "libraries/JPEGDecoder/src"
+      "libraries/rapidjson/include/"
+  )
+
+if(BOARD STREQUAL "M5STACKCORE2")
+  message(STATUS "Compiling for M5Stack Core2")
+  list(APPEND priv_requires m5stackcore2)
+endif(BOARD STREQUAL "M5STACKCORE2")
+
+if(NOT BOARD STREQUAL "M5STACKCORE2")
+
+
+  set(PLATFORM_INCLUDES
+      "libraries/TFT_eSPI/"
+      "libraries/TFT_eFEX/"
+  )
+
+  set(COMPONENT_SRCS
+    ${COMPONENT_SRCS}
+    ${PLATFORM_SRC}
+  )
+
+  set(COMPONENT_ADD_INCLUDEDIRS
+      ${COMPONENT_ADD_INCLUDEDIRS}
+      ${PLATFORM_INCLUDES}
+  )
+
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTOUCH_CS")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTOUCH_CS -fconcepts -Wno-shift-negative-value -Wno-cpp")
+endif(NOT BOARD STREQUAL "M5STACKCORE2")
 
 register_component()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DESP32")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DESP32")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTOUCH_CS")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTOUCH_CS -fconcepts -Wno-shift-negative-value -Wno-cpp")
 
 option(M5STACK "Compile for M5Stack" OFF) # Enabled by default
 option(BUTTONS "Compile for M5Stack" OFF) # Enabled by default
@@ -124,6 +156,15 @@ if(BOARD STREQUAL "M5STACK")
   file(COPY ${CMAKE_SOURCE_DIR}/main/config/TFT_eSPI/M5Stack/User_Setup.h
     DESTINATION ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI)
 endif(BOARD STREQUAL "M5STACK")
+
+if(BOARD STREQUAL "M5STACKCORE2")
+  message(STATUS "Compiling for M5Stack Core2")
+  list(APPEND compile_definitions "M5StackCore2")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DM5StackCore2")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DM5StackCore2")
+  file(COPY ${CMAKE_SOURCE_DIR}/main/config/TFT_eSPI/M5StackCore2/User_Setup.h
+    DESTINATION ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI)
+endif(BOARD STREQUAL "M5STACKCORE2")
 
 if(BOARD STREQUAL "AZTOUCHMOD")
   message(STATUS "Compiling for AZ-Touch MOD")

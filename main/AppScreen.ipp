@@ -86,13 +86,10 @@ namespace gfx
   template<class ScreenDriver, class NavigationDriver>
   void AppScreen<ScreenDriver, NavigationDriver>::setupScreen()
   {
-    mTft.begin(320000000);
+    InitializeScreen(&mTft);
     mTft.setRotation(mpAppContext->getModel().mHardwareConfig.mScreenRotationAngle);
     mpStatusBar->setBackgroundColor(Color::BlackColor());
     mpStatusBar->setTextColor(Color::WhiteColor());
-
-    ledcSetup(0, 2000, 8);
-    ledcAttachPin(SDA, 0);
   }
 
   template<class ScreenDriver, class NavigationDriver>
@@ -160,7 +157,7 @@ namespace gfx
   // Touch Driver Specialization
   template<class ScreenDriver, class NavigationDriver>
   template<class N>
-  void AppScreen<ScreenDriver, NavigationDriver>::draw(typename std::enable_if<std::is_same<N, gfx::TouchDriver>::value, N>::type*)
+  void AppScreen<ScreenDriver, NavigationDriver>::draw(typename std::enable_if<std::is_same<N, gfx::TouchDriver<typename N::MyDriver>>::value, N >::type*)
   {
     std::lock_guard<std::mutex> guard(viewMutex);
     auto tapEvent = mNavigation.tapEvent();

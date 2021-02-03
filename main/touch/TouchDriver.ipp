@@ -1,23 +1,28 @@
 
+#pragma once
+
 #include "TouchDriver.h"
-#include <config/Config.h>
+#include "Arduino.h"
 #include <tft/ScreenSaver.hpp>
 
 namespace gfx
 {
-  TouchDriver::TouchDriver(TFT_eSPI* tftDriver) :
+  template <class Driver>
+  TouchDriver<Driver>::TouchDriver(Driver* tftDriver) :
     mTouch(tftDriver)
   {
     mCurrentEvent = {{0,0,0}, TouchState::NoTouch, xTaskGetTickCount()};
   };
 
-  void TouchDriver::updateHardwareConfig(config::HardwareConfig& hwConfig)
+  template <class Driver>
+  void TouchDriver<Driver>::updateHardwareConfig(config::HardwareConfig& hwConfig)
   {
     mXAxisInversionAmount = hwConfig.mIsTouchXAxisInverted ? ScreenWidth : 0;
     mYAxisInversionAmount = hwConfig.mIsTouchYAxisInverted ? ScreenHeight : 0;
   }
 
-  auto TouchDriver::touchPoint() -> std::optional<TouchEvent>
+  template <class Driver>
+  auto TouchDriver<Driver>::touchPoint() -> std::optional<TouchEvent>
   {
     // TODO: Should probably average over 3 points with timestamps
     // because occasionally touches would "drop" out and lead
@@ -75,8 +80,8 @@ namespace gfx
     return std::nullopt;
   }
 
-
-  auto TouchDriver::tapEvent() -> std::optional<TapEvent>
+  template <class Driver>
+  auto TouchDriver<Driver>::tapEvent() -> std::optional<TapEvent>
   {
     auto touchEvt = touchPoint();
     if (!touchEvt)
