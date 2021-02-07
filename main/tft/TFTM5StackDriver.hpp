@@ -2,7 +2,10 @@
 
 //#include <SPI.h>
 #define GFXFF 1
-#include <M5Core2.h>
+#include <AXP192.h>
+#include "TFT_eSPI.h"
+#include "TFT_eFEX.h"
+#include <M5TouchAdapter.h>
 #include "ui/Color.hpp"
 #include "ui/UIPosition.hpp"
 #include <memory>
@@ -17,14 +20,21 @@ namespace driver
   {
     public:
       TFTM5STACKESPI(int width, int height) :
+        mDriver(height, width),
         mSprite(&mDriver),
+        mEfx(&mDriver),
         mWidth(width),
         mHeight(height)
       {};
 
       void begin(int freq = 0)
       {
-        mDriver.init();
+        mDriver.begin();
+        #define BLK_PWM_CHANNEL 7
+        // Init the back-light LED PWM
+        ledcSetup(BLK_PWM_CHANNEL, 44100, 8);
+        ledcAttachPin(TFT_BL, BLK_PWM_CHANNEL);
+        ledcWrite(BLK_PWM_CHANNEL, 80);
         mSprite.setColorDepth(8);
       }
 
@@ -71,13 +81,13 @@ namespace driver
 
       void drawJpg(const std::string filePath, const Point position)
       {
-        mSprite.drawJpgFile(SPIFFS, filePath.c_str(), position.x, position.y);
+        mEfx.drawJpeg(filePath.c_str(), position.x, position.y, &mSprite);
       }
 
       void drawJpg(const uint8_t* arrayname, size_t imageSize, const Point position)
       {
         printf("Size: %i\r\n", imageSize);
-        mSprite.drawJpg(arrayname, imageSize, position.x, position.y);
+        mEfx.drawJpeg(arrayname, imageSize, position.x, position.y, &mSprite);
       }
 
       void setTextColor(Color textColor, Color backgroundColor)
@@ -136,9 +146,9 @@ namespace driver
       {
       }
     
-      M5Display* getDriverRef()
+      M5TouchAdapter* getTouchDriverRef()
       {
-        return &mDriver;
+        return &mTouchDriver;
       }
 
       void writeCommand(uint8_t command)
@@ -150,20 +160,26 @@ namespace driver
       {
         if (on)
         {
-          mDriver.sleep();
+          mDriver.startWrite();
+          mDriver.writecommand(ILI9341_SLPOUT); // Software reset
+          mDriver.endWrite();
         }
         else
         {
-          mDriver.wakeup();
+          mDriver.startWrite();
+          mDriver.writecommand(ILI9341_SLPIN); // Software reset
+          mDriver.endWrite();
         }
       }
 
     private:
-      M5Display mDriver;
+      TFT_eSPI mDriver;
       TFT_eSprite mSprite;
+      TFT_eFEX mEfx;
       int mWidth;
       int mHeight;
       std::string mLoadedFont;
+      M5TouchAdapter mTouchDriver;
       
   };
 } // namespace driver

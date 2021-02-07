@@ -34,7 +34,8 @@
 
 #elif defined(M5StackCore2)
   #include <tft/TFTM5StackDriver.hpp>
-  using NavigationDriver = gfx::TouchDriver<M5Display>;
+  #include <M5TouchAdapter.h>
+  using NavigationDriver = gfx::TouchDriver<M5TouchAdapter>;
   using ScreenDriver = gfx::driver::TFTM5STACKESPI; 
   auto ScreenOnOffSwitch = [](ScreenDriver* driver, bool on, bool inverted = false)
   {
