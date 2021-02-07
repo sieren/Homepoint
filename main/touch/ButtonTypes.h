@@ -1,5 +1,7 @@
 #pragma once
 
+#include <config/HID_Config.h>
+
 namespace gfx
 {
   enum class PressState: int

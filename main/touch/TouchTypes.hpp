@@ -1,9 +1,9 @@
 #pragma once
 
 #include "ui/UIPosition.hpp"
+
 namespace gfx
 {
-
   enum class TouchState: int
   {
     TouchStart = 0,

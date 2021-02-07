@@ -1,6 +1,6 @@
 #pragma once
 
-#include <config/Config.h>
+#include <model/HardwareConfig.hpp>
 #include <mqtt/MQTTConnection.h>
 #include <mqtt/MQTTGroup.hpp>
 #include <mqtt/MQTTSensorGroup.hpp>

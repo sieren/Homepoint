@@ -16,7 +16,7 @@ extern "C"
   #include "nvs_flash.h"
 }
 
-#define MAINLOOPCORE 1
+#define MAINLOOPCORE 0
 TaskHandle_t runLoopHandle = NULL;
 bool loopTaskWDTEnabled = false; // Enable if watchdog running
 
@@ -38,6 +38,8 @@ extern "C"
     ESP_ERROR_CHECK(ret);
 
     initArduino();
+    InitializePlatform();
+    Serial.begin(115200);
     setupApp();
   }
 

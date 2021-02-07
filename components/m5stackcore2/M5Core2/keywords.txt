@@ -1,0 +1,219 @@
+#######################################
+# Syntax Coloring Map For M5Stack
+#######################################
+
+#######################################
+# Library (KEYWORD3)
+#######################################
+
+M5Stack	KEYWORD3
+M5	KEYWORD3
+m5	KEYWORD3
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Lcd	KEYWORD1
+Speaker	KEYWORD1
+BtnA	KEYWORD1
+BtnB	KEYWORD1
+BtnC	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+update	KEYWORD2
+Power	KEYWORD2
+
+
+# Zone
+Zone	KEYWORD1
+rot1	KEYWORD2
+set	KEYWORD2
+contains	KEYWORD2
+rotate	KEYWORD2
+
+# Point
+Point	KEYWORD1
+in	KEYWORD2
+Equals	KEYWORD2
+distanceTo	KEYWORD2
+directionTo	KEYWORD2
+isDirectionTo	KEYWORD2
+valid	KEYWORD2
+
+ButtonColors	KEYWORD1
+bg	KEYWORD2
+text	KEYWORD2
+outline	KEYWORD2
+
+Event	KEYWORD1
+TFT_eSPI_Button	KEYWORD1
+
+instance	KEYWORD2
+instances	KEYWORD2
+
+#Events
+fireEvent	KEYWORD2
+typeName	KEYWORD2
+objName	KEYWORD2
+finger	KEYWORD2
+type	KEYWORD2
+from	KEYWORD2
+to	KEYWORD2
+duration	KEYWORD2
+distance	KEYWORD2
+direction	KEYWORD2
+isDirection KEYWORD2
+button	KEYWORD2
+gesture	KEYWORD2
+
+E_TOUCH	LITERAL1
+E_RELEASE	LITERAL1
+E_MOVE	LITERAL1
+E_GESTURE	LITERAL1
+E_TAP	LITERAL1
+E_DBLTAP	LITERAL1
+E_DRAGGED	LITERAL1
+E_PRESSED	LITERAL1
+E_PRESSING	LITERAL1
+E_LONGPRESSED	LITERAL1
+E_LONGPRESSING	LITERAL1
+
+DIR_UP	LITERAL1
+DIR_DOWN	LITERAL1
+DIR_LEFT	LITERAL1
+DIR_RIGHT	LITERAL1
+DIR_ANY	LITERAL1
+
+# Button
+Button	KEYWORD1
+isPressed	KEYWORD2
+wasPressed	KEYWORD2
+pressedFor	KEYWORD2
+isReleased	KEYWORD2
+wasReleased	KEYWORD2
+releasedFor	KEYWORD2
+wasReleasefor	KEYWORD2
+addHandler	KEYWORD2
+delHandlers	KEYWORD2
+lastChange	KEYWORD2
+cancel	KEYWORD2
+fingerDown	KEYWORD2
+fingerUp	KEYWORD2
+fingerMove	KEYWORD2
+name	KEYWORD2
+setLabel	KEYWORD2
+event	KEYWORD2
+tapTime	KEYWORD2
+dbltapTime	KEYWORD2
+longpressTime	KEYWORD2
+instanceIndex	KEYWORD2
+drawFn	KEYWORD2
+repeatDelay	KEYWORD2
+repeatinterval	KEYWORD2
+on	KEYWORD2
+off	KEYWORD2
+dx	KEYWORD2
+dy	KEYWORD2
+
+
+#Buttons
+Buttons	KEYWORD1
+draw	KEYWORD2
+which	KEYWORD2
+fireEvent	KEYWORD2
+
+held	KEYWORD2
+repeat	KEYWORD2
+timeHeld	KEYWORD2
+
+getBuffer	KEYWORD2
+setContrast	KEYWORD2
+clear	KEYWORD2
+update	KEYWORD2
+fillScreen	KEYWORD2
+persistence	KEYWORD2
+setColor	KEYWORD2
+drawPixel	KEYWORD2
+getPixel	KEYWORD2
+drawLine	KEYWORD2
+drawFastVLine	KEYWORD2
+drawFastHLine	KEYWORD2
+drawRect	KEYWORD2
+fillRect	KEYWORD2
+drawRoundRect	KEYWORD2
+fillRoundRect	KEYWORD2
+drawCircle	KEYWORD2
+fillCircle	KEYWORD2
+drawCircleHelper	KEYWORD2
+fillCircleHelper	KEYWORD2
+drawTriangle	KEYWORD2
+fillTriangle	KEYWORD2
+drawBitmap	KEYWORD2
+drawChar	KEYWORD2
+print	KEYWORD2
+cursorX	KEYWORD2
+cursorY	KEYWORD2
+fontSize	KEYWORD2
+textWrap	KEYWORD2
+fontWidth	KEYWORD2
+fontHeight	KEYWORD2
+setFont	KEYWORD2
+setTextFont	KEYWORD2
+setFreeFont	KEYWORD2
+setTextColor	KEYWORD2
+setTextSize	KEYWORD2
+setRotation	KEYWORD2
+pushState	KEYWORD2
+popState	KEYWORD2
+
+WHITE	LITERAL1
+BLACK	LITERAL1
+INVERT	LITERAL1
+GRAY	LITERAL1
+RED	LITERAL1
+BLUE	LITERAL1
+GREEN	LITERAL1
+YELLOW	LITERAL1
+NODRAW	LITERAL1
+
+# Core2 only
+
+M5Core2	KEYWORD2
+
+# Touch
+Touch	KEYWORD1
+ft6336	KEYWORD2
+dump	KEYWORD2
+stale	KEYWORD2
+interval	KEYWORD2
+ispressed	KEYWORD2
+getPressPoint	KEYWORD2
+rotation	KEYWORD2
+points	KEYWORD2
+changed	KEYWORD2
+wasRead	KEYWORD2
+point	KEYWORD2
+point0finger	KEYWORD2
+Hotzone_t 	KEYWORD1
+TouchPoint_t	KEYWORD1
+
+# Gesture
+Gesture	KEYWORD1
+wasDetected	KEYWORD2
+fromZone	KEYWORD2
+toZone	KEYWORD2
+maxTime	KEYWORD2
+minDistance	KEYWORD2
+
+# M5Display TFT_eSPI resistive touch interface emulation
+getTouchRaw	KEYWORD2
+getTouchRawZ	KEYWORD2
+convertRawXY	KEYWORD2
+getTouch	KEYWORD2
+calibrateTouch	KEYWORD2
+setTouch	KEYWORD2

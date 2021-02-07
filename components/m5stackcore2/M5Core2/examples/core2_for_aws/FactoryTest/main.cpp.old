@@ -1,0 +1,56 @@
+#include "M5Core2.h"
+#include "FastLED.h"
+#include <ArduinoECCX08.h>
+
+#define LEDS_PIN 25
+#define LEDS_NUM 10
+CRGB ledsBuff[LEDS_NUM];
+
+ECCX08Class myECCX08(Wire1, 0x35);
+//ECCX08 Serial Number = 0123AB2500FF230C01
+//ECCX08 Serial Number = 012358FF897FCDDB01
+
+void setup()
+{
+    M5.begin();
+    // put your setup code here, to run once:
+    FastLED.addLeds<SK6812, LEDS_PIN>(ledsBuff, LEDS_NUM);
+    for (int i = 0; i < LEDS_NUM; i++)
+    {
+        ledsBuff[i].setRGB(100, 0, 0);
+    }
+    FastLED.show();
+
+    Wire1.begin(21, 22, 10000);
+    for (int i = 0; i < 128; i++)
+    {
+        Wire1.beginTransmission(i);
+        if (Wire1.endTransmission() == ESP_OK)
+        {
+            Serial.printf("Device %02x \r\n", i);
+        }
+    }
+
+    if (!myECCX08.begin())
+    {
+        Serial.println("No ECCX08 present!");
+        while (1)
+            ;
+    }
+
+    String serialNumber = myECCX08.serialNumber();
+
+    Serial.print("ECCX08 Serial Number = ");
+    Serial.println(serialNumber);
+    Serial.println();
+
+    
+}
+
+void loop()
+{
+    // put your main code here, to run repeatedly:
+    FastLED.show();
+    delay(100);
+    M5.update();
+}

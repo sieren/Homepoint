@@ -139,7 +139,7 @@ namespace driver
       {
       }
     
-      TFT_eSPI* getDriverRef()
+      TFT_eSPI* getTouchDriverRef()
       {
         return &mDriver;
       }

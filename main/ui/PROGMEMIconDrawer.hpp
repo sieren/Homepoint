@@ -3,6 +3,7 @@
 #include <ui/SPIFFSIconDrawer.hpp>
 #include <ui/UIPosition.hpp>
 
+#include <algorithm>
 #include <map>
 #include <string>
 #include <vector>
