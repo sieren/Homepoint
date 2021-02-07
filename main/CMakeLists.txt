@@ -116,9 +116,6 @@ if(BOARD STREQUAL "M5STACKCORE2")
   list(APPEND priv_requires m5stackcore2)
 endif(BOARD STREQUAL "M5STACKCORE2")
 
-if(NOT BOARD STREQUAL "M5STACKCORE2")
-
-
   set(PLATFORM_INCLUDES
       "libraries/TFT_eSPI/"
       "libraries/TFT_eFEX/"
@@ -136,7 +133,6 @@ if(NOT BOARD STREQUAL "M5STACKCORE2")
 
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTOUCH_CS")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTOUCH_CS -fconcepts -Wno-shift-negative-value -Wno-cpp")
-endif(NOT BOARD STREQUAL "M5STACKCORE2")
 
 register_component()
 
