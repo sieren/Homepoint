@@ -12,7 +12,7 @@ namespace gfx
   class TouchDriver
   {
     public:
-      using MyDriver = Driver;
+      using InnerDriver = Driver;
       TouchDriver(Driver* tftDriver);
       void updateHardwareConfig(config::HardwareConfig& hwConfig);
       void begin();

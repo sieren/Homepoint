@@ -228,7 +228,7 @@ namespace gfx
       bool mIsPresenting{false};
       // Check if we're using a TouchDriver at compile-time
       // to determine whether we need on-screen page buttons
-      static constexpr bool isTouchDriver = std::is_same<NavigationDriver, gfx::TouchDriver<typename NavigationDriver::MyDriver>>::value;
+      static constexpr bool isTouchDriver = std::is_same<NavigationDriver, gfx::TouchDriver<typename NavigationDriver::InnerDriver>>::value;
       int mCurrentButtonSelected = 0;
 
 

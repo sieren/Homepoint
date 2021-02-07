@@ -157,7 +157,7 @@ namespace gfx
   // Touch Driver Specialization
   template<class ScreenDriver, class NavigationDriver>
   template<class N>
-  void AppScreen<ScreenDriver, NavigationDriver>::draw(typename std::enable_if<std::is_same<N, gfx::TouchDriver<typename N::MyDriver>>::value, N >::type*)
+  void AppScreen<ScreenDriver, NavigationDriver>::draw(typename std::enable_if<std::is_same<N, gfx::TouchDriver<typename N::InnerDriver>>::value, N >::type*)
   {
     std::lock_guard<std::mutex> guard(viewMutex);
     auto tapEvent = mNavigation.tapEvent();
