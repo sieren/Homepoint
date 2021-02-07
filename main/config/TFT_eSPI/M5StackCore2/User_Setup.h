@@ -28,16 +28,18 @@
 //#define ST7789_DRIVER      // Full configuration option, define additional parameters below for this display
 //#define ST7789_2_DRIVER    // Minimal configuration option, define additional parameters below for this display
 //#define R61581_DRIVER
+//#define RM68140_DRIVER
+
+// #include "ILI9341_Defines.h"
+#define  TFT_DRIVER 0x9341
 
 // Some displays support SPI reads via the MISO pin, other displays have a single
 // bi-directional SDA pin and the library will try to read this via the MOSI line.
 // To use the SDA line for reading data from the TFT uncomment the following line:
 
-// #define TFT_SDA_READ      // This option is for ESP32 ONLY, tested with ST7789 display only
-#define  TFT_DRIVER 0x9341
 #define TFT_SDA_READ      // This option is for ESP32 ONLY, tested with ST7789 display only
 
-// For ST7789 ONLY, define the colour order IF the blue and red are swapped on your display
+// For ST7789 and ILI9341 ONLY, define the colour order IF the blue and red are swapped on your display
 // Try ONE option at a time to find the correct colour order for your display
 
 //  #define TFT_RGB_ORDER TFT_RGB  // Colour order Red-Green-Blue
@@ -76,7 +78,7 @@
 // If colours are inverted (white shows as black) then uncomment one of the next
 // 2 lines try both options, one of the options should correct the inversion.
 
-// #define TFT_INVERSION_ON
+#define TFT_INVERSION_ON
 // #define TFT_INVERSION_OFF
 
 // If a backlight control signal is available then define the TFT_BL pin in Section 2
@@ -126,39 +128,12 @@
 // ###### EDIT THE PIN NUMBERS IN THE LINES FOLLOWING TO SUIT YOUR ESP8266 SETUP ######
 
 // For NodeMCU - use pin numbers in the form PIN_Dx where Dx is the NodeMCU pin designation
-// #define TFT_CS   PIN_D8  // Chip select control pin D8
-// #define TFT_DC   PIN_D3  // Data Command control pin
-// #define TFT_RST  PIN_D4  // Reset pin (could connect to NodeMCU RST, see next line)
+//#define TFT_CS   PIN_D8  // Chip select control pin D8
+//#define TFT_DC   PIN_D3  // Data Command control pin
+//#define TFT_RST  PIN_D4  // Reset pin (could connect to NodeMCU RST, see next line)
 //#define TFT_RST  -1    // Set TFT_RST to -1 if the display RESET is connected to NodeMCU RST or 3.3V
 
 //#define TFT_BL PIN_D1  // LED back-light (only for ST7789 with backlight control pin)
-
-// #define TOUCH_CS 14
-// #define TOUCH_IRQ 2
-
-#define TFT_MISO 38
-#define TFT_MOSI 23
-#define TFT_SCLK 18
-#define TFT_CS   5      // Chip select control pin
-#define TFT_DC   15     // Data Command control pin
-#define TFT_RST  -1     // Reset pin (could connect to Arduino RESET pin)
-#define TFT_BL   -1     // LED back-light (required for M5Stack)
-#define TFT_LED   -1     // LED back-light (required for M5Stack)
-
-// ArduiTouch
-// #define TFT_CS   5
-// #define TFT_DC   4
-// #define TFT_MOSI 23
-// #define TFT_SCLK  18
-// #define TFT_RST  22
-// #define TFT_MISO 19
-// #define TFT_LED  15  
-
-// #define HAVE_TOUCHPAD
-// #define TOUCH_CS 14
-// #define TOUCH_IRQ 2
-
-
 
 //#define TOUCH_CS PIN_D2     // Chip select pin (T_CS) of touch screen
 
@@ -168,10 +143,12 @@
 // ######  FOR ESP8266 OVERLAP MODE EDIT THE PIN NUMBERS IN THE FOLLOWING LINES  ######
 
 // Overlap mode shares the ESP8266 FLASH SPI bus with the TFT so has a performance impact
-// but saves pins for other functions.
-// Use NodeMCU SD0=MISO, SD1=MOSI, CLK=SCLK to connect to TFT in overlap mode
-
+// but saves pins for other functions. It is best not to connect MISO as some displays
+// do not tristate that line wjen chip select is high!
+// On NodeMCU 1.0 SD0=MISO, SD1=MOSI, CLK=SCLK to connect to TFT in overlap mode
+// On NodeMCU V3  S0 =MISO, S1 =MOSI, S2 =SCLK
 // In ESP8266 overlap mode the following must be defined
+
 //#define TFT_SPI_OVERLAP
 
 // In ESP8266 overlap mode the TFT chip select MUST connect to pin D3
@@ -201,14 +178,13 @@
 //#define TFT_WR 22    // Write strobe for modified Raspberry Pi TFT only
 
 // For the M5Stack module use these #define lines
-//#define TFT_MISO 19
-//#define TFT_MOSI 23
-//#define TFT_SCLK 18
-//#define TFT_CS   14  // Chip select control pin
-//#define TFT_DC   27  // Data Command control pin
-//#define TFT_RST  33  // Reset pin (could connect to Arduino RESET pin)
-//#define TFT_BL   32  // LED back-light (required for M5Stack)
-//#define TFT_LED   32  // LED back-light (required for M5Stack)
+#define TFT_MISO 38
+#define TFT_MOSI 23
+#define TFT_SCLK 18
+#define TFT_CS   5      // Chip select control pin
+#define TFT_DC   15     // Data Command control pin
+#define TFT_RST  -1     // Reset pin (could connect to Arduino RESET pin)
+#define TFT_BL   -1     // LED back-light (required for M5Stack)
 
 // ######       EDIT THE PINs BELOW TO SUIT YOUR ESP32 PARALLEL TFT SETUP        ######
 
@@ -282,15 +258,15 @@
 // #define SPI_FREQUENCY   5000000
 // #define SPI_FREQUENCY  10000000
 // #define SPI_FREQUENCY  20000000
-#define SPI_FREQUENCY  27000000 // Actually sets it to 26.67MHz = 80/3
-// #define SPI_FREQUENCY  40000000 // Maximum to use SPIFFS
+// #define SPI_FREQUENCY  27000000 // Actually sets it to 26.67MHz = 80/3
+#define SPI_FREQUENCY  40000000 // Maximum to use SPIFFS
 // #define SPI_FREQUENCY  80000000
 
 // Optional reduced SPI frequency for reading TFT
-#define SPI_READ_FREQUENCY  20000000
+#define SPI_READ_FREQUENCY  16000000
 
 // The XPT2046 requires a lower SPI clock rate of 2.5MHz so we define that here:
-#define SPI_TOUCH_FREQUENCY  2500000
+// #define SPI_TOUCH_FREQUENCY  2500000
 
 // The ESP32 has 2 free SPI ports i.e. VSPI and HSPI, the VSPI is the default.
 // If the VSPI port is in use and pins are not accessible (e.g. TTGO T-Beam)
@@ -308,3 +284,4 @@
 // so changing it here has no effect
 
 // #define SUPPORT_TRANSACTIONS
+#define USE_M5_FONT_CREATOR
