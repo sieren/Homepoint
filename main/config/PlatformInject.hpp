@@ -30,7 +30,7 @@
   {
     driver->begin(320000000);
   }; // Screen initialization routines
-  auto Updater = []() {}; // misc. hardware update operations. called from loop()
+  auto InitializePlatform = []() {};
 
 #elif defined(M5StackCore2)
   #include <tft/TFTM5StackDriver.hpp>
@@ -43,12 +43,14 @@
   };
   auto InitializeScreen = [](ScreenDriver* driver)
   {
-    M5.begin(true, false, false,/* I2C */ false);
-    M5.Axp.SetLDOEnable(3,0); // disable vibration motor
     driver->begin();
   };
-  auto Updater = []()
+  auto InitializePlatform = []()
   {
+    auto axp = AXP192();
+    axp.begin(kMBusModeOutput);
+    axp.SetLDOEnable(3,0); // disable vibration motor
+    M5Touch().begin();
   };
   
 #else // Touch Screen
@@ -68,7 +70,7 @@
   {
     driver->begin(320000000);
   }; // Screen initialization routines
-  auto Updater = []() {};
+  auto InitializePlatform = []() {};
 #endif                          
 
 using ImageWriter = gfx::util::PROGMEMIconDrawer<ScreenDriver>; // gfx::util::SPIFFSIconDrawer for SPIFFS only

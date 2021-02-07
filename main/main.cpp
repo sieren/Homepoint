@@ -38,6 +38,7 @@ extern "C"
     ESP_ERROR_CHECK(ret);
 
     initArduino();
+    InitializePlatform();
     Serial.begin(115200);
     setupApp();
   }
