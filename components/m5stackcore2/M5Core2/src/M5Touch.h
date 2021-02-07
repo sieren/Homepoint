@@ -228,9 +228,9 @@
 #ifndef _M5TOUCH_H_
 #define _M5TOUCH_H_
 
-#include <M5Display.h>
+// #include <M5Display.h>
 
-#include "utility/Config.h"  // Defines 'TFT', a pointer to the display
+// #include "utility/Config.h"  // Defines 'TFT', a pointer to the display
 #include "utility/PointAndZone.h"
 
 #define TOUCH_W 320

@@ -133,8 +133,8 @@
 #define _POINTANDZONE_H_
 
 #include <Arduino.h>
-#include <M5Display.h>        // so that we can get the rotation
-#include "utility/Config.h"   // Defines 'TFT', a pointer to the display
+// #include <M5Display.h>        // so that we can get the rotation
+// #include "utility/Config.h"   // Defines 'TFT', a pointer to the display
 
 #define INVALID_VALUE -32768
 #define PLUSMINUS 45  // default value for isDirectionTo
@@ -183,7 +183,6 @@ class Zone {
            int16_t w_ = 0 , int16_t h_ = 0, bool rot1_ = false);
   bool contains(const Point& p);
   bool contains(int16_t x, int16_t y);
-  void rotate(uint8_t m);
   int16_t x, y, w, h;
   bool rot1;
 };

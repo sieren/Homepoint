@@ -1,6 +1,7 @@
-#include <M5Core2.h>
-
-// M5Touch class
+#include <M5Touch.h>
+#include <Arduino.h>
+#include <Wire.h>
+#include <SPI.h>
 
 /* static */ M5Touch* M5Touch::instance;
 

@@ -6,9 +6,11 @@
  * https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html           *
  *----------------------------------------------------------------------*/
 #include "CommUtil.h"
-#include "../M5Core2.h"
+// #include "../M5Core2.h"
+#include <Wire.h>
+#include <SPI.h>
 
-extern M5Core2 M5;
+// extern M5Core2 M5;
 
 //debug for message of I2C ( bypass message to serial)
 //#define  I2C_DEBUG_TO_SERIAL
