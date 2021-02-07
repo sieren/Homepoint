@@ -19,6 +19,3 @@
 [submodule "main/libraries/TFT_eSPI"]
 	path = main/libraries/TFT_eSPI
 	url = https://github.com/Bodmer/TFT_eSPI.git
-[submodule "main/libraries/M5Core2"]
-	path = main/libraries/M5Core2
-	url = https://github.com/m5stack/M5Core2.git
