@@ -22,6 +22,3 @@
 [submodule "main/libraries/M5Core2"]
 	path = main/libraries/M5Core2
 	url = https://github.com/m5stack/M5Core2.git
-[submodule "components/m5stackcore2/M5Core2"]
-	path = components/m5stackcore2/M5Core2
-	url = https://github.com/m5stack/M5Core2.git

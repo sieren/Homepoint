@@ -1,0 +1,17 @@
+---
+
+# This is a clang-format config file. Run command below with this file in
+# one of the parent directories.
+#
+# 	clang-format -style=file -i <filename> (.cpp or .h)
+#
+# ( -i = in-place editing, without it formatted source goes to stdout )
+#
+# See https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+
+Language:        Cpp
+BasedOnStyle:  Google
+ReflowComments:  false
+SortIncludes:    false
+PointerAlignment: Left
+...
