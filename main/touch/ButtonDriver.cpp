@@ -1,5 +1,6 @@
 #include <touch/ButtonDriver.h>
-#include <config/Config.h>
+
+#include <config/HID_Config.h>
 
 // Specifically for M5Stack which uses Pull-Ups on buttons
 

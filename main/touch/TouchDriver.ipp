@@ -3,6 +3,7 @@
 
 #include "TouchDriver.h"
 #include "Arduino.h"
+#include <config/HID_Config.h>
 #include <tft/ScreenSaver.hpp>
 
 namespace gfx
