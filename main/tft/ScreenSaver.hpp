@@ -19,8 +19,6 @@ namespace gfx
         mpCtx(ctx)
       {
         mLastTouch = std::chrono::system_clock::now();
-        // pinMode(TFT_LED, OUTPUT);
-        // digitalWrite(TFT_LED, LOW);    // LOW to turn backlight on - pcb version 01-02-00
       }
 
       void operator()()
