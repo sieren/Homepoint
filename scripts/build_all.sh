@@ -79,7 +79,7 @@ mkdir M5StackCore2
 cp ../build/ota_data_initial.bin ./M5StackCore2/
 cp ../build/partition_table/partition-table.bin ./M5StackCore2/
 cp ../build/bootloader/bootloader.bin ./M5StackCore2/
-cp ../build/homepoint.bin .//
+cp ../build/homepoint.bin ./M5StackCore2
 cp ../build/spiffs.bin ./M5StackCore2
 cd M5Stack
 python ../merge_bin_esp.py --output_name homepoint_m5stackcore2_full.bin --bin_path partition-table.bin ota_data_initial.bin bootloader.bin homepoint.bin spiffs.bin --bin_address 0x8000 0xd000 0x1000 0x10000 0x2b0000
