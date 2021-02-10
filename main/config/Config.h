@@ -15,7 +15,7 @@ static const unsigned long MinsBeforeScreenSleep = 10; // Minutes before putting
 //                                                           
 //  
 
-#if defined(M5StackCore1) || defined(BUTTONSASS)
+#if defined(M5StackCore1) || defined(BUTTONS)
   // Define Button PINs
   #define BUTTON_A_PIN 39
   #define BUTTON_B_PIN 38
