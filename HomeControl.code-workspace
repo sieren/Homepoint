@@ -62,7 +62,27 @@
       "streambuf": "cpp",
       "system_error": "cpp",
       "thread": "cpp",
-      "cinttypes": "cpp"
+      "cinttypes": "cpp",
+      "bit": "cpp",
+      "bitset": "cpp",
+      "compare": "cpp",
+      "complex": "cpp",
+      "concepts": "cpp",
+      "map": "cpp",
+      "memory_resource": "cpp",
+      "netfwd": "cpp",
+      "random": "cpp",
+      "regex": "cpp",
+      "string": "cpp",
+      "iomanip": "cpp",
+      "iostream": "cpp",
+      "ranges": "cpp",
+      "shared_mutex": "cpp",
+      "stop_token": "cpp",
+      "variant": "cpp",
+      "forward_list": "cpp",
+      "set": "cpp",
+      "unordered_set": "cpp"
     }
 	}
 }

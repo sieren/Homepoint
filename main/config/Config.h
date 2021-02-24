@@ -1,7 +1,5 @@
 #pragma once
 
-#include <optional>
-
 static const unsigned long StatusBarUpdateInterval = 4; // update status bar every 10s to keep time up to date
 static const unsigned long MinsBeforeScreenSleep = 10; // Minutes before putting Screen to sleep
 
@@ -24,7 +22,7 @@ static const unsigned long MinsBeforeScreenSleep = 10; // Minutes before putting
   static const bool kDISPLAY_INVERTED = false; // Display color space inverted
   static const bool kTOUCH_X_AXIS_INVERTED = false;
   static const bool kTOUCH_Y_AXIS_INVERTED = true;
-  #define SCREEN_ROTATION_ANGLE 1
+  #define SCREEN_ROTATION_ANGLE 0
   static const bool ButtonsArePullUp = true;
 
 #elif defined(M5StackCore2)

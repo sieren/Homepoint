@@ -1,6 +1,10 @@
 #pragma once
 
 #include <stdint.h>
+extern "C"
+{
+  #include "lvgl.h"
+}
 
 namespace gfx
 {
