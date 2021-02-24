@@ -7,7 +7,7 @@ namespace mqtt
   {
     // comments are JSON type values
     MQTTSingleValue, // = single value
-    MQTTCombinedValues, // = two values in UI
+    MQTTCombinedJSONValues, // = two values in UI
     MQTTINVALID // Invalid Type
   };
 

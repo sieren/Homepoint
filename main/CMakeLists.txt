@@ -1,19 +1,16 @@
+# file(GLOB_RECURSE LVGL_SRC "libraries/lvgl/src/*.c")
 
-file(GLOB TFTESPI_SRC
-    "libraries/TFT_eSPI/*.cpp"
+file(GLOB FONTS_SRC
+    "config/font/*.c"
 )
 
-file(GLOB TFTEFEX_SRC
-    "libraries/TFT_eFEX/*.cpp"
-)
-
-file(GLOB JPEGDEC_SRC
-    "libraries/JPEGDecoder/src/*.cpp"
-    "libraries/JPEGDecoder/src/*.c"
+file(GLOB ICONS_BUILTIN_SRC
+    "ui/icons/*.c"
 )
 
 set(FS_SRC_PATH "fs")
 file(GLOB FS_SRC
+  "${FS_SRC_PATH}/spiffs_drv.c"
   "${FS_SRC_PATH}/ConfigReader.cpp"
   "${FS_SRC_PATH}/Filesystem.cpp"
 )
@@ -29,24 +26,17 @@ file(GLOB NTP_SRC
 )
 
 set(TOUCH_SRC_PATH "touch")
-if(BUTTONS OR BOARD STREQUAL "M5STACK")
-set(TOUCH_SRC
-  "${TOUCH_SRC_PATH}/ButtonDriver.cpp"
-)
-endif(BUTTONS OR BOARD STREQUAL "M5STACK")
-
 set(TOUCH_SRC
   ${TOUCH_SRC}
 )
 
 set(UI_SRC_PATH "ui")
 file(GLOB UI_SRC
-    "${UI_SRC_PATH}/UIButton.cpp"
-    "${UI_SRC_PATH}/UIMosaicMenuWidget.cpp"
-    "${UI_SRC_PATH}/UIPageButton.cpp"
-    "${UI_SRC_PATH}/UISensorComboWidget.cpp"
-    "${UI_SRC_PATH}/UIStatusBarWidget.cpp"
-    "${UI_SRC_PATH}/UIWidget.cpp"
+    "${UI_SRC_PATH}/UIMenuBar.cpp"
+    "${UI_SRC_PATH}/UIMosaicButton.cpp"
+    "${UI_SRC_PATH}/UISensorComboButton.cpp"
+    "${UI_SRC_PATH}/UISwitchDeviceButton.cpp"
+    "${UI_SRC_PATH}/UIStatusBar.cpp"
 )
 
 set(UIINCLUDES
@@ -72,20 +62,13 @@ file(GLOB WEB_SRC
 
 set(GLOBALINCLUDES
   "./"
-  PARENT_SCOPE
-)
-
-set(LIBRARY_SRC
-    ${JPEGDEC_SRC}
-)
-
-set(PLATFORM_SRC
-    ${TFTESPI_SRC}
-    ${TFTEFEX_SRC}
+  "./config/"
 )
 
 set(COMPONENT_SRCS 
+    ${FONTS_SRC}
     "AppContext.cpp"
+    "AppNewScreen.cpp"
     "main.cpp"
     ${FS_SRC}
     ${UI_SRC}
@@ -94,36 +77,27 @@ set(COMPONENT_SRCS
     ${TOUCH_SRC}
     ${WEB_SRC}
     ${WIFI_SRC}
-    ${LIBRARY_SRC}
+    ${ICONS_BUILTIN_SRC}
 )
 
 set_property(SOURCE ${LIBRARY_SRC} PROPERTY COMPILE_FLAGS "-Wno-all -Wno-shift-negative-value -Wno-cpp")
-
-  set(PLATFORM_INCLUDES
-      "libraries/TFT_eSPI/"
-      "libraries/TFT_eFEX/"
-  )
   
-  set(COMPONENT_ADD_INCLUDEDIRS
-      "."
-      ${UIINCLUDES}
-      "libraries/JPEGDecoder/src"
-      "libraries/rapidjson/include/"
-  )
+set(COMPONENT_ADD_INCLUDEDIRS
+  "."
+  ${UIINCLUDES}
+  ${GLOBALINCLUDES}
+  "libraries/rapidjson/include/"
+)
 
 if(BOARD STREQUAL "M5STACKCORE2")
   message(STATUS "Compiling for M5Stack Core2")
   list(APPEND priv_requires m5stackcore2)
 endif(BOARD STREQUAL "M5STACKCORE2")
 
-  set(PLATFORM_INCLUDES
-      "libraries/TFT_eSPI/"
-      "libraries/TFT_eFEX/"
-  )
-
   set(COMPONENT_SRCS
     ${COMPONENT_SRCS}
     ${PLATFORM_SRC}
+    "config/PlatformM5StackCore2Helpers.c"
   )
 
   set(COMPONENT_ADD_INCLUDEDIRS
@@ -135,6 +109,8 @@ endif(BOARD STREQUAL "M5STACKCORE2")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTOUCH_CS -fconcepts -Wno-shift-negative-value -Wno-cpp")
 
 register_component()
+
+target_compile_definitions(${COMPONENT_LIB} PUBLIC "-DLV_LVGL_H_INCLUDE_SIMPLE")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DESP32")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DESP32")
@@ -157,8 +133,8 @@ endif(BOARD STREQUAL "M5STACK")
 if(BOARD STREQUAL "M5STACKCORE2")
   message(STATUS "Compiling for M5Stack Core2")
   list(APPEND compile_definitions "M5StackCore2")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DM5StackCore2")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DM5StackCore2")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCONFIG_LV_TFT_DISPLAY_PROTOCOL_SPI -DCONFIG_LV_TFT_DISPLAY_CONTROLLER_ILI9341 -DM5StackCore2 -DTFT_WIDTH=320 -DTFT_HEIGHT=240 -DLV_HIGH_RESOURCE_MCU=1 -DLV_CONF_INCLUDE_SIMPLE")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  ${CMAKE_C_FLAGS} -DM5StackCore2")
   file(COPY ${CMAKE_SOURCE_DIR}/main/config/TFT_eSPI/M5StackCore2/User_Setup.h
     DESTINATION ${CMAKE_SOURCE_DIR}/main/libraries/TFT_eSPI)
 endif(BOARD STREQUAL "M5STACKCORE2")

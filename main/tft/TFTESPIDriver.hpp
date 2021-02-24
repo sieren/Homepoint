@@ -10,25 +10,54 @@
 #include <string>
 #include <vector>
 
+#include "lv_conf.h"
+#include "lvgl.h"
+
+
 namespace gfx
 {
 namespace driver
 {
+  static TFT_eSPI tft_espi(TFT_WIDTH,TFT_HEIGHT); 
   class TFTESPI
   {
     public:
-      TFTESPI(int width, int height) :
-        mDriver(height, width),
-        mSprite(&mDriver),
-        mEfx(&mDriver),
-        mWidth(width),
-        mHeight(height)
+      TFTESPI() :
+        mSprite(&tft_espi),
+        mEfx(&tft_espi),
+        mWidth(320),
+        mHeight(270)
       {};
 
-      void begin(int freq = 0)
+      void begin()
       {
-        mDriver.init();
-        mSprite.setColorDepth(8);
+
+      }
+  
+      void init(int rotation, bool isInverted)
+      {
+     //   tft_espi.initDMA(); 
+
+        // tft_espi.begin();
+        // tft_espi.setSwapBytes(true);
+        // tft_espi.setRotation(rotation);
+        // tft_espi.invertDisplay(isInverted);
+      }
+
+      static void flush(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * color_p)
+      {
+        size_t len = lv_area_get_size(area);
+        tft_espi.startWrite();                                      /* Start new TFT transaction */
+        tft_espi.setWindow(area->x1, area->y1, area->x2, area->y2); /* set the working window */
+        #ifdef USE_DMA_TO_TFT
+        tft_espi.pushPixelsDMA((uint16_t *)color_p, len); /* Write words at once */
+        #else
+        tft_espi.pushPixels((uint16_t *)color_p, len); /* Write words at once */
+        #endif
+        tft_espi.endWrite(); /* terminate TFT transaction */
+  Serial.println("Flushed");
+        /* Tell lvgl that flushing is done */
+        lv_disp_flush_ready(disp);
       }
 
       void createSprite(Frame frame, Color background)
@@ -49,12 +78,12 @@ namespace driver
 
       void setRotation(int rot)
       {
-        mDriver.setRotation(rot);
+        tft_espi.setRotation(rot);
       }
 
       void setDisplayInverted(bool inverted)
       {
-        mDriver.invertDisplay(inverted);
+        tft_espi.invertDisplay(inverted);
       }
 
       void drawRect(Frame frame, Color color)
@@ -69,7 +98,7 @@ namespace driver
 
       void drawDirectLine(int32_t x0, int32_t y0, int32_t x1, int32_t y1, Color lineColor)
       {
-        mDriver.drawLine(x0, y0, x1, y1, lineColor.getColorInt());
+        tft_espi.drawLine(x0, y0, x1, y1, lineColor.getColorInt());
       }
 
       void drawJpg(const std::string filePath, const Point position)
@@ -101,7 +130,7 @@ namespace driver
     
       void setFreeFont(const GFXfont *font)
       {
-        mDriver.setFreeFont(font);
+        tft_espi.setFreeFont(font);
       }
 
       auto getTextWidth(const std::string textString) -> int16_t
@@ -141,16 +170,15 @@ namespace driver
     
       TFT_eSPI* getTouchDriverRef()
       {
-        return &mDriver;
+        return &tft_espi;
       }
 
       void writeCommand(uint8_t command)
       {
-        mDriver.writecommand(command);
+        tft_espi.writecommand(command);
       }
 
     private:
-      TFT_eSPI mDriver;
       TFT_eSprite mSprite;
       TFT_eFEX mEfx;
       int mWidth;

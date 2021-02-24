@@ -1,10 +1,14 @@
 #pragma once
-#include <AppScreen.hpp>
+#include <AppNewScreen.h>
 #include <config/Icon.hpp>
 #include <mqtt/MQTTSensorGroup.hpp>
-#include <ui/UIButton.h>
-#include <ui/UISensorComboWidget.h>
-#include <ui/UIWidget.hpp>
+#include <mqtt/MQTTSensorTypes.hpp>
+#include <ui/UIMosaicButton.h>
+#include <ui/UISensorComboButton.h>
+
+#include <lvgl.h>
+
+#include <vector>
 
 namespace gfx
 {
@@ -13,109 +17,126 @@ namespace util
   template<typename ScreenType>
   struct UISceneButtonBuilder
   {
-    auto operator()(MQTTSwitchGroupPtr ptr, ScreenType screen) -> std::shared_ptr<UIButton>
+    auto operator()(MQTTSwitchGroupPtr ptr, ScreenType screen, lv_obj_t* pParent)
+      -> std::shared_ptr<UIMosaicButton>
     {
-      auto button = std::make_shared<UIButton>(&(screen->mTft), Frame(), ptr->groupId);
-      button->setBackgroundColor(Color::InactiveBgColor());
-      button->setLabel(ptr->sceneName);
+      auto button = std::make_shared<UIMosaicButton>(pParent, ptr->sceneName);
+      const auto groupId = ptr->groupId;
+      button->setupButton();
+      button->setTextLabel(ptr->sceneName);
 
-      const auto icons = GetIconFileNames(ptr->iconName);
+      const auto imageName = ptr->iconName;
       const auto state = ptr->currentState();
       // Switch Textlabel color based on if some or all devices are on.
-      using namespace mqtt;
-      const auto textColor = (state == MQTTSwitchGroupState::Some ||
-        state == MQTTSwitchGroupState::All) ? Color::ActiveBgColor() : Color::InactiveTextColor();
-      const auto imagePath = ptr->isActive() ? icons.first : icons.second;
-      button->setImage(imagePath);
-      button->setTextColor(textColor);
-      button->setMoreIndicator(ptr->mDevices.size() > 1);
-      auto& context = screen->mpAppContext;
-      button->addTargetAction([ptr, context](const uint16_t id) {
+      button->setImage(imageName);
+      button->setState(state);
+      const auto ctx = screen->mpAppContext;
+      button->addTargetLongPressAction([ptr, ctx](const uint16_t id) {
         const bool isActive =  ptr->isActive();
-        context->getMQTTConnection()->switchScene(id, !isActive);
+        ctx->getMQTTConnection()->switchScene(id, !isActive);
       });
-      button->addTargetLongPressAction([screen](const uint16_t id)
+      button->addTargetAction([screen, groupId](const uint16_t id)
       {
-        screen->presentScreen(id);
+        screen->presentTilesForScene(groupId);
       });
-      auto& screenSaver = screen->mScreenSaver; 
-      ptr->mSetNeedsUpdateCB = [ptr, weakBtn = std::weak_ptr<UIButton>(button), &screenSaver, icons]() {
+  
+      ptr->mSetNeedsUpdateCB = [ptr, weakBtn = std::weak_ptr<UIMosaicButton>(button)]() {
         using namespace mqtt;
         const auto state = ptr->currentState();
-        // Switch Textlabel color based on if some or all devices are on.
-        const auto textColor = (state == MQTTSwitchGroupState::Some ||
-          state == MQTTSwitchGroupState::All) ? Color::ActiveBgColor() : Color::InactiveTextColor();
-        // Image will only change color when all devices are on.
-        const auto imagePath = ptr->isActive() ? icons.first : icons.second;
         auto button = weakBtn.lock();
         if (!button)
         {
           return;
         }
-        button->setTextColor(textColor);
-        button->setImage(imagePath);
-        screenSaver.activate();
+        button->setState(state);
       };
       return button;
     };
 
-    auto operator()(MQTTSensorGroupPtr ptr, ScreenType screen) -> std::shared_ptr<UIWidget>
+    auto operator()(MQTTSensorGroupPtr ptr, ScreenType screen, lv_obj_t* pParent) -> std::shared_ptr<UIMosaicButton>
     {
-      auto button = std::make_shared<UISensorComboWidget>(&(screen->mTft), Frame(), ptr->groupId);
-      button->setLabel(ptr->sceneName);
-      button->setTextColor(Color::WhiteColor());
+      const bool hasMultipleSensors = isMultiSensor(ptr);
+      auto button = std::make_shared<UISensorComboButton>(pParent, ptr->sceneName, ptr->groupId, hasMultipleSensors);
+      button->setupButton();
+      button->setTextLabel(ptr->sceneName);
       setMultiSensorStates(ptr, button);
-      ptr->mSetNeedsUpdateCB = [ptr, weakBtn = std::weak_ptr<UISensorComboWidget>(button)]() {
-        const auto textColor = Color::InactiveTextColor();
+      ptr->mSetNeedsUpdateCB = [ptr, weakBtn = std::weak_ptr<UISensorComboButton>(button)]() {
         auto button = weakBtn.lock();
         if (!button)
         {
           return;
         }
-        button->setTextColor(textColor);
 
         setMultiSensorStates(ptr, button);
       };
       return button;
     };
 
-    std::shared_ptr<UIButton> operator()(auto ptr, ScreenType screen)
+    std::shared_ptr<UIMosaicButton> operator()(auto ptr, ScreenType screen, lv_obj_t* pParent)
     {
       // NO OP, means unimplemented handler
       // TODO: Abort or crash instead
-      std::shared_ptr<UIButton> button = std::make_shared<UIButton>(&(screen->mTft), Frame(), 999999);
+      std::shared_ptr<UIMosaicButton> button = std::make_shared<UIMosaicButton>(pParent, "");
       return button;
     };
 
-    // Helper
+    static bool isMultiSensor(auto ptr)
+    {
+      using namespace mqtt;
+      if (ptr->mSensorDevices.size() > 1) { return true; }
+      for (auto& sensor : ptr->mSensorDevices)
+      {
+        switch(sensor.second.sensorType)
+        {
+          case MQTTSensorType::MQTTCombinedJSONValues:
+          {
+            return true;
+            break;
+          }
 
+          case MQTTSensorType::MQTTSingleValue:
+          {
+            return false;
+            break;
+          }
+
+          default:
+            return false;
+            break;
+        }
+      }
+      return false;
+    };
+
+    // Helper
     static void setMultiSensorStates(auto ptr, auto button)
     {
       using namespace mqtt::util;
       using namespace mqtt;
       button->eraseValues();
+      std::vector<std::pair<UISensorComboButton::ImagePath, UISensorComboButton::ValueType>> valuePairs;
       for (auto& sensor : ptr->mSensorDevices)
       {
         switch(sensor.second.sensorType)
         {
-          case MQTTSensorType::MQTTCombinedValues:
+          case MQTTSensorType::MQTTCombinedJSONValues:
           {
             const auto firstValue = sensor.second.getFirstValue();
             const auto secondValue = sensor.second.getSecondValue();
 
-            const auto firstValueIcon = util::GetIconFilePath(sensor.second.firstIconName);
+            const auto firstValueIcon = sensor.second.firstIconName;
             const auto secondValueIcon = sensor.second.secondIconName.has_value() ?
-              util::GetIconFilePath(*sensor.second.secondIconName) : firstValueIcon; // fallback
-            button->setImageWithValue({firstValueIcon, firstValue});
-            button->setImageWithValue({secondValueIcon, secondValue});
+              *sensor.second.secondIconName : firstValueIcon; // fallback
+            valuePairs.push_back({firstValueIcon, firstValue});
+            valuePairs.push_back({secondValueIcon, secondValue});
             break;
           }
 
           case MQTTSensorType::MQTTSingleValue:
           {
             const auto firstValue = sensor.second.getFirstValue();
-            const auto firstValueIcon = util::GetIconFilePath(sensor.second.firstIconName);
-            button->setImageWithValue({firstValueIcon, firstValue});
+            const auto firstValueIcon = sensor.second.firstIconName;
+            valuePairs.push_back({firstValueIcon, firstValue});
             break;
           }
 
@@ -123,6 +144,7 @@ namespace util
             break;
         }
       }
+      button->updateImageWithValue(valuePairs);
     }
   };
 } // namespace util

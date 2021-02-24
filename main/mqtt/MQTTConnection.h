@@ -44,7 +44,9 @@ namespace mqtt
       void eventCallback(esp_mqtt_event_handle_t event);
       MQTTConnectionStatus getLastState();
 
-      void registerConnectionStatusCallback(MQTTConnectionCB cb);
+      Dispatcher<MQTTConnectionStatus>::CBID registerConnectionStatusCallback(MQTTConnectionCB cb);
+      void deleteCallback(Dispatcher<MQTTConnectionStatus>::CBID callbackId);
+
     private:
       void updateScenes(esp_mqtt_event_handle_t event);
       MQTTConfig mConfig;

@@ -30,7 +30,8 @@ namespace ctx
       void connect(const std::string ssid, const std::string passwd,
         const std::optional<std::string> hostname);
       void disconnect();
-      void registerCallback(WifiConnectionStateCB callback);
+      Dispatcher<WifiConnectionState>::CBID registerCallback(WifiConnectionStateCB callback);
+      void deleteCallback(Dispatcher<WifiConnectionState>::CBID callback);
 
       std::string getIpAddrStr() const;
       WifiConnectionState getWifiState();
@@ -43,6 +44,7 @@ namespace ctx
       std::string mSSID;
       std::string mPassword;
       std::optional<std::string> mHostname;
+      WifiConnectionState mLastState;
       wificallback_t mWifiCallback; // Need to store so doesnt go out of scope in C land
   };
 } // namespace ctx

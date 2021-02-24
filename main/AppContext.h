@@ -28,7 +28,7 @@ namespace ctx
       AppContext() = default;
       void setup();
 
-      WifiContext& getWifiContext() { return mWifiContext; };
+      std::shared_ptr<WifiContext> getWifiContext() { return mpWifiContext; };
       model::Model& getModel() { return mModel; }
       std::shared_ptr<mqtt::MQTTConnection> getMQTTConnection() { return mpMQTTConnection; };
       std::vector<MQTTVariants> &getMQTTGroups();
@@ -36,7 +36,8 @@ namespace ctx
       void connectionStateChanged(ctx::WifiConnectionState state);
       void setFirstLaunch(const WifiCredentials credentials,
         const std::string login, const std::string username);
-      void registerStateCallback(AppStateCB callback);
+      Dispatcher<ctx::ContextState>::CBID registerStateCallback(AppStateCB callback);
+      void deleteStateCallback(Dispatcher<ctx::ContextState>::CBID callback);
 
     private: 
       void connectWireless();
@@ -45,7 +46,7 @@ namespace ctx
       std::shared_ptr<ntp::NTPSync> mNTPSync;
       std::unique_ptr<wifi::CaptiveServer> mpCaptiveServer;
       std::unique_ptr<web::WebServer> mpWebServer;
-      WifiContext mWifiContext;
+      std::shared_ptr<WifiContext> mpWifiContext;
       rapidjson::Document mConfigDocument;
       model::Model mModel;
   };

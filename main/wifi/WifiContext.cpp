@@ -9,7 +9,6 @@ extern "C"
 #include "esp_system.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
-#include "esp_event_loop.h"
 #include "esp_log.h"
 
 #include "nvs_flash.h"
@@ -70,9 +69,14 @@ namespace ctx
 
   }
 
-  void WifiContext::registerCallback(WifiConnectionStateCB callback)
+  Dispatcher<WifiConnectionState>::CBID WifiContext::registerCallback(WifiConnectionStateCB callback)
   {
-    mWifiStateNotifier.addCB(callback);
+    return mWifiStateNotifier.addCB(callback);
+  }
+
+  void WifiContext::deleteCallback(Dispatcher<WifiConnectionState>::CBID callback)
+  {
+    mWifiStateNotifier.delCB(callback);
   }
 
   std::string WifiContext::getIpAddrStr() const
@@ -116,9 +120,13 @@ namespace ctx
              mSSID.c_str(), mPassword.c_str());
   }
 
+  WifiConnectionState WifiContext::getWifiState()
+  {
+    return mLastState;
+  }
+
   void WifiContext::wifiStateChanged(WifiAssociationState state)
   {
-    WifiConnectionState wifiConnState;
     if (mHostname.has_value() && state == WifiAssociationState::READY) {
       esp_err_t err;
       if ((err = tcpip_adapter_set_hostname(TCPIP_ADAPTER_IF_STA, (*mHostname).c_str())) != ESP_OK)
@@ -127,10 +135,10 @@ namespace ctx
       }
     }
     if (state == WifiAssociationState::CONNECTED) {
-      wifiConnState.ipAddr = getIpAddrStr();
+      mLastState.ipAddr = getIpAddrStr();
     }
-    wifiConnState.wifiState = state;
-    mWifiStateNotifier.broadcast(wifiConnState);
+    mLastState.wifiState = state;
+    mWifiStateNotifier.broadcast(mLastState);
   }
 
 } // namespace ctx

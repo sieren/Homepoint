@@ -2,7 +2,6 @@
 
 #include <AppContext.h>
 #include <config/PlatformInject.hpp>
-#include <touch/TouchTypes.hpp>
 
 #include <chrono>
 #include <memory>

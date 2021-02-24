@@ -115,6 +115,10 @@ namespace mqtt
 
   void MQTTConnection::switchScene(const uint16_t id, bool on)
   {
+    if (mLastState != MQTTConnectionStatus::CONNECTED)
+    {
+      return;
+    }
     auto scene = std::find_if(mMQTTScenes.begin(), mMQTTScenes.end(), [&id](auto& ele)
     {
       return std::visit([&id](auto&& elem) { return elem->groupId == id; }, ele);
@@ -179,9 +183,14 @@ namespace mqtt
     }
   }
 
-  void MQTTConnection::registerConnectionStatusCallback(MQTTConnectionCB cb)
+  Dispatcher<MQTTConnectionStatus>::CBID MQTTConnection::registerConnectionStatusCallback(MQTTConnectionCB cb)
   {
-    mConnectionStatusNotifier.addCB(cb);
+    return mConnectionStatusNotifier.addCB(cb);
+  }
+
+  void MQTTConnection::deleteCallback(Dispatcher<MQTTConnectionStatus>::CBID callbackId)
+  {
+    mConnectionStatusNotifier.delCB(callbackId);
   }
 
   MQTTConnectionStatus MQTTConnection::getLastState()

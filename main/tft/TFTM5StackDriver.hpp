@@ -2,7 +2,7 @@
 
 //#include <SPI.h>
 #define GFXFF 1
-#include <AXP192.h>
+
 #include "TFT_eSPI.h"
 #include "TFT_eFEX.h"
 #include <M5TouchAdapter.h>
@@ -29,13 +29,13 @@ namespace driver
 
       void begin(int freq = 0)
       {
-        mDriver.begin();
+        // mDriver.begin();
         #define BLK_PWM_CHANNEL 7
         // Init the back-light LED PWM
         ledcSetup(BLK_PWM_CHANNEL, 44100, 8);
         ledcAttachPin(TFT_BL, BLK_PWM_CHANNEL);
         ledcWrite(BLK_PWM_CHANNEL, 80);
-        mSprite.setColorDepth(8);
+     //   mSprite.setColorDepth(8);
       }
 
       void createSprite(Frame frame, Color background)
