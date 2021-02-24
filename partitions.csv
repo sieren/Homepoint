@@ -5,4 +5,4 @@ otadata,  data, ota,     0xd000,  0x2000,
 phy_init, data, phy,     0xf000,  0x1000,
 ota_0,  app,  ota_0, 0x10000, 0x150000,
 ota_1,  app,  ota_1, 0x160000, 0x150000,
-spiffs,  data, spiffs,  , 500K
+spiffs,  data, spiffs,  , 1000K
