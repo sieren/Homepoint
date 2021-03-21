@@ -74,7 +74,9 @@
     digitalWrite(TFT_LED, LOW);    // LOW to turn backlight on - pcb version 01-02-00
     driver->begin(320000000);
   }; // Screen initialization routines
-  auto InitializePlatform = []() {};
+  auto InitializePlatform = []() {
+    ledcAttachPin(21,0);
+  };
 #endif                          
 
 using ImageWriter = gfx::util::PROGMEMIconDrawer<ScreenDriver>; // gfx::util::SPIFFSIconDrawer for SPIFFS only
