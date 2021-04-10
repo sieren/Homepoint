@@ -38,7 +38,19 @@ static const unsigned long MinsBeforeScreenSleep = 10; // Minutes before putting
   static const bool kTOUCH_Y_AXIS_INVERTED = false;
   #define SCREEN_ROTATION_ANGLE 1
   static const bool ButtonsArePullUp = false;
-  
+
+#elif defined(AZTOUCHMOD)
+  // Define Button PINs
+  #define BUTTON_A_PIN 0 // unused
+  #define BUTTON_B_PIN 0 // unused
+  #define BUTTON_C_PIN 0 // unused
+  static const bool kLED_PIN_INVERTED = false;
+  static const bool kDISPLAY_INVERTED = false; // Display color space inverted
+  static const bool kTOUCH_X_AXIS_INVERTED = true;
+  static const bool kTOUCH_Y_AXIS_INVERTED = false;
+  #define SCREEN_ROTATION_ANGLE 3
+  static const bool ButtonsArePullUp = false;
+
 #else // Touch Screen
   #define BUTTON_A_PIN 0 // unused
   #define BUTTON_B_PIN 0 // unused
