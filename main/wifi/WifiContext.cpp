@@ -39,8 +39,8 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         callback(ctx::WifiAssociationState::CONNECTING);
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
-        ESP_LOGI(TAG, "got ip:%s",
-                 ip4addr_ntoa(&event->ip_info.ip));
+        ESP_LOGI(TAG, "got ip:" IPSTR "\n",
+                 IP2STR(&event->ip_info.ip));
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
         callback(ctx::WifiAssociationState::CONNECTED);
     }
@@ -112,7 +112,7 @@ namespace ctx
     strcpy(reinterpret_cast<char*>(wifi_config.sta.password), mPassword.c_str());
 
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA) );
-    ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) );
+    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
     ESP_ERROR_CHECK(esp_wifi_start() );
 
     ESP_LOGI(TAG, "wifi_init_sta finished.");

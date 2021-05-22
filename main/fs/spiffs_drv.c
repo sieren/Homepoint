@@ -136,7 +136,7 @@ void spiffs_drv_init()
   drv.seek_cb = my_seek_cb;                 /*Callback to seek in a file (Move cursor) */
   drv.tell_cb = my_tell_cb;                 /*Callback to tell the cursor position  */
   drv.size_cb = my_size_cb;
-   ESP_LOGE(TAG, "FS init");
+  ESP_LOGE(TAG, "FS init");
   lv_fs_drv_register(&drv);                 /*Finally register the drive*/
-   ESP_LOGE(TAG, "FS done");
+  ESP_LOGE(TAG, "FS done");
 }

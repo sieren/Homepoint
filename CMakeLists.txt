@@ -9,7 +9,7 @@ list(APPEND compile_definitions "ARDUINO=202000")
 # Ignore warning in Azure IoT Library in esp32 Arduino
 # pending PR: https://github.com/VSChina/ESP32_AzureIoT_Arduino/pull/15
 list(APPEND compile_options "-Wno-maybe-uninitialized")
-list(APPEND EXTRA_COMPONENT_DIRS components/lvgl_esp32_drivers components/lvgl_esp32_drivers/lvgl_touch components/lvgl_esp32_drivers/lvgl_tft)
+list(APPEND EXTRA_COMPONENT_DIRS components/esp-rainmaker/components/ components/lvgl_esp32_drivers components/lvgl_esp32_drivers/lvgl_touch components/lvgl_esp32_drivers/lvgl_tft)
 
 
 project(homepoint)

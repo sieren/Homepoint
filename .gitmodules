@@ -22,3 +22,9 @@
 [submodule "components/esp_i2c_helper"]
 	path = components/esp_i2c_helper
 	url = https://github.com/tuupola/esp_i2c_helper.git
+[submodule "components/esp-rainmaker"]
+	path = components/esp-rainmaker
+	url = https://github.com/espressif/esp-rainmaker.git
+[submodule "components/esp_littlefs"]
+	path = components/esp_littlefs
+	url = https://github.com/joltwallet/esp_littlefs.git
