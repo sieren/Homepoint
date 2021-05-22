@@ -37,6 +37,7 @@ file(GLOB UI_SRC
     "${UI_SRC_PATH}/UISensorComboButton.cpp"
     "${UI_SRC_PATH}/UISwitchDeviceButton.cpp"
     "${UI_SRC_PATH}/UIStatusBar.cpp"
+    "${UI_SRC_PATH}/Styles.cpp"
 )
 
 set(UIINCLUDES

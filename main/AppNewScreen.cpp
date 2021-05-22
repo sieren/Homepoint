@@ -1,4 +1,5 @@
 #include "AppNewScreen.h"
+#include <ui/Styles.h>
 #include <config/PlatformInject.hpp>
 #include <util/varianthelper.hpp>
 /// Additional LVGL Custom Drivers
@@ -68,15 +69,6 @@ namespace gfx
     ESP_ERROR_CHECK(esp_timer_create(&periodic_timer_args, &periodic_timer));
     ESP_ERROR_CHECK(esp_timer_start_periodic(periodic_timer, LV_TICK_PERIOD_MS * 1000));
 
-    lv_style_init(&mainStyle);
-    lv_style_set_border_width(&mainStyle, LV_STATE_DEFAULT, 0);
-    lv_style_set_pad_inner(&mainStyle, LV_STATE_DEFAULT, 0);
-    lv_style_set_pad_left(&mainStyle, LV_STATE_DEFAULT, 0);
-    lv_style_set_pad_right(&mainStyle, LV_STATE_DEFAULT, 0);
-    lv_style_set_bg_color(&mainStyle, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-    lv_style_set_text_color(&mainStyle, LV_STATE_DEFAULT, LV_COLOR_WHITE);
-    lv_obj_report_style_mod(&mainStyle);
-
     using namespace std::placeholders;
     mpAppContext->registerStateCallback(std::bind(&AppNewScreen::appContextChanged, this, _1));
     Serial.println("Done setting up the GUI");
@@ -88,7 +80,7 @@ namespace gfx
     lv_cont_set_layout(screen, LV_LAYOUT_COLUMN_MID);
     lv_obj_set_style_local_bg_color (screen, LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
 	  lv_obj_set_style_local_bg_opa( screen, LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_COVER); 
-    lv_obj_add_style(screen, LV_OBJ_PART_MAIN, &mainStyle);
+    lv_obj_add_style(screen, LV_OBJ_PART_MAIN, &Styles::getInstance().mainStyle);
     if (!mpStatusBar)
     {
       mpStatusBar = std::make_shared<UIStatusBar>(
@@ -191,7 +183,7 @@ namespace gfx
   lv_obj_t* AppNewScreen::createTabOverview(lv_obj_t* pParent)
   {
       lv_obj_t* tabView = lv_tabview_create(pParent, NULL);
-      lv_obj_add_style(tabView, LV_TABVIEW_PART_BG, &mainStyle);
+      lv_obj_add_style(tabView, LV_TABVIEW_PART_BG, &Styles::getInstance().mainStyle);
       lv_tabview_set_btns_pos(tabView, LV_TABVIEW_TAB_POS_NONE);
       return tabView;
   }
@@ -203,7 +195,7 @@ namespace gfx
     lv_obj_set_style_local_pad_right(tab, LV_TABVIEW_PART_BG_SCROLLABLE , LV_STATE_DEFAULT, 0);
     lv_obj_set_style_local_pad_top(tab, LV_TABVIEW_PART_BG_SCROLLABLE , LV_STATE_DEFAULT, 0);
     lv_obj_set_style_local_pad_bottom(tab, LV_TABVIEW_PART_BG_SCROLLABLE , LV_STATE_DEFAULT, 0);
-    lv_obj_add_style(tab, LV_PAGE_PART_SCROLLABLE, &mainStyle);
+    lv_obj_add_style(tab, LV_PAGE_PART_SCROLLABLE, &Styles::getInstance().mainStyle);
     return tab;
   }
 
@@ -214,7 +206,7 @@ namespace gfx
     lv_obj_set_size(pButtonCont, lv_obj_get_width(pParent), lv_obj_get_height(pParent));
     lv_obj_set_auto_realign(pButtonCont, true);     
     lv_cont_set_fit2(pButtonCont, LV_FIT_MAX, LV_FIT_NONE);
-    lv_obj_add_style(pButtonCont, LV_OBJ_PART_MAIN, &mainStyle);
+    lv_obj_add_style(pButtonCont, LV_OBJ_PART_MAIN, &Styles::getInstance().mainStyle);
     lv_page_glue_obj(pButtonCont, true);
     lv_obj_set_style_local_pad_top(pButtonCont, LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, 0);
     return pButtonCont;

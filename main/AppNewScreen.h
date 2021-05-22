@@ -11,8 +11,6 @@
 
 #include <lvgl.h>
 
-static lv_style_t mainStyle;
-
 namespace gfx
 {
   class AppNewScreen : public std::enable_shared_from_this<AppNewScreen>
