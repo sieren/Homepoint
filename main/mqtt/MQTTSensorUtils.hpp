@@ -26,7 +26,7 @@ namespace util
   {
     // map JSON Keys to Enum
     if (typeName == "singleValue") { return MQTTSensorType::MQTTSingleValue; }
-    if (typeName == "combinedValues") { return MQTTSensorType::MQTTCombinedValues; }
+    if (typeName == "combinedValues") { return MQTTSensorType::MQTTCombinedJSONValues; }
     return MQTTSensorType::MQTTINVALID;
   }
 

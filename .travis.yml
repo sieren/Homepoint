@@ -21,12 +21,13 @@ install:
   # Get required packages - already done above, see addons: apt: packages:
   # - sudo apt-get install git wget make libncurses-dev flex bison gperf python python-serial
   # Prepare directory for the toolchain
+  - python3 -m pip || wget -qO- https://bootstrap.pypa.io/pip/3.5/get-pip.py | python3
   - mkdir -p ~/esp
   - cd ~/esp
   # Get ESP-IDF from github
   - git clone --recursive https://github.com/espressif/esp-idf.git
   - cd esp-idf
-  - git checkout release/v4.0
+  - git checkout cf457d41
   - git submodule update --init --recursive
   - export IDF_PATH=~/esp/esp-idf
   - ./install.sh
@@ -55,7 +56,5 @@ script:
   # Update configuration so that kconfig doesn't start interactive mode
   - mkdir build
   - cd build
-  - cmake ../
-  - make -j 8
-  - cmake -DBOARD=M5STACK ../
+  - cmake -DBOARD=M5STACKCORE2 ../
   - make -j 8

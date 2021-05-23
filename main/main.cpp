@@ -4,7 +4,7 @@
 #include <SPI.h>
 #include <config/Config.h>
 #include <fs/ConfigReader.hpp>
-#include "AppScreen.hpp"
+#include "AppNewScreen.h"
 
 #include <memory>
 
@@ -21,7 +21,7 @@ TaskHandle_t runLoopHandle = NULL;
 bool loopTaskWDTEnabled = false; // Enable if watchdog running
 
 std::shared_ptr<ctx::AppContext> mpAppContext(new ctx::AppContext());
-gfx::AppScreen<ScreenDriver, NavigationDriver> mScreen(mpAppContext);
+gfx::AppNewScreen mScreen(mpAppContext);
 
 extern "C" 
 {
@@ -38,33 +38,36 @@ extern "C"
     ESP_ERROR_CHECK(ret);
 
     initArduino();
-    InitializePlatform();
     Serial.begin(115200);
+    InitializePlatform();
     setupApp();
   }
 
   void setupApp()
   {
-    mScreen.setupScreen();
+
+    // xTaskCreateUniversal(runLoop, "loopTask", 4096, NULL, 1, &runLoopHandle, MAINLOOPCORE);
+    // mScreen.showWarning("Initializing HomePoint");
+    mScreen.init();
     xTaskCreateUniversal(runLoop, "loopTask", 4096, NULL, 1, &runLoopHandle, MAINLOOPCORE);
-    mScreen.showWarning("Initializing HomePoint");
     try
     {
       mpAppContext->setup();
     }
     catch(const std::exception& e)
     {
-      mScreen.showWarning(e.what());
-      mScreen.registerWifiCallback();
+      Serial.println(e.what());
+      mScreen.showWarningScreen(e.what());
+      // mScreen.registerWifiCallback();
       return;
     }
     if (!mpAppContext->getModel().hasWifiCredentials())
     {
-      mScreen.showWarning("AP: HomePoint-Config, IP: 192.168.99.1");
+      mScreen.showWarningScreen("AP: HomePoint-Config\nIP: 192.168.99.1");
       return;
     }
-    mScreen.showWarning("Loading Screen");
-    mScreen.setupData();
+
+    mScreen.presentScenesView();
   }
 
   void runLoop(void *pvParameters)
@@ -75,8 +78,9 @@ extern "C"
         {
           esp_task_wdt_reset();
         }
-        mScreen.draw();
-        delay(50);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+        mScreen.loop();
+        // delay(50);
     }
   }
 }

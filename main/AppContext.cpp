@@ -8,6 +8,7 @@ namespace ctx
   void AppContext::setup()
   {
     fs::FileSystem::getInstance().loadPartitions();
+    mpWifiContext = std::make_shared<WifiContext>();
     try
     {
       mModel = fs::ConfigReader().readConfiguration();
@@ -30,9 +31,11 @@ namespace ctx
       if (cb == mqtt::MQTTConnectionStatus::CONNECTED)
       {
         mpMQTTConnection->bindScenes();
+        mAppStateNotifier.broadcast(ContextState::Ready);
       }
     });
     mpWebServer = std::make_unique<web::WebServer>(shared_from_this(), mModel.mWebCredentials);
+    mAppStateNotifier.broadcast(ContextState::Ready);
   }
 
   void AppContext::reload()
@@ -52,10 +55,11 @@ namespace ctx
       if (cb == mqtt::MQTTConnectionStatus::CONNECTED)
       {
         mpMQTTConnection->bindScenes();
+        mAppStateNotifier.broadcast(ContextState::Ready);
       }
+      Serial.println("Connected");
     });
     mpMQTTConnection->connect();
-    mAppStateNotifier.broadcast(ContextState::Ready);
   }
 
   void AppContext::setFirstLaunch(const WifiCredentials credentials,
@@ -65,17 +69,22 @@ namespace ctx
     ESP.restart();
   }
 
-  void AppContext::registerStateCallback(AppStateCB callback)
+  Dispatcher<ctx::ContextState>::CBID AppContext::registerStateCallback(AppStateCB callback)
   {
-    mAppStateNotifier.addCB(callback);
+    return mAppStateNotifier.addCB(callback);
+  }
+
+  void AppContext::deleteStateCallback(Dispatcher<ctx::ContextState>::CBID callback)
+  {
+    mAppStateNotifier.delCB(callback);
   }
 
   void AppContext::connectWireless()
   {
     auto& wifi = mModel.mWifiCredentials;
-    getWifiContext().connect(wifi.mSSID, wifi.mPassword, wifi.mHostname);
+    mpWifiContext->connect(wifi.mSSID, wifi.mPassword, wifi.mHostname);
     using namespace std::placeholders;
-    getWifiContext().registerCallback(std::bind(&AppContext::connectionStateChanged, this, _1));
+    mpWifiContext->registerCallback(std::bind(&AppContext::connectionStateChanged, this, _1));
   }
 
   std::vector<MQTTVariants> &AppContext::getMQTTGroups()

@@ -9,7 +9,6 @@ extern "C"
 #include "esp_system.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
-#include "esp_event_loop.h"
 #include "esp_log.h"
 
 #include "nvs_flash.h"
@@ -40,8 +39,8 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         callback(ctx::WifiAssociationState::CONNECTING);
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
-        ESP_LOGI(TAG, "got ip:%s",
-                 ip4addr_ntoa(&event->ip_info.ip));
+        ESP_LOGI(TAG, "got ip:" IPSTR "\n",
+                 IP2STR(&event->ip_info.ip));
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
         callback(ctx::WifiAssociationState::CONNECTED);
     }
@@ -70,9 +69,14 @@ namespace ctx
 
   }
 
-  void WifiContext::registerCallback(WifiConnectionStateCB callback)
+  Dispatcher<WifiConnectionState>::CBID WifiContext::registerCallback(WifiConnectionStateCB callback)
   {
-    mWifiStateNotifier.addCB(callback);
+    return mWifiStateNotifier.addCB(callback);
+  }
+
+  void WifiContext::deleteCallback(Dispatcher<WifiConnectionState>::CBID callback)
+  {
+    mWifiStateNotifier.delCB(callback);
   }
 
   std::string WifiContext::getIpAddrStr() const
@@ -108,7 +112,7 @@ namespace ctx
     strcpy(reinterpret_cast<char*>(wifi_config.sta.password), mPassword.c_str());
 
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA) );
-    ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) );
+    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
     ESP_ERROR_CHECK(esp_wifi_start() );
 
     ESP_LOGI(TAG, "wifi_init_sta finished.");
@@ -116,9 +120,13 @@ namespace ctx
              mSSID.c_str(), mPassword.c_str());
   }
 
+  WifiConnectionState WifiContext::getWifiState()
+  {
+    return mLastState;
+  }
+
   void WifiContext::wifiStateChanged(WifiAssociationState state)
   {
-    WifiConnectionState wifiConnState;
     if (mHostname.has_value() && state == WifiAssociationState::READY) {
       esp_err_t err;
       if ((err = tcpip_adapter_set_hostname(TCPIP_ADAPTER_IF_STA, (*mHostname).c_str())) != ESP_OK)
@@ -127,10 +135,10 @@ namespace ctx
       }
     }
     if (state == WifiAssociationState::CONNECTED) {
-      wifiConnState.ipAddr = getIpAddrStr();
+      mLastState.ipAddr = getIpAddrStr();
     }
-    wifiConnState.wifiState = state;
-    mWifiStateNotifier.broadcast(wifiConnState);
+    mLastState.wifiState = state;
+    mWifiStateNotifier.broadcast(mLastState);
   }
 
 } // namespace ctx

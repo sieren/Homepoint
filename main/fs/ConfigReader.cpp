@@ -179,7 +179,7 @@ namespace fs
       if (sensorDevice.dataType == MQTTSensorDataType::JSON)
       {
         std::vector<ValueTuple> vals;
-        if (sensorDevice.sensorType == MQTTSensorType::MQTTCombinedValues)
+        if (sensorDevice.sensorType == MQTTSensorType::MQTTCombinedJSONValues)
         {
           ValueTuple firstValueTuple;
           read(device, MQTTFirstKey.c_str(), [&](std::string temp) {

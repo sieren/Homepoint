@@ -1,21 +1,30 @@
 [submodule "components/arduino-esp32"]
 	path = components/arduino-esp32
   url = https://github.com/sieren/arduino-esp32.git
-[submodule "main/libraries/TFT_eFEX"]
-	path = main/libraries/TFT_eFEX
-  url = https://github.com/sieren/TFT_eFEX.git
 [submodule "main/libraries/rapidjson"]
 	path = main/libraries/rapidjson
 	url = https://github.com/Tencent/rapidjson.git
-[submodule "main/libraries/JPEGDecoder"]
-	path = main/libraries/JPEGDecoder
-	url = https://github.com/sieren/JPEGDecoder.git 
 [submodule "components/ESPAsyncWebServer"]
 	path = components/ESPAsyncWebServer
 	url = https://github.com/me-no-dev/ESPAsyncWebServer.git
 [submodule "components/AsyncTCP"]
 	path = components/AsyncTCP
 	url = https://github.com/me-no-dev/AsyncTCP.git
-[submodule "main/libraries/TFT_eSPI"]
-	path = main/libraries/TFT_eSPI
-	url = https://github.com/Bodmer/TFT_eSPI.git
+[submodule "components/lvgl_esp32_drivers"]
+	path = components/lvgl_esp32_drivers
+	url = https://github.com/usedbytes/lvgl_esp32_drivers.git
+[submodule "components/lvgl"]
+	path = components/lvgl
+	url = https://github.com/lvgl/lvgl.git
+[submodule "components/axp192"]
+	path = components/axp192
+	url = https://github.com/usedbytes/axp192.git
+[submodule "components/esp_i2c_helper"]
+	path = components/esp_i2c_helper
+	url = https://github.com/tuupola/esp_i2c_helper.git
+[submodule "components/esp-rainmaker"]
+	path = components/esp-rainmaker
+	url = https://github.com/espressif/esp-rainmaker.git
+[submodule "components/esp_littlefs"]
+	path = components/esp_littlefs
+	url = https://github.com/joltwallet/esp_littlefs.git
